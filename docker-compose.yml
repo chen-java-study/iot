@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: iot_card_postgres
+    environment:
+      POSTGRES_DB: iot_card_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/migrations:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - iot_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: iot_card_backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres123
+      DB_NAME: iot_card_db
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/configs:/app/configs
+    networks:
+      - iot_network
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: iot_card_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/h5/dist:/usr/share/nginx/html/h5
+      - ./frontend/admin/dist:/usr/share/nginx/html/admin
+    depends_on:
+      - backend
+    networks:
+      - iot_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  iot_network:
+    driver: bridge

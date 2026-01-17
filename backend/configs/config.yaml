@@ -1,0 +1,22 @@
+server:
+  port: 8080
+  mode: release  # 生产用 release
+
+database:
+  host: 127.0.0.1       # 或 RDS 内网地址
+  port: 5432
+  user: iot_user        # 你创建的 DB 用户
+  password: "adfhkIxcvYIK2189"     # 与创建用户时一致
+  dbname: iot_card_db
+
+jwt:
+  secret_key: "fjakslfjasldkfjaklfjklafjlasdjghsdnvuvnm"
+  expire_hours: 24      # 可按需调整
+
+wechat:
+  app_id: "你的公众号/小程序 appid"
+  mch_id: "你的商户号"
+  api_v3_key: "微信支付 APIv3 密钥"
+  serial_no: "商户证书序列号"
+  private_key_path: "/path/to/apiclient_key.pem"  # 服务器上的绝对路径
+  notify_url: "https://yourdomain.com/api/v1/payment/notify"  # 用你的正式域名，需 HTTPS

@@ -1,0 +1,331 @@
+========================================
+完全卸载并重新安装 Go 和 Node.js
+========================================
+
+【1】卸载旧版本 Go
+========================================
+
+# 删除 Go 安装目录
+sudo rm -rf /usr/local/go
+
+# 删除 apt 安装的 Go（如果有）
+sudo apt remove golang-go -y      # Ubuntu/Debian
+sudo yum remove golang -y          # CentOS/RHEL
+
+# 清理环境变量（编辑 .bashrc 文件）
+nano ~/.bashrc
+# 删除包含 /usr/local/go/bin 的行，保存退出（Ctrl+X, Y, Enter）
+
+# 或者用命令自动删除
+sed -i '/\/usr\/local\/go\/bin/d' ~/.bashrc
+
+# 刷新环境
+source ~/.bashrc
+
+# 验证卸载
+go version  # 应该提示找不到命令
+
+========================================
+
+【2】卸载旧版本 Node.js
+========================================
+
+# Ubuntu/Debian 系统
+sudo apt-get remove nodejs npm -y
+sudo apt-get purge nodejs npm -y
+sudo apt-get autoremove -y
+
+# CentOS/RHEL 系统
+sudo yum remove nodejs npm -y
+sudo yum autoremove -y
+
+# 删除残留文件
+sudo rm -rf /usr/local/lib/node_modules
+sudo rm -rf /usr/local/bin/node
+sudo rm -rf /usr/local/bin/npm
+sudo rm -rf ~/.npm
+sudo rm -rf ~/.nvm
+
+# 验证卸载
+node --version  # 应该提示找不到命令
+npm --version   # 应该提示找不到命令
+
+========================================
+
+【3】全新安装 Go 1.24
+========================================
+
+# 下载最新版 Go
+cd /tmp
+wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz
+
+# 解压到 /usr/local
+sudo tar -C /usr/local -xzf go1.24.0.linux-amd64.tar.gz
+
+# 添加到 PATH
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+echo 'export GOPATH=$HOME/go' >> ~/.bashrc
+source ~/.bashrc
+
+# 验证安装
+go version
+
+# 清理下载文件
+rm -f /tmp/go1.24.0.linux-amd64.tar.gz
+
+========================================
+
+【4】全新安装 Node.js 20（Ubuntu/Debian）
+========================================
+
+# 更新系统
+sudo apt update
+
+# 安装 curl（如果没有）
+sudo apt install -y curl
+
+# 添加 NodeSource 仓库
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+
+# 安装 Node.js
+sudo apt-get install -y nodejs
+
+# 验证安装
+node --version
+npm --version
+
+========================================
+
+【5】全新安装 Node.js 20（CentOS/RHEL）
+========================================
+
+# 更新系统
+sudo yum update -y
+
+# 安装 curl（如果没有）
+sudo yum install -y curl
+
+# 添加 NodeSource 仓库
+curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
+
+# 安装 Node.js
+sudo yum install -y nodejs
+
+# 验证安装
+node --version
+npm --version
+
+========================================
+
+【6】完整卸载重装脚本（Ubuntu/Debian）
+========================================
+
+#!/bin/bash
+
+echo "=========================================="
+echo "开始完全卸载并重新安装 Go 和 Node.js"
+echo "=========================================="
+
+# ===== 卸载旧版本 =====
+echo ""
+echo "[1/6] 卸载旧版 Go..."
+sudo rm -rf /usr/local/go
+sudo apt remove golang-go -y 2>/dev/null
+sed -i '/\/usr\/local\/go\/bin/d' ~/.bashrc
+sed -i '/GOPATH/d' ~/.bashrc
+
+echo "[2/6] 卸载旧版 Node.js..."
+sudo apt-get remove nodejs npm -y
+sudo apt-get purge nodejs npm -y
+sudo apt-get autoremove -y
+sudo rm -rf /usr/local/lib/node_modules
+sudo rm -rf /usr/local/bin/node
+sudo rm -rf /usr/local/bin/npm
+sudo rm -rf ~/.npm
+
+# ===== 安装新版本 =====
+echo ""
+echo "[3/6] 下载并安装 Go 1.24..."
+cd /tmp
+wget -q https://go.dev/dl/go1.24.0.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.24.0.linux-amd64.tar.gz
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+echo 'export GOPATH=$HOME/go' >> ~/.bashrc
+rm -f go1.24.0.linux-amd64.tar.gz
+
+echo "[4/6] 安装 Node.js 20..."
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+echo "[5/6] 配置 npm 镜像..."
+npm config set registry https://registry.npmmirror.com
+
+# ===== 验证安装 =====
+echo ""
+echo "[6/6] 验证安装..."
+echo "=========================================="
+
+# 刷新环境变量
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+
+echo "Go 版本:"
+go version
+
+echo ""
+echo "Node.js 版本:"
+node --version
+
+echo ""
+echo "npm 版本:"
+npm --version
+
+echo ""
+echo "npm 镜像源:"
+npm config get registry
+
+echo ""
+echo "=========================================="
+echo "安装完成！"
+echo "=========================================="
+echo "重要: 请执行以下命令刷新环境变量:"
+echo "  source ~/.bashrc"
+echo "或者重新登录系统"
+echo "=========================================="
+
+========================================
+
+【7】完整卸载重装脚本（CentOS/RHEL）
+========================================
+
+#!/bin/bash
+
+echo "=========================================="
+echo "开始完全卸载并重新安装 Go 和 Node.js"
+echo "=========================================="
+
+# ===== 卸载旧版本 =====
+echo ""
+echo "[1/6] 卸载旧版 Go..."
+sudo rm -rf /usr/local/go
+sudo yum remove golang -y 2>/dev/null
+sed -i '/\/usr\/local\/go\/bin/d' ~/.bashrc
+sed -i '/GOPATH/d' ~/.bashrc
+
+echo "[2/6] 卸载旧版 Node.js..."
+sudo yum remove nodejs npm -y
+sudo yum autoremove -y
+sudo rm -rf /usr/local/lib/node_modules
+sudo rm -rf /usr/local/bin/node
+sudo rm -rf /usr/local/bin/npm
+sudo rm -rf ~/.npm
+
+# ===== 安装新版本 =====
+echo ""
+echo "[3/6] 下载并安装 Go 1.24..."
+cd /tmp
+wget -q https://go.dev/dl/go1.24.0.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.24.0.linux-amd64.tar.gz
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+echo 'export GOPATH=$HOME/go' >> ~/.bashrc
+rm -f go1.24.0.linux-amd64.tar.gz
+
+echo "[4/6] 安装 Node.js 20..."
+curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
+sudo yum install -y nodejs
+
+echo "[5/6] 配置 npm 镜像..."
+npm config set registry https://registry.npmmirror.com
+
+# ===== 验证安装 =====
+echo ""
+echo "[6/6] 验证安装..."
+echo "=========================================="
+
+# 刷新环境变量
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+
+echo "Go 版本:"
+go version
+
+echo ""
+echo "Node.js 版本:"
+node --version
+
+echo ""
+echo "npm 版本:"
+npm --version
+
+echo ""
+echo "npm 镜像源:"
+npm config get registry
+
+echo ""
+echo "=========================================="
+echo "安装完成！"
+echo "=========================================="
+echo "重要: 请执行以下命令刷新环境变量:"
+echo "  source ~/.bashrc"
+echo "或者重新登录系统"
+echo "=========================================="
+
+========================================
+
+【8】使用方法
+========================================
+
+# 方法1: 创建脚本文件执行（推荐）
+
+# Ubuntu/Debian 用户
+nano reinstall.sh
+# 复制上面【6】的脚本内容，保存退出
+chmod +x reinstall.sh
+./reinstall.sh
+
+# CentOS/RHEL 用户
+nano reinstall.sh
+# 复制上面【7】的脚本内容，保存退出
+chmod +x reinstall.sh
+./reinstall.sh
+
+# 方法2: 手动逐行执行
+# 按照【1】到【5】的步骤依次复制粘贴命令执行
+
+========================================
+
+【9】执行完成后的必要操作
+========================================
+
+# 刷新环境变量（重要！）
+source ~/.bashrc
+
+# 重新验证版本
+go version
+node --version
+npm --version
+
+# 如果仍显示旧版本，请重新登录或重启终端
+exit
+# 重新连接SSH或打开新终端
+
+========================================
+
+【10】预期结果
+========================================
+
+执行完成后应该看到:
+
+Go 版本:
+  go version go1.24.0 linux/amd64
+
+Node.js 版本:
+  v20.x.x
+
+npm 版本:
+  10.x.x
+
+npm 镜像源:
+  https://registry.npmmirror.com/
+
+========================================

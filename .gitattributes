@@ -1,0 +1,6 @@
+# 所有文件默认使用 LF 换行符，禁止 Git 自动转换
+* text=auto eol=lf
+
+# 针对Windows的批处理文件，单独指定用 CRLF（可选）
+*.bat text eol=crlf
+*.cmd text eol=crlf

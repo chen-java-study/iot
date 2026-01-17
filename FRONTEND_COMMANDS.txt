@@ -1,0 +1,274 @@
+========================================
+前端命令速查表
+========================================
+
+【开发环境启动】
+
+## Admin管理端（端口3001）
+
+# 方式A：推荐（清理重新安装，最稳定）
+cd ~/workspace/frontend/admin
+rm -rf node_modules package-lock.json
+npm install
+npx vite --host 0.0.0.0 --port 3001
+
+# 方式B：快速启动（已安装依赖）
+cd ~/workspace/frontend/admin
+npx vite --host 0.0.0.0 --port 3001
+
+# 方式C：使用npm script
+cd ~/workspace/frontend/admin
+npm run dev -- --host 0.0.0.0 --port 3001 --strictPort
+
+访问地址:
+- 本机: http://localhost:3001
+- 局域网: http://192.168.0.128:3001
+
+========================================
+
+## H5用户端（端口3000）
+
+# 方式A：推荐（清理重新安装，最稳定）
+cd ~/workspace/frontend/h5
+rm -rf node_modules package-lock.json
+npm install
+npx vite --host 0.0.0.0 --port 3000
+
+# 方式B：快速启动（已安装依赖）
+cd ~/workspace/frontend/h5
+npx vite --host 0.0.0.0 --port 3000
+
+# 方式C：使用npm script
+cd ~/workspace/frontend/h5
+npm run dev -- --host 0.0.0.0 --port 3000 --strictPort
+
+访问地址:
+- 本机: http://localhost:3000
+- 局域网: http://192.168.0.128:3000
+
+========================================
+
+【生产构建】
+
+## Admin管理端生产构建
+
+cd ~/workspace/frontend/admin
+npm run build
+
+# 输出目录: dist/
+# 部署时上传dist文件夹的内容到服务器
+
+========================================
+
+## H5用户端生产构建
+
+cd ~/workspace/frontend/h5
+npm run build
+
+# 输出目录: dist/
+# 部署时上传dist文件夹的内容到服务器
+
+========================================
+
+【依赖管理】
+
+# 查看已安装的包
+npm list
+
+# 安装所有依赖
+npm install
+
+# 安装特定包
+npm install <package-name>
+
+# 删除依赖
+npm uninstall <package-name>
+
+# 清理npm缓存
+npm cache clean --force
+
+# 清理并重装
+cd <frontend目录>
+rm -rf node_modules package-lock.json
+npm install
+
+========================================
+
+【清理与重置】
+
+# 仅删除node_modules（保留package.json）
+rm -rf node_modules package-lock.json
+
+# 完全重置项目依赖
+cd ~/workspace/frontend/admin  # 或 h5
+rm -rf node_modules package-lock.json .vite
+npm install
+
+# 清理vite缓存
+rm -rf .vite
+
+========================================
+
+【npm脚本】
+
+# Admin脚本
+cd ~/workspace/frontend/admin
+npm run dev      # 开发模式
+npm run build    # 生产构建
+npm run preview  # 预览构建结果
+
+# H5脚本
+cd ~/workspace/frontend/h5
+npm run dev      # 开发模式
+npm run build    # 生产构建
+npm run preview  # 预览构建结果
+
+========================================
+
+【三终端完整启动】
+
+# 终端1：启动后端
+cd ~/workspace/backend
+go run cmd/server/main.go
+
+# 终端2：启动Admin
+cd ~/workspace/frontend/admin
+rm -rf node_modules package-lock.json
+npm install
+npx vite --host 0.0.0.0 --port 3001
+
+# 终端3：启动H5
+cd ~/workspace/frontend/h5
+rm -rf node_modules package-lock.json
+npm install
+npx vite --host 0.0.0.0 --port 3000
+
+========================================
+
+【开发技巧】
+
+# 关闭前端服务器
+Ctrl + C
+
+# 重启前端服务器
+# 1. 按 Ctrl + C 停止
+# 2. 上下箭头调出上一条命令
+# 3. 回车执行
+
+# 修改端口
+npx vite --host 0.0.0.0 --port 3002  # 改成3002
+
+# 本地访问
+http://localhost:3001   # Admin
+http://localhost:3000   # H5
+
+# 其他电脑访问（替换成你的虚拟机IP）
+http://192.168.0.128:3001   # Admin
+http://192.168.0.128:3000   # H5
+
+========================================
+
+【故障排查命令】
+
+# 检查npm版本
+npm --version
+
+# 检查node版本
+node --version
+
+# 验证前端是否在运行
+curl http://localhost:3001
+curl http://localhost:3000
+
+# 查看后端是否可访问
+curl http://localhost:8080/api/v1/card/query?keyword=89860123456789012345
+
+# 查看进程占用的端口
+lsof -i:3001
+lsof -i:3000
+lsof -i:8080
+
+# 杀死占用某个端口的进程
+kill -9 <PID>
+
+========================================
+
+【常用快捷方式】
+
+# 一键启动Admin（清理模式）
+cd ~/workspace/frontend/admin && rm -rf node_modules package-lock.json && npm install && npx vite --host 0.0.0.0 --port 3001
+
+# 一键启动H5（清理模式）
+cd ~/workspace/frontend/h5 && rm -rf node_modules package-lock.json && npm install && npx vite --host 0.0.0.0 --port 3000
+
+# 一键启动Admin（快速模式，已安装）
+cd ~/workspace/frontend/admin && npx vite --host 0.0.0.0 --port 3001
+
+# 一键启动H5（快速模式，已安装）
+cd ~/workspace/frontend/h5 && npx vite --host 0.0.0.0 --port 3000
+
+========================================
+
+【推荐工作流】
+
+1. 启动后端
+   cd ~/workspace/backend
+   go run cmd/server/main.go
+
+2. 在新终端启动Admin
+   cd ~/workspace/frontend/admin
+   npx vite --host 0.0.0.0 --port 3001
+
+3. 在新终端启动H5
+   cd ~/workspace/frontend/h5
+   npx vite --host 0.0.0.0 --port 3000
+
+4. 访问前端
+   Admin: http://192.168.0.128:3001
+   H5: http://192.168.0.128:3000
+
+5. 开发时修改代码，前端会自动热更新（HMR）
+
+6. 完成开发后构建生产版本
+   cd ~/workspace/frontend/admin && npm run build
+   cd ~/workspace/frontend/h5 && npm run build
+
+========================================
+
+【文件结构】
+
+frontend/
+├── admin/                  # 管理端
+│   ├── src/
+│   │   ├── views/         # 页面组件
+│   │   ├── components/    # 通用组件
+│   │   ├── api/           # API调用
+│   │   ├── router/        # 路由
+│   │   ├── utils/         # 工具函数
+│   │   └── main.js        # 入口文件
+│   ├── package.json
+│   └── vite.config.js     # Vite配置
+├── h5/                     # 用户端
+│   ├── src/
+│   │   ├── views/         # 页面组件
+│   │   ├── components/    # 通用组件
+│   │   ├── api/           # API调用
+│   │   ├── router/        # 路由
+│   │   ├── utils/         # 工具函数
+│   │   └── main.js        # 入口文件
+│   ├── package.json
+│   └── vite.config.js     # Vite配置
+
+========================================
+
+【默认账号密码】
+
+Admin账号:
+- 用户名: admin
+- 密码: admin123
+
+测试卡片:
+- 卡号: 89860123456789012345
+- 设备号: 866123456789012
+
+========================================
