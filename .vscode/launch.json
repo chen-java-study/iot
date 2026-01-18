@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Admin Frontend (3001)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://192.168.0.128:3001",
+      "webRoot": "${workspaceFolder}/frontend/admin/src",
+      "sourceMapPathOverride": {
+        "webpack:///*": "${webRoot}/*"
+      },
+      "runtimeExecutable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      "runtimeArgs": ["--remote-debugging-port=9222"],
+      "port": 9222
+    },
+    {
+      "name": "H5 Frontend (3000)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://192.168.0.128:3000",
+      "webRoot": "${workspaceFolder}/frontend/h5/src",
+      "sourceMapPathOverride": {
+        "webpack:///*": "${webRoot}/*"
+      },
+      "runtimeExecutable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      "runtimeArgs": ["--remote-debugging-port=9222"],
+      "port": 9222
+    }
+  ]
+}

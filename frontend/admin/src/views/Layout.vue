@@ -21,7 +21,7 @@
       <el-header>
         <div class="header-right">
           <span>欢迎，管理员</span>
-          <el-button type="text" @click="handleLogout">退出</el-button>
+          <el-button link @click="handleLogout">退出</el-button>
         </div>
       </el-header>
       <el-main>

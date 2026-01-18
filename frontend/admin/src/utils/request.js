@@ -26,7 +26,10 @@ request.interceptors.response.use(
         localStorage.removeItem('admin_token')
         window.location.href = '/login'
       }
-      return Promise.reject(new Error(res.message || '请求失败'))
+      // 保留完整的响应信息方便错误处理
+      const error = new Error(res.message || '请求失败')
+      error.response = { data: res }
+      return Promise.reject(error)
     }
     return res.data
   },

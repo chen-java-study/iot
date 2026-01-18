@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { ElMessage } from 'element-plus'
-import { login } from '@/api/admin'
+import { login } from '@/api/admin';
+import { ElMessage } from 'element-plus';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'Login',
@@ -37,12 +37,24 @@ export default {
       loading.value = true
       try {
         const data = await login(form.value)
+        // console.log('返回数据:', data)
+        // console.log('token:', data.token)
+        // console.log('user_info:', data.user_info)
+        // console.log('user_info类型:', typeof data.user_info)
+        
         localStorage.setItem('admin_token', data.token)
-        localStorage.setItem('admin_user', JSON.stringify(data.user_info))
+        if (data.user_info) {
+          try {
+            localStorage.setItem('admin_user', JSON.stringify(data.user_info))
+          } catch (e) {
+            console.error('序列化user_info失败:', e)
+          }
+        }
         ElMessage.success('登录成功')
         router.push('/')
       } catch (error) {
         console.error('登录失败:', error)
+        ElMessage.error(error?.message || '登录失败')
       } finally {
         loading.value = false
       }
