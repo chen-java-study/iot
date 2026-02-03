@@ -22,6 +22,11 @@ func (r *Repository) FindAdminByUsername(username string) (*model.AdminUser, err
 	return &user, err
 }
 
+// UpdateAdminUser 更新管理员用户信息
+func (r *Repository) UpdateAdminUser(user *model.AdminUser) error {
+	return r.db.Save(user).Error
+}
+
 // === SimCard Methods ===
 
 func (r *Repository) FindCardByKeyword(keyword string) (*model.SimCard, error) {
@@ -111,8 +116,21 @@ func (r *Repository) ListRechargeRecords(page, pageSize int, status int16, keywo
 
 	query.Count(&total)
 
-	// 计算总金额
-	r.db.Model(&model.RechargeRecord{}).Where(query.Statement.SQL.String()).Select("COALESCE(SUM(recharge_amount), 0)").Scan(&totalAmount)
+	// 计算总金额 - 使用相同的查询条件构建新查询
+	amountQuery := r.db.Model(&model.RechargeRecord{})
+	if status >= 0 {
+		amountQuery = amountQuery.Where("payment_status = ?", status)
+	}
+	if keyword != "" {
+		amountQuery = amountQuery.Where("card_no LIKE ? OR device_no LIKE ? OR trade_no LIKE ?", "%"+keyword+"%", "%"+keyword+"%", "%"+keyword+"%")
+	}
+	if startDate != "" {
+		amountQuery = amountQuery.Where("DATE(created_at) >= ?", startDate)
+	}
+	if endDate != "" {
+		amountQuery = amountQuery.Where("DATE(created_at) <= ?", endDate)
+	}
+	amountQuery.Select("COALESCE(SUM(recharge_amount), 0)").Scan(&totalAmount)
 
 	offset := (page - 1) * pageSize
 	err := query.Offset(offset).Limit(pageSize).Order("id DESC").Find(&records).Error

@@ -1,0 +1,572 @@
+================================================================================
+物联网卡管理系统 - 完整开发指南
+================================================================================
+
+目录:
+  1. 环境安装 (Windows/Linux)
+  2. 项目启动
+  3. 前端命令速查
+  4. 后端编译与配置
+  5. 功能测试
+  6. 调试指南
+  7. 常见问题解决
+
+================================================================================
+第一部分: 环境安装
+================================================================================
+
+【Windows 安装 Go 和 Node.js】
+
+## 安装 Go
+
+# 方式A: 使用Chocolatey（推荐）
+choco install golang
+
+# 方式B: 使用winget
+winget install GoLang.Go
+
+# 方式C: 手动下载安装
+# 访问: https://golang.org/dl
+# 下载对应版本(如: go1.24.windows-amd64.msi)
+# 双击安装即可
+
+# 验证安装
+go version
+go env
+
+## 安装 Node.js
+
+# 方式A: 使用Chocolatey（推荐）
+choco install nodejs
+
+# 方式B: 使用winget
+winget install OpenJS.NodeJS
+
+# 方式C: 手动下载安装
+# 访问: https://nodejs.org
+# 下载LTS版本(如: node-v20.x.x-x64.msi)
+# 双击安装即可
+
+# 验证安装
+node --version
+npm --version
+
+--------------------------------------------------------------------------------
+
+【Linux 安装 Go 和 Node.js (Ubuntu/Debian)】
+
+# 更新系统
+sudo apt update
+sudo apt upgrade -y
+
+# 安装 Go (方式A: apt)
+sudo apt install -y golang-go git
+
+# 安装 Go (方式B: 官方下载，获取最新版本)
+cd /tmp
+wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz
+sudo rm -rf /usr/local/go
+sudo tar -C /usr/local -xzf go1.24.0.linux-amd64.tar.gz
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+source ~/.bashrc
+
+# 安装 Node.js (使用NodeSource仓库)
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+
+# 验证安装
+go version
+node --version
+npm --version
+
+--------------------------------------------------------------------------------
+
+【Linux 安装 Go 和 Node.js (CentOS/RHEL)】
+
+# 更新系统
+sudo yum update -y
+
+# 安装 Go
+sudo yum install -y golang git
+
+# 或手动安装最新版
+cd /tmp
+wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz
+sudo rm -rf /usr/local/go
+sudo tar -C /usr/local -xzf go1.24.0.linux-amd64.tar.gz
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+source ~/.bashrc
+
+# 安装 Node.js
+curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
+sudo yum install -y nodejs
+
+# 验证安装
+go version
+node --version
+npm --version
+
+--------------------------------------------------------------------------------
+
+【配置 npm 国内镜像（推荐）】
+
+npm config set registry https://registry.npmmirror.com
+npm config get registry
+
+# 恢复官方镜像
+npm config set registry https://registry.npmjs.org
+
+--------------------------------------------------------------------------------
+
+【安装项目依赖】
+
+# 安装Go依赖
+cd backend
+go mod download
+go mod tidy
+
+# 安装前端依赖
+cd frontend/admin
+npm install
+
+cd ../h5
+npm install
+
+================================================================================
+第二部分: 项目启动
+================================================================================
+
+【三终端完整启动】
+
+# 终端1：启动后端 (端口 8080)
+cd ~/workspace/backend
+go run cmd/server/main.go
+
+# 终端2：启动Admin管理端 (端口 3001)
+cd ~/workspace/frontend/admin
+npm install
+npx vite --host 0.0.0.0 --port 3001
+
+# 终端3：启动H5用户端 (端口 3000)
+cd ~/workspace/frontend/h5
+npm install
+npx vite --host 0.0.0.0 --port 3000
+
+--------------------------------------------------------------------------------
+
+【访问地址】
+
+Admin管理端: http://localhost:3001 或 http://192.168.0.128:3001
+H5用户端:    http://localhost:3000 或 http://192.168.0.128:3000
+后端API:     http://localhost:8080
+
+--------------------------------------------------------------------------------
+
+【默认账号密码】
+
+Admin账号:
+- 用户名: admin
+- 密码: admin123
+
+测试卡片:
+- 卡号: 89860123456789012345
+- 设备号: 866123456789012
+
+================================================================================
+第三部分: 前端命令速查
+================================================================================
+
+【开发环境启动】
+
+## Admin管理端
+
+# 方式A：清理重新安装（最稳定）
+cd ~/workspace/frontend/admin
+rm -rf node_modules package-lock.json
+npm install
+npx vite --host 0.0.0.0 --port 3001
+
+# 方式B：快速启动（已安装依赖）
+cd ~/workspace/frontend/admin
+npx vite --host 0.0.0.0 --port 3001
+
+# 方式C：使用npm script
+cd ~/workspace/frontend/admin
+npm run dev -- --host 0.0.0.0 --port 3001 --strictPort
+
+## H5用户端
+
+# 方式A：清理重新安装（最稳定）
+cd ~/workspace/frontend/h5
+rm -rf node_modules package-lock.json
+npm install
+npx vite --host 0.0.0.0 --port 3000
+
+# 方式B：快速启动（已安装依赖）
+cd ~/workspace/frontend/h5
+npx vite --host 0.0.0.0 --port 3000
+
+--------------------------------------------------------------------------------
+
+【生产构建】
+
+cd ~/workspace/frontend/admin
+npm run build
+# 输出目录: dist/
+
+cd ~/workspace/frontend/h5
+npm run build
+# 输出目录: dist/
+
+--------------------------------------------------------------------------------
+
+【依赖管理】
+
+npm list              # 查看已安装的包
+npm install           # 安装所有依赖
+npm install <pkg>     # 安装特定包
+npm uninstall <pkg>   # 删除依赖
+npm cache clean --force  # 清理npm缓存
+
+# 清理并重装
+rm -rf node_modules package-lock.json
+npm install
+
+--------------------------------------------------------------------------------
+
+【一键启动命令】
+
+# Admin（清理模式）
+cd ~/workspace/frontend/admin && rm -rf node_modules package-lock.json && npm install && npx vite --host 0.0.0.0 --port 3001
+
+# H5（清理模式）
+cd ~/workspace/frontend/h5 && rm -rf node_modules package-lock.json && npm install && npx vite --host 0.0.0.0 --port 3000
+
+# Admin（快速模式）
+cd ~/workspace/frontend/admin && npx vite --host 0.0.0.0 --port 3001
+
+# H5（快速模式）
+cd ~/workspace/frontend/h5 && npx vite --host 0.0.0.0 --port 3000
+
+================================================================================
+第四部分: 后端编译与配置
+================================================================================
+
+【后端运行方式】
+
+## 方式A：开发模式运行（推荐开发时使用）
+cd backend
+go run cmd/server/main.go
+
+## 方式B：编译为可执行文件
+# Windows
+cd backend
+go build -o app.exe cmd/server/main.go
+.\app.exe
+
+# Linux/Mac
+cd backend
+go build -o app cmd/server/main.go
+./app
+
+## 方式C：编译（带优化，减小体积）
+go build -ldflags="-s -w" -o app cmd/server/main.go
+
+--------------------------------------------------------------------------------
+
+【前端网络配置 - 监听所有接口】
+
+编辑 frontend/admin/vite.config.js 和 frontend/h5/vite.config.js:
+
+server: {
+  host: '0.0.0.0',      // 监听所有网络接口
+  port: 3001,           // 或 3000
+  proxy: {
+    '/api': {
+      target: 'http://localhost:8080',
+      changeOrigin: true
+    }
+  }
+}
+
+--------------------------------------------------------------------------------
+
+【从其他机器访问】
+
+假设服务器IP是 192.168.1.100:
+- H5前端:    http://192.168.1.100:3000
+- Admin前端: http://192.168.1.100:3001
+- 后端API:   http://192.168.1.100:8080
+
+================================================================================
+第五部分: 功能测试
+================================================================================
+
+【API接口测试】
+
+## H5接口
+GET  /api/v1/card/query?keyword=卡号
+POST /api/v1/payment/create
+GET  /api/v1/payment/status?trade_no=订单号
+
+## 管理端接口
+POST   /api/v1/admin/login
+GET    /api/v1/admin/statistics
+GET    /api/v1/admin/cards
+POST   /api/v1/admin/cards
+PUT    /api/v1/admin/cards/:id
+DELETE /api/v1/admin/cards/:id
+GET    /api/v1/admin/recharges
+GET    /api/v1/admin/config
+POST   /api/v1/admin/config
+
+--------------------------------------------------------------------------------
+
+【测试数据】
+
+管理员账号: admin / admin123
+
+测试卡片（5张）:
+- 正常:     89860123456789012345 / 866123456789012
+- 即将到期: 89860123456789012346 / 866123456789013
+- 已过期:   89860123456789012347 / 866123456789014
+- 正常:     89860123456789012348 / 866123456789015
+- 正常:     89860123456789012349 / 866123456789016
+
+--------------------------------------------------------------------------------
+
+【功能测试清单】
+
+## Admin管理端
+- 登录功能
+- 首页Dashboard统计数据
+- 卡片管理（列表、搜索、筛选、增删改）
+- 充值记录（列表、搜索、筛选）
+- 系统配置
+
+## H5用户端
+- 卡片查询
+- 充值功能（模拟）
+
+================================================================================
+第六部分: 调试指南
+================================================================================
+
+【浏览器DevTools调试】
+
+打开方式: F12 或 Ctrl + Shift + I (Mac: Cmd + Option + I)
+
+## Console 控制台
+- 查看错误信息（红色）
+- 使用 console.log() 打印调试信息
+
+## Network 网络
+- 查看API请求和响应
+- 检查状态码: 200(成功), 401(未授权), 404(不存在), 500(服务器错误)
+
+## Application
+- 查看 Local Storage 中的 token
+
+--------------------------------------------------------------------------------
+
+【常见错误排查】
+
+404 Not Found: API接口不存在或URL错误
+401 Unauthorized: 没有权限/token过期，清除localStorage重新登录
+500 Internal Server Error: 后端代码有bug，查看后端终端日志
+CORS错误: 跨域问题，检查后端CORS配置
+请求挂起: 后端没启动或网络不通
+
+--------------------------------------------------------------------------------
+
+【故障排查命令】
+
+# 检查版本
+npm --version
+node --version
+go version
+
+# 验证服务是否运行
+curl http://localhost:3001
+curl http://localhost:3000
+curl http://localhost:8080/api/v1/card/query?keyword=89860123456789012345
+
+# 查看端口占用
+lsof -i:3001
+lsof -i:3000
+lsof -i:8080
+
+# 杀死进程
+kill -9 <PID>
+
+--------------------------------------------------------------------------------
+
+【VSCode调试配置】
+
+创建 .vscode/launch.json:
+
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Admin Frontend (3001)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://192.168.0.128:3001",
+      "webRoot": "${workspaceFolder}/frontend/admin/src"
+    },
+    {
+      "name": "H5 Frontend (3000)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://192.168.0.128:3000",
+      "webRoot": "${workspaceFolder}/frontend/h5/src"
+    }
+  ]
+}
+
+调试快捷键:
+F5        - 启动/继续调试
+F10       - 单步执行
+F11       - 单步进入
+Shift+F5  - 停止调试
+
+================================================================================
+第七部分: 常见问题解决
+================================================================================
+
+【npm install 在 VMware 共享文件夹失败】
+
+原因: VMware HGFS不支持创建符号链接
+
+解决方案1（推荐）: 复制到虚拟机本地目录
+cp -r /mnt/hgfs/workspace ~/workspace
+cd ~/workspace/frontend/admin
+npm install
+
+解决方案2: 禁用符号链接
+npm config set bin-links false
+npm install
+
+解决方案3: 使用yarn
+yarn install
+
+--------------------------------------------------------------------------------
+
+【前端启动报esbuild错误】
+
+rm -rf node_modules package-lock.json
+npm install
+
+--------------------------------------------------------------------------------
+
+【页面刷新报"请求失败"】
+
+检查后端是否在运行（端口8080）
+检查浏览器Network显示的具体错误
+
+--------------------------------------------------------------------------------
+
+【登录后跳转到空白页】
+
+清除浏览器localStorage
+重新登录
+
+--------------------------------------------------------------------------------
+
+【H5查询返回404】
+
+检查测试数据是否插入成功:
+psql -h 127.0.0.1 -U iot_user -d iot_card_db
+SELECT * FROM sim_cards;
+
+--------------------------------------------------------------------------------
+
+【升级 Go 和 Node.js】
+
+# 升级 Go
+cd /tmp
+wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz
+sudo rm -rf /usr/local/go
+sudo tar -C /usr/local -xzf go1.24.0.linux-amd64.tar.gz
+source ~/.bashrc
+go version
+
+# 升级 Node.js (Ubuntu/Debian)
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
+node --version
+
+--------------------------------------------------------------------------------
+
+【完全卸载重装】
+
+# 卸载 Go
+sudo rm -rf /usr/local/go
+sudo apt remove golang-go -y
+
+# 卸载 Node.js
+sudo apt-get remove nodejs npm -y
+sudo apt-get purge nodejs npm -y
+sudo rm -rf /usr/local/lib/node_modules ~/.npm
+
+# 然后按照第一部分重新安装
+
+================================================================================
+项目文件结构
+================================================================================
+
+frontend/
+├── admin/                  # 管理端
+│   ├── src/
+│   │   ├── views/         # 页面组件
+│   │   ├── components/    # 通用组件
+│   │   ├── api/           # API调用
+│   │   ├── router/        # 路由
+│   │   ├── utils/         # 工具函数
+│   │   └── main.js        # 入口文件
+│   ├── package.json
+│   └── vite.config.js     # Vite配置
+├── h5/                     # 用户端
+│   ├── src/
+│   │   ├── views/
+│   │   ├── components/
+│   │   ├── api/
+│   │   ├── router/
+│   │   ├── utils/
+│   │   └── main.js
+│   ├── package.json
+│   └── vite.config.js
+
+backend/
+├── cmd/server/main.go     # 入口文件
+├── configs/config.yaml    # 配置文件
+├── internal/              # 内部代码
+└── migrations/            # 数据库迁移
+
+================================================================================
+快速检查清单
+================================================================================
+
+□ Go 已安装 (go version)
+□ Node.js 已安装 (node --version)
+□ npm 已安装 (npm --version)
+□ npm镜像已配置 (npm config get registry)
+□ 后端依赖已安装 (go mod tidy)
+□ 前端admin依赖已安装 (npm install)
+□ 前端h5依赖已安装 (npm install)
+□ 后端运行中 (端口8080)
+□ Admin前端运行中 (端口3001)
+□ H5前端运行中 (端口3000)
+
+================================================================================
+下一步（生产部署）
+================================================================================
+
+1. 配置真实的微信支付参数
+2. 部署到生产环境
+3. 配置Nginx反向代理
+4. 配置HTTPS证书
+5. 设置定时任务（到期提醒等）
+
+================================================================================

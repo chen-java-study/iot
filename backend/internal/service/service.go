@@ -49,7 +49,7 @@ func (s *Service) AdminLogin(username, password string) (string, *model.AdminUse
 	// 更新最后登录时间
 	now := time.Now()
 	user.LastLoginAt = &now
-	s.repo.UpdateCard(&model.SimCard{ID: user.ID}) // 这里简化了，实际应该有UpdateAdmin方法
+	s.repo.UpdateAdminUser(user)
 
 	return token, user, nil
 }

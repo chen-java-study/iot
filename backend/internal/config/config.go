@@ -50,5 +50,45 @@ func LoadConfig(filepath string) (*Config, error) {
 		return nil, err
 	}
 
+	// 从环境变量覆盖敏感配置
+	overrideFromEnv(&config)
+
 	return &config, nil
+}
+
+// overrideFromEnv 从环境变量覆盖敏感配置
+func overrideFromEnv(config *Config) {
+	if v := os.Getenv("DB_HOST"); v != "" {
+		config.Database.Host = v
+	}
+	if v := os.Getenv("DB_USER"); v != "" {
+		config.Database.User = v
+	}
+	if v := os.Getenv("DB_PASSWORD"); v != "" {
+		config.Database.Password = v
+	}
+	if v := os.Getenv("DB_NAME"); v != "" {
+		config.Database.DBName = v
+	}
+	if v := os.Getenv("JWT_SECRET"); v != "" {
+		config.JWT.SecretKey = v
+	}
+	if v := os.Getenv("WECHAT_APP_ID"); v != "" {
+		config.Wechat.AppID = v
+	}
+	if v := os.Getenv("WECHAT_MCH_ID"); v != "" {
+		config.Wechat.MchID = v
+	}
+	if v := os.Getenv("WECHAT_API_V3_KEY"); v != "" {
+		config.Wechat.APIV3Key = v
+	}
+	if v := os.Getenv("WECHAT_SERIAL_NO"); v != "" {
+		config.Wechat.SerialNo = v
+	}
+	if v := os.Getenv("WECHAT_PRIVATE_KEY_PATH"); v != "" {
+		config.Wechat.PrivateKeyPath = v
+	}
+	if v := os.Getenv("WECHAT_NOTIFY_URL"); v != "" {
+		config.Wechat.NotifyURL = v
+	}
 }

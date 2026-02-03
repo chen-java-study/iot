@@ -2,40 +2,98 @@
 
 一个完整的物联网SIM卡管理系统，包含手机端H5查询充值和Web管理后台。
 
-## 项目架构
+## 目录
+
+1. [项目概述](#项目概述)
+2. [技术架构](#技术架构)
+3. [功能特性](#功能特性)
+4. [快速开始](#快速开始)
+5. [本地开发](#本地开发)
+6. [数据库配置](#数据库配置)
+7. [API文档](#api文档)
+8. [阿里云部署](#阿里云部署)
+9. [项目结构](#项目结构)
+10. [安全建议](#安全建议)
+11. [故障排查](#故障排查)
+12. [缺陷修复记录](#缺陷修复记录)
+
+---
+
+## 项目概述
+
+### 系统组成
+
+- **手机端H5**: 用户查询SIM卡到期时间、在线充值（微信支付）
+- **管理端Web**: 商家管理卡片、查看充值记录、系统配置
+
+### 业务流程
+
+1. 用户在H5端输入卡号/设备号查询卡片信息
+2. 查看到期时间，点击充值跳转支付页面
+3. 完成微信支付后，卡片到期时间自动延长1年
+4. 商家在管理端录入卡片、查看充值记录、对账
+
+---
+
+## 技术架构
 
 ### 技术栈
 
-**后端:**
-- Go 1.21 + Gin框架
-- PostgreSQL 15
-- JWT认证
-- 微信支付APIv3
+| 层级 | 技术 |
+|------|------|
+| **后端** | Go 1.21 + Gin框架 + GORM |
+| **数据库** | PostgreSQL 15 |
+| **认证** | JWT |
+| **支付** | 微信支付APIv3 |
+| **H5前端** | Vue 3 + Vite + Vant 4 |
+| **管理前端** | Vue 3 + Vite + Element Plus |
+| **部署** | Docker + Nginx |
 
-**前端:**
-- Vue 3 + Vite
-- H5端: Vant 4
-- 管理端: Element Plus
-- Axios
+### 架构图
 
-**部署:**
-- Docker + Docker Compose
-- Nginx反向代理
+```
+┌─────────────┐     ┌─────────────┐
+│   H5前端    │     │  管理端前端  │
+│  (Vant 4)   │     │(Element Plus)│
+└──────┬──────┘     └──────┬──────┘
+       │                   │
+       └─────────┬─────────┘
+                 │
+         ┌───────▼───────┐
+         │    Nginx      │
+         │  (反向代理)    │
+         └───────┬───────┘
+                 │
+         ┌───────▼───────┐
+         │   Go Backend  │
+         │   (Gin框架)   │
+         └───────┬───────┘
+                 │
+         ┌───────▼───────┐
+         │  PostgreSQL   │
+         └───────────────┘
+```
+
+---
 
 ## 功能特性
 
-### 手机端H5 (微信公众号)
-- 📱 查询SIM卡信息 (输入卡号/设备号)
-- 💳 在线充值 (微信支付)
+### 手机端H5
+
+- 📱 查询SIM卡信息（输入卡号/设备号）
+- 💳 在线充值（微信支付）
 - 📊 查看到期时间和剩余天数
 - ✅ 充值后自动延长1年
 
 ### 管理端Web
-- 🏠 数据仪表盘 (卡片总数、充值总额统计)
-- 📋 卡片管理 (增删改查)
+
+- 🏠 数据仪表盘（卡片总数、充值总额统计）
+- 📋 卡片管理（增删改查）
 - 💰 充值记录查询
-- ⚙️ 系统配置 (充值价格、微信支付配置)
-- 🔐 用户登录认证 (JWT)
+- ⚙️ 系统配置（充值价格、微信支付配置）
+- 🔐 用户登录认证（JWT）
+
+---
 
 ## 快速开始
 
@@ -43,134 +101,228 @@
 
 - Go 1.21+
 - Node.js 18+
-- PostgreSQL 15+
-- Docker & Docker Compose (可选)
+- PostgreSQL 15+ 或 Docker
+- 微信支付商户号（生产环境）
 
-### 本地开发
+### 方式一：一键启动（推荐）
 
-#### 1. 克隆项目
+**Windows:**
+```cmd
+双击运行：start-dev.bat
+```
 
-\`\`\`bash
-git clone <repository-url>
-cd iot-card-management
-\`\`\`
+**Linux/Mac:**
+```bash
+chmod +x start-dev.sh
+./start-dev.sh
+```
+
+### 方式二：Docker快速启动
+
+```bash
+# 1. 启动PostgreSQL
+docker run -d --name iot_postgres \
+  -e POSTGRES_DB=iot_card_db \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=postgres123 \
+  -p 5432:5432 \
+  postgres:15-alpine
+
+# 2. 等待数据库启动
+sleep 10
+
+# 3. 执行数据库迁移
+for sql in backend/migrations/00*.sql backend/migrations/insert_test_data.sql; do
+  docker exec -i iot_postgres psql -U postgres -d iot_card_db < "$sql"
+done
+
+# 4. 启动后端
+cd backend && go run cmd/server/main.go &
+
+# 5. 启动H5前端
+cd frontend/h5 && npm install && npm run dev &
+
+# 6. 启动管理端
+cd frontend/admin && npm install && npm run dev &
+```
+
+### 访问地址
+
+| 服务 | 地址 |
+|------|------|
+| H5端 | http://localhost:3000 |
+| 管理端 | http://localhost:3001 |
+| 后端API | http://localhost:8080/api/v1 |
+
+### 测试账号
+
+- **管理员**: admin / admin123
+- **测试卡号**: 89860123456789012345
+
+---
+
+## 本地开发
+
+### 手动分步启动
+
+#### 1. 启动数据库
+
+**使用Docker:**
+```bash
+docker run -d --name iot_postgres \
+  -e POSTGRES_DB=iot_card_db \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=postgres123 \
+  -p 5432:5432 \
+  postgres:15-alpine
+```
+
+**使用本地PostgreSQL:**
+```bash
+# Ubuntu/Debian
+sudo apt install postgresql postgresql-contrib
+sudo systemctl start postgresql
+sudo -u postgres createdb iot_card_db
+```
 
 #### 2. 初始化数据库
 
-\`\`\`bash
-# 创建数据库
-createdb iot_card_db
+```bash
+# Docker方式
+docker exec -i iot_postgres psql -U postgres -d iot_card_db < backend/migrations/001_create_admin_users.sql
+docker exec -i iot_postgres psql -U postgres -d iot_card_db < backend/migrations/002_create_sim_cards.sql
+docker exec -i iot_postgres psql -U postgres -d iot_card_db < backend/migrations/003_create_recharge_records.sql
+docker exec -i iot_postgres psql -U postgres -d iot_card_db < backend/migrations/004_create_system_config.sql
+docker exec -i iot_postgres psql -U postgres -d iot_card_db < backend/migrations/insert_test_data.sql
 
-# 执行迁移脚本
-psql -d iot_card_db -f backend/migrations/001_create_admin_users.sql
-psql -d iot_card_db -f backend/migrations/002_create_sim_cards.sql
-psql -d iot_card_db -f backend/migrations/003_create_recharge_records.sql
-psql -d iot_card_db -f backend/migrations/004_create_system_config.sql
-\`\`\`
+# 本地PostgreSQL方式
+psql -U postgres -d iot_card_db -f backend/migrations/001_create_admin_users.sql
+# ... 依次执行其他SQL文件
+```
 
-#### 3. 配置后端
+#### 3. 启动后端
 
-编辑 \`backend/configs/config.yaml\`:
-
-\`\`\`yaml
-server:
-  port: 8080
-  mode: debug
-
-database:
-  host: localhost
-  port: 5432
-  user: postgres
-  password: your_password
-  dbname: iot_card_db
-
-jwt:
-  secret_key: your_jwt_secret_key_change_in_production
-  expire_hours: 24
-
-wechat:
-  app_id: "your_wechat_appid"
-  mch_id: "your_merchant_id"
-  api_v3_key: "your_api_v3_key"
-  serial_no: "your_certificate_serial_number"
-  private_key_path: "path/to/apiclient_key.pem"
-  notify_url: "https://yourdomain.com/api/v1/payment/notify"
-\`\`\`
-
-#### 4. 启动后端
-
-\`\`\`bash
+```bash
 cd backend
 go mod download
 go run cmd/server/main.go
-\`\`\`
+```
 
-#### 5. 启动H5前端
+成功标志：
+```
+数据库连接成功
+服务器启动在端口 8080
+[GIN-debug] Listening and serving HTTP on :8080
+```
 
-\`\`\`bash
+#### 4. 启动H5前端
+
+```bash
 cd frontend/h5
 npm install
 npm run dev
-# 访问: http://localhost:3000
-\`\`\`
+```
 
-#### 6. 启动管理端
+成功标志：
+```
+VITE v5.x.x ready in xxx ms
+➜ Local: http://localhost:3000/
+```
 
-\`\`\`bash
+#### 5. 启动管理端
+
+```bash
 cd frontend/admin
 npm install
 npm run dev
-# 访问: http://localhost:3001
-\`\`\`
+```
 
-**默认管理员账号:** admin / admin123
+成功标志：
+```
+VITE v5.x.x ready in xxx ms
+➜ Local: http://localhost:3001/
+```
 
-### Docker部署
+---
 
-#### 1. 构建并启动所有服务
+## 数据库配置
 
-\`\`\`bash
-# 前端项目需先构建
-cd frontend/h5
-npm install && npm run build
+### 表结构说明
 
-cd ../admin
-npm install && npm run build
+| 表名 | 说明 |
+|------|------|
+| admin_users | 管理员用户表 |
+| sim_cards | SIM卡信息表 |
+| recharge_records | 充值记录表 |
+| system_config | 系统配置表 |
+| v_statistics | 统计视图 |
 
-# 启动Docker服务
-cd ../..
-docker-compose up -d
-\`\`\`
+### 数据库凭证
 
-#### 2. 访问系统
+| 项目 | 开发环境 | 生产环境 |
+|------|----------|----------|
+| 主机 | localhost | 使用环境变量 DB_HOST |
+| 端口 | 5432 | 5432 |
+| 数据库 | iot_card_db | iot_card_db |
+| 用户 | postgres | 使用环境变量 DB_USER |
+| 密码 | postgres123 | 使用环境变量 DB_PASSWORD |
 
-- H5端: http://localhost/h5
-- 管理端: http://localhost/admin
-- API: http://localhost/api
+### 配置文件
 
-#### 3. 查看日志
+编辑 `backend/configs/config.yaml`:
 
-\`\`\`bash
-docker-compose logs -f backend
-\`\`\`
+```yaml
+server:
+  port: 8080
+  mode: release
 
-#### 4. 停止服务
+database:
+  host: 127.0.0.1
+  port: 5432
+  user: iot_user
+  password: ""          # 生产环境使用环境变量 DB_PASSWORD
+  dbname: iot_card_db
 
-\`\`\`bash
-docker-compose down
-\`\`\`
+jwt:
+  secret_key: ""        # 生产环境使用环境变量 JWT_SECRET
+  expire_hours: 24
+
+wechat:
+  app_id: ""            # 生产环境使用环境变量 WECHAT_APP_ID
+  mch_id: ""            # 生产环境使用环境变量 WECHAT_MCH_ID
+  api_v3_key: ""        # 生产环境使用环境变量 WECHAT_API_V3_KEY
+  serial_no: ""         # 生产环境使用环境变量 WECHAT_SERIAL_NO
+  private_key_path: "/path/to/apiclient_key.pem"
+  notify_url: "https://yourdomain.com/api/v1/payment/notify"
+```
+
+---
 
 ## API文档
 
-### H5端API (无需认证)
+### H5端API（无需认证）
 
 **查询卡片**
-\`\`\`
+```
 GET /api/v1/card/query?keyword=卡号或设备号
-\`\`\`
+
+响应:
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "id": 1,
+    "card_no": "89860123456789012345",
+    "device_no": "866123456789012",
+    "expire_date": "2027-01-01",
+    "status": 1,
+    "operator": "中国移动"
+  }
+}
+```
 
 **创建充值订单**
-\`\`\`
+```
 POST /api/v1/payment/create
 Content-Type: application/json
 
@@ -178,17 +330,17 @@ Content-Type: application/json
   "card_no": "89860123456789012345",
   "openid": "user_wechat_openid"
 }
-\`\`\`
+```
 
 **查询订单状态**
-\`\`\`
+```
 GET /api/v1/payment/status?trade_no=订单号
-\`\`\`
+```
 
-### 管理端API (需JWT认证)
+### 管理端API（需JWT认证）
 
 **登录**
-\`\`\`
+```
 POST /api/v1/admin/login
 Content-Type: application/json
 
@@ -196,22 +348,31 @@ Content-Type: application/json
   "username": "admin",
   "password": "admin123"
 }
-\`\`\`
+
+响应:
+{
+  "code": 200,
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIs...",
+    "user": { "id": 1, "username": "admin" }
+  }
+}
+```
 
 **获取统计数据**
-\`\`\`
+```
 GET /api/v1/admin/statistics
 Headers: Authorization: Bearer <token>
-\`\`\`
+```
 
 **卡片列表**
-\`\`\`
+```
 GET /api/v1/admin/cards?page=1&page_size=20&status=1&keyword=
 Headers: Authorization: Bearer <token>
-\`\`\`
+```
 
 **创建卡片**
-\`\`\`
+```
 POST /api/v1/admin/cards
 Headers: Authorization: Bearer <token>
 Content-Type: application/json
@@ -219,210 +380,376 @@ Content-Type: application/json
 {
   "card_no": "89860123456789012345",
   "device_no": "866123456789012",
-  "start_date": "2026-01-01",
-  "expire_date": "2027-01-01",
+  "start_date": "2026-01-01T00:00:00Z",
+  "expire_date": "2027-01-01T00:00:00Z",
   "operator": "中国移动",
   "package_type": "年卡"
 }
-\`\`\`
+```
 
-## 数据库结构
+**更新卡片**
+```
+PUT /api/v1/admin/cards/:id
+Headers: Authorization: Bearer <token>
+```
 
-### admin_users (管理员表)
-- id, username, password_hash, real_name
-- status (1:启用 0:禁用)
-- last_login_at, created_at, updated_at
+**删除卡片**
+```
+DELETE /api/v1/admin/cards/:id
+Headers: Authorization: Bearer <token>
+```
 
-### sim_cards (SIM卡表)
-- id, card_no (卡号), device_no (设备号)
-- start_date, expire_date
-- status (1:正常 2:即将到期 3:已过期)
-- operator (运营商), package_type (套餐类型)
-- total_recharge_count, total_recharge_amount
-- 自动状态更新触发器
+**充值记录列表**
+```
+GET /api/v1/admin/recharges?page=1&page_size=20&status=1&keyword=&start_date=&end_date=
+Headers: Authorization: Bearer <token>
+```
 
-### recharge_records (充值记录表)
-- id, card_id, card_no, device_no
-- recharge_amount, recharge_years
-- old_expire_date, new_expire_date
-- trade_no (订单号), transaction_id (微信交易号)
-- payment_status (0:待支付 1:已支付 2:已退款 3:失败)
-- paid_at, openid, ip_address
+**获取系统配置**
+```
+GET /api/v1/admin/config
+Headers: Authorization: Bearer <token>
+```
 
-### system_config (系统配置表)
-- id, config_key, config_value
-- config_type, description
+**更新系统配置**
+```
+POST /api/v1/admin/config
+Headers: Authorization: Bearer <token>
+Content-Type: application/json
 
-### v_statistics (统计视图)
-- total_cards, active_cards, expiring_cards, expired_cards
-- total_recharge_amount, total_recharge_count
-- today_amount, month_amount
+{
+  "recharge_price": "100.00",
+  "wechat_app_id": "your_app_id"
+}
+```
 
-## 微信支付对接
+---
 
-### 1. 前期准备
+## 阿里云部署
 
-- 申请微信公众号(服务号)
-- 开通微信支付，获取商户号
-- 下载API证书 (apiclient_key.pem)
-- 配置支付授权目录
-- 设置支付回调地址
+### 资源准备
 
-### 2. 获取用户OpenID
+| 资源 | 推荐配置 |
+|------|----------|
+| ECS云服务器 | ecs.c6.large (2核4G), Ubuntu 22.04 |
+| RDS PostgreSQL | rds.pg.s2.large (2核4G), 50GB SSD |
+| 域名 | 需完成ICP备案 |
+| SSL证书 | 阿里云免费DV证书 |
 
-用户访问H5时，系统会引导进行OAuth授权获取OpenID，用于发起支付。
+### 部署步骤
 
-### 3. 支付流程
+#### 1. 服务器环境配置
 
-1. 前端调用创建订单API
-2. 后端调用微信统一下单API
-3. 后端返回支付参数
-4. 前端调用WeixinJSBridge发起支付
-5. 用户完成支付
-6. 微信异步回调通知后端
-7. 后端验证签名，更新订单，延长卡片到期时间
+```bash
+# 安装Go
+wget https://go.dev/dl/go1.21.5.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.21.5.linux-amd64.tar.gz
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+source ~/.bashrc
 
-### 4. 注意事项
+# 安装Node.js
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs
 
-- 回调地址必须使用HTTPS
-- 需要验证微信回调签名
-- 使用事务确保数据一致性
-- 防止重复处理支付回调
+# 安装Nginx
+sudo apt install nginx -y
+```
+
+#### 2. 数据库配置
+
+```sql
+-- 连接RDS后执行
+CREATE DATABASE iot_card_db WITH ENCODING 'UTF8';
+CREATE USER iot_user WITH PASSWORD '你的强密码';
+GRANT ALL PRIVILEGES ON DATABASE iot_card_db TO iot_user;
+```
+
+#### 3. 编译部署后端
+
+```bash
+cd /opt/iot-card-system/backend
+go mod tidy
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o iot-server ./cmd/server/main.go
+```
+
+#### 4. 构建部署前端
+
+```bash
+# H5前端
+cd /opt/iot-card-system/frontend/h5
+npm install && npm run build
+cp -r dist/* /var/www/iot-h5/
+
+# 管理端
+cd /opt/iot-card-system/frontend/admin
+npm install && npm run build
+cp -r dist/* /var/www/iot-admin/
+```
+
+#### 5. Nginx配置
+
+创建 `/etc/nginx/conf.d/iot-card.conf`:
+
+```nginx
+server {
+    listen 443 ssl http2;
+    server_name admin.yourdomain.com;
+
+    ssl_certificate /etc/nginx/ssl/admin.yourdomain.com.pem;
+    ssl_certificate_key /etc/nginx/ssl/admin.yourdomain.com.key;
+
+    root /var/www/iot-admin;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    server_name h5.yourdomain.com;
+
+    ssl_certificate /etc/nginx/ssl/h5.yourdomain.com.pem;
+    ssl_certificate_key /etc/nginx/ssl/h5.yourdomain.com.key;
+
+    root /var/www/iot-h5;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```
+
+#### 6. 环境变量配置
+
+创建 `/opt/iot-card-system/backend/.env`:
+
+```bash
+DB_HOST=rm-xxxxx.pg.rds.aliyuncs.com
+DB_USER=iot_user
+DB_PASSWORD=你的数据库密码
+DB_NAME=iot_card_db
+JWT_SECRET=生成一个32位以上的随机字符串
+WECHAT_APP_ID=你的AppID
+WECHAT_MCH_ID=你的商户号
+WECHAT_API_V3_KEY=你的APIv3密钥
+WECHAT_SERIAL_NO=商户证书序列号
+WECHAT_PRIVATE_KEY_PATH=/opt/iot-card-system/certs/apiclient_key.pem
+WECHAT_NOTIFY_URL=https://h5.yourdomain.com/api/v1/payment/notify
+```
+
+#### 7. Systemd服务配置
+
+创建 `/etc/systemd/system/iot-card.service`:
+
+```ini
+[Unit]
+Description=IoT Card Management System
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/iot-card-system/backend
+EnvironmentFile=/opt/iot-card-system/backend/.env
+ExecStart=/opt/iot-card-system/backend/iot-server
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+启动服务:
+```bash
+sudo systemctl daemon-reload
+sudo systemctl start iot-card
+sudo systemctl enable iot-card
+```
+
+### 部署检查清单
+
+- [ ] ECS服务器已购买并配置安全组
+- [ ] RDS数据库已创建并配置白名单
+- [ ] 数据库表结构已初始化
+- [ ] 域名已备案并解析到ECS
+- [ ] SSL证书已申请并配置
+- [ ] 后端代码已编译并部署
+- [ ] 前端代码已构建并部署
+- [ ] Nginx配置已完成
+- [ ] 环境变量已配置
+- [ ] Systemd服务已配置并启动
+- [ ] 微信支付证书已上传
+
+---
 
 ## 项目结构
 
-\`\`\`
+```
 iot-card-management/
 ├── backend/                    # Go后端
 │   ├── cmd/server/main.go      # 程序入口
 │   ├── internal/
 │   │   ├── config/             # 配置管理
 │   │   ├── handler/            # HTTP处理器
-│   │   ├── middleware/         # 中间件
+│   │   ├── middleware/         # 中间件(CORS, JWT)
 │   │   ├── model/              # 数据模型
 │   │   ├── repository/         # 数据访问层
 │   │   ├── router/             # 路由配置
 │   │   ├── service/            # 业务逻辑层
 │   │   └── utils/              # 工具函数
-│   ├── migrations/             # 数据库迁移
+│   ├── migrations/             # 数据库迁移脚本
 │   ├── pkg/database/           # 数据库连接
 │   ├── configs/                # 配置文件
-│   ├── go.mod
-│   └── Dockerfile
+│   └── go.mod
 ├── frontend/
-│   ├── h5/                     # 手机端H5
+│   ├── h5/                     # 手机端H5 (Vue3 + Vant4)
 │   │   ├── src/
 │   │   │   ├── api/            # API接口
 │   │   │   ├── views/          # 页面组件
 │   │   │   ├── router/         # 路由配置
 │   │   │   └── utils/          # 工具函数
-│   │   ├── package.json
 │   │   └── vite.config.js
-│   └── admin/                  # 管理端Web
+│   └── admin/                  # 管理端 (Vue3 + Element Plus)
 │       ├── src/
 │       │   ├── api/
-│       │   ├── views/          # 页面组件
+│       │   ├── views/
 │       │   ├── router/
 │       │   └── utils/
-│       ├── package.json
 │       └── vite.config.js
-├── nginx/
-│   └── nginx.conf              # Nginx配置
+├── nginx/                      # Nginx配置
 ├── docker-compose.yml          # Docker编排
 └── README.md
-\`\`\`
+```
 
-## 开发说明
-
-### 添加新的API接口
-
-1. 在 \`internal/handler/handler.go\` 添加处理函数
-2. 在 \`internal/service/service.go\` 添加业务逻辑
-3. 在 \`internal/repository/repository.go\` 添加数据访问方法
-4. 在 \`internal/router/router.go\` 注册路由
-
-### 添加前端页面
-
-**H5端:**
-1. 在 \`frontend/h5/src/views/\` 创建Vue组件
-2. 在 \`frontend/h5/src/router/index.js\` 添加路由
-3. 在 \`frontend/h5/src/api/\` 添加API调用
-
-**管理端:**
-1. 在 \`frontend/admin/src/views/\` 创建Vue组件
-2. 在 \`frontend/admin/src/router/index.js\` 添加路由
-3. 在 \`frontend/admin/src/api/\` 添加API调用
+---
 
 ## 安全建议
 
-- ✅ 使用环境变量管理敏感配置
+- ✅ 使用环境变量管理敏感配置（数据库密码、JWT密钥、微信支付密钥）
 - ✅ 定期更新JWT密钥
 - ✅ 启用HTTPS传输
 - ✅ 验证所有微信支付回调签名
 - ✅ 使用bcrypt加密密码
-- ✅ 实施SQL注入防护(GORM参数化查询)
-- ✅ 实施XSS防护(前端输入过滤)
+- ✅ 实施SQL注入防护（GORM参数化查询）
+- ✅ 实施XSS防护（前端输入过滤）
+- ✅ 配置CORS白名单（生产环境）
 
-## 性能优化建议
-
-1. **数据库优化**
-   - 已添加关键索引
-   - 使用数据库连接池
-   - 定期清理过期数据
-
-2. **缓存策略**
-   - 可添加Redis缓存系统配置
-   - 缓存统计数据
-
-3. **前端优化**
-   - 路由懒加载
-   - 资源压缩和CDN加速
+---
 
 ## 故障排查
 
 ### 后端启动失败
 
-\`\`\`bash
+```bash
 # 检查数据库连接
-psql -h localhost -U postgres -d iot_card_db
+docker ps | grep iot_postgres
 
 # 查看详细日志
 cd backend && go run cmd/server/main.go
-\`\`\`
 
-### 前端构建失败
+# 测试数据库连接
+psql -h localhost -U postgres -d iot_card_db
+```
 
-\`\`\`bash
+### 前端启动失败
+
+```bash
+# 使用国内npm镜像
+npm config set registry https://registry.npmmirror.com
+
 # 清除缓存重新安装
 rm -rf node_modules package-lock.json
 npm install
-\`\`\`
+```
 
-### Docker容器无法启动
+### 端口被占用
 
-\`\`\`bash
-# 查看容器日志
-docker-compose logs backend
-docker-compose logs postgres
+```bash
+# Windows
+netstat -ano | findstr :8080
 
-# 重新构建
-docker-compose build --no-cache
-docker-compose up -d
-\`\`\`
+# Linux/Mac
+lsof -i :8080
+lsof -i :3000
+lsof -i :3001
+```
+
+### CORS跨域错误
+
+检查后端 `internal/middleware/cors.go` 中的配置，确保允许前端域名。
+
+### 微信支付回调失败
+
+1. 确认域名已备案且HTTPS正常
+2. 检查Nginx代理配置
+3. 验证微信支付证书配置正确
+4. 检查回调URL是否可访问
+
+---
+
+## 缺陷修复记录
+
+### 已修复的问题
+
+| 问题 | 文件 | 修复内容 |
+|------|------|----------|
+| CORS配置冲突 | `middleware/cors.go` | `AllowOrigins: ["*"]` 与 `AllowCredentials: true` 不能同时使用，改用 `AllowOriginFunc` |
+| AdminLogin错误调用 | `service/service.go` | 更新最后登录时间时错误调用了 `UpdateCard`，改为 `UpdateAdminUser` |
+| 总金额计算SQL错误 | `repository/repository.go` | `query.Statement.SQL.String()` 方式错误，改为重新构建查询条件 |
+| 配置文件敏感信息 | `configs/config.yaml` | 移除硬编码密码，支持环境变量覆盖 |
+| 支付回调安全验证 | `utils/wechat.go` | 新增微信支付签名验证工具 |
+
+---
+
+## 测试数据
+
+系统预置了5张测试卡片：
+
+| 卡号 | 状态 | 运营商 |
+|------|------|--------|
+| 89860123456789012345 | 正常 | 中国移动 |
+| 89860123456789012346 | 即将到期 | 中国联通 |
+| 89860123456789012347 | 已过期 | 中国电信 |
+| 89860123456789012348 | 正常 | 中国移动 |
+| 89860123456789012349 | 正常 | 中国联通 |
+
+---
 
 ## 许可证
 
 MIT License
 
-## 联系方式
-
-- 项目负责人: [Your Name]
-- Email: [your.email@example.com]
-- GitHub: [your-github-profile]
+---
 
 ## 更新日志
 
-### v1.0.0 (2026-01-16)
+### v1.0.1
+- 🐛 修复CORS配置冲突问题
+- 🐛 修复AdminLogin更新最后登录时间的错误调用
+- 🐛 修复充值记录总金额计算SQL错误
+- 🔒 移除配置文件中的硬编码敏感信息
+- 🔒 添加环境变量支持
+- 🔒 添加微信支付签名验证工具
+- 📝 合并整理项目文档
+
+### v1.0.0
 - ✨ 初始版本发布
 - ✨ 完整的卡片管理功能
 - ✨ 微信支付集成
