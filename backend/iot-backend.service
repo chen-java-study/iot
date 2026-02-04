@@ -1,0 +1,21 @@
+[Unit]
+Description=IoT Backend Service
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/workspace/iot/backend
+ExecStart=/home/workspace/iot/backend/iot-server
+Restart=always
+RestartSec=5
+Environment=ENV=production
+
+# 日志配置
+StandardOutput=append:/home/workspace/iot/logs/backend.log
+StandardError=append:/home/workspace/iot/logs/backend_error.log
+
+[Install]
+WantedBy=multi-user.target
+

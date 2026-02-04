@@ -1,12 +1,14 @@
 package handler
 
 import (
-	"github.com/gin-gonic/gin"
+	"fmt"
 	"iot-card-system/internal/model"
 	"iot-card-system/internal/service"
 	"iot-card-system/internal/utils"
 	"strconv"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 type Handler struct {
@@ -34,15 +36,15 @@ func (h *Handler) QueryCard(c *gin.Context) {
 	}
 
 	utils.Success(c, gin.H{
-		"id":              card.ID,
-		"card_no":         card.CardNo,
-		"device_no":       card.DeviceNo,
-		"start_date":      card.StartDate.Format("2006-01-02"),
-		"expire_date":     card.ExpireDate.Format("2006-01-02"),
-		"status":          card.Status,
-		"status_text":     card.StatusText(),
-		"operator":        card.Operator,
-		"days_remaining":  card.DaysRemaining(),
+		"id":             card.ID,
+		"card_no":        card.CardNo,
+		"device_no":      card.DeviceNo,
+		"start_date":     card.StartDate.Format("2006-01-02"),
+		"expire_date":    card.ExpireDate.Format("2006-01-02"),
+		"status":         card.Status,
+		"status_text":    card.StatusText(),
+		"operator":       card.Operator,
+		"days_remaining": card.DaysRemaining(),
 	})
 }
 
@@ -114,10 +116,10 @@ func (h *Handler) QueryPaymentStatus(c *gin.Context) {
 	}
 
 	utils.Success(c, gin.H{
-		"trade_no":             record.TradeNo,
-		"payment_status":       record.PaymentStatus,
-		"payment_status_text":  record.PaymentStatusText(),
-		"paid_at":              record.PaidAt,
+		"trade_no":            record.TradeNo,
+		"payment_status":      record.PaymentStatus,
+		"payment_status_text": record.PaymentStatusText(),
+		"paid_at":             record.PaidAt,
 	})
 }
 
@@ -137,6 +139,7 @@ func (h *Handler) AdminLogin(c *gin.Context) {
 
 	token, user, err := h.service.AdminLogin(req.Username, req.Password)
 	if err != nil {
+		fmt.Println("AdminLogin error: ", err)
 		utils.Unauthorized(c, err.Error())
 		return
 	}
@@ -271,15 +274,15 @@ func (h *Handler) ListRechargeRecords(c *gin.Context) {
 			paidAtStr = record.PaidAt.Format("2006-01-02 15:04:05")
 		}
 		result = append(result, gin.H{
-			"id":                   record.ID,
-			"card_no":              record.CardNo,
-			"device_no":            record.DeviceNo,
-			"recharge_amount":      record.RechargeAmount,
-			"trade_no":             record.TradeNo,
-			"payment_status":       record.PaymentStatus,
-			"payment_status_text":  record.PaymentStatusText(),
-			"paid_at":              paidAtStr,
-			"created_at":           record.CreatedAt.Format("2006-01-02 15:04:05"),
+			"id":                  record.ID,
+			"card_no":             record.CardNo,
+			"device_no":           record.DeviceNo,
+			"recharge_amount":     record.RechargeAmount,
+			"trade_no":            record.TradeNo,
+			"payment_status":      record.PaymentStatus,
+			"payment_status_text": record.PaymentStatusText(),
+			"paid_at":             paidAtStr,
+			"created_at":          record.CreatedAt.Format("2006-01-02 15:04:05"),
 		})
 	}
 
