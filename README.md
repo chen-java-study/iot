@@ -874,4 +874,4 @@ nohup npm run dev > ../../logs/admin.log 2>&1 &
 
 cd /opt/iot-card-system/frontend/h5
 npm run build
-nohup npm run dev > ../../logs/admin.log 2>&1 &
+nohup npm run dev > ../../logs/h5.log 2>&1 &

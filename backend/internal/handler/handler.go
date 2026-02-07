@@ -215,14 +215,53 @@ func (h *Handler) ListCards(c *gin.Context) {
 
 // CreateCard 创建卡片
 func (h *Handler) CreateCard(c *gin.Context) {
-	var card model.SimCard
-	if err := c.ShouldBindJSON(&card); err != nil {
+	var req struct {
+		CardNo             string  `json:"card_no"`
+		DeviceNo           string  `json:"device_no"`
+		Operator           string  `json:"operator"`
+		PackageType        string  `json:"package_type"`
+		StartDate          string  `json:"start_date"`
+		ExpireDate         string  `json:"expire_date"`
+		LastRechargeTime   string  `json:"last_recharge_time"`
+		LastRechargeAmount float64 `json:"last_recharge_amount"`
+		Remark             string  `json:"remark"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
 		utils.BadRequest(c, "参数错误")
 		return
 	}
 
+	startDate, err := time.Parse("2006-01-02", req.StartDate)
+	if err != nil {
+		utils.BadRequest(c, "开始日期格式错误")
+		return
+	}
+	expireDate, err := time.Parse("2006-01-02", req.ExpireDate)
+	if err != nil {
+		utils.BadRequest(c, "到期日期格式错误")
+		return
+	}
+
+	card := model.SimCard{
+		CardNo:             req.CardNo,
+		DeviceNo:           req.DeviceNo,
+		Operator:           req.Operator,
+		PackageType:        req.PackageType,
+		StartDate:          startDate,
+		ExpireDate:         expireDate,
+		LastRechargeAmount: req.LastRechargeAmount,
+		Remark:             req.Remark,
+	}
+
+	if req.LastRechargeTime != "" {
+		t, err := time.Parse("2006-01-02 15:04:05", req.LastRechargeTime)
+		if err == nil {
+			card.LastRechargeTime = &t
+		}
+	}
+
 	if err := h.service.CreateCard(&card); err != nil {
-		utils.BadRequest(c, "创建失败")
+		utils.BadRequest(c, "创建失败: "+err.Error())
 		return
 	}
 
@@ -232,15 +271,54 @@ func (h *Handler) CreateCard(c *gin.Context) {
 // UpdateCard 更新卡片
 func (h *Handler) UpdateCard(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-	var card model.SimCard
-	if err := c.ShouldBindJSON(&card); err != nil {
+	var req struct {
+		CardNo             string  `json:"card_no"`
+		DeviceNo           string  `json:"device_no"`
+		Operator           string  `json:"operator"`
+		PackageType        string  `json:"package_type"`
+		StartDate          string  `json:"start_date"`
+		ExpireDate         string  `json:"expire_date"`
+		LastRechargeTime   string  `json:"last_recharge_time"`
+		LastRechargeAmount float64 `json:"last_recharge_amount"`
+		Remark             string  `json:"remark"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
 		utils.BadRequest(c, "参数错误")
 		return
 	}
 
-	card.ID = uint(id)
+	startDate, err := time.Parse("2006-01-02", req.StartDate)
+	if err != nil {
+		utils.BadRequest(c, "开始日期格式错误")
+		return
+	}
+	expireDate, err := time.Parse("2006-01-02", req.ExpireDate)
+	if err != nil {
+		utils.BadRequest(c, "到期日期格式错误")
+		return
+	}
+
+	card := model.SimCard{
+		ID:                 uint(id),
+		CardNo:             req.CardNo,
+		DeviceNo:           req.DeviceNo,
+		Operator:           req.Operator,
+		PackageType:        req.PackageType,
+		StartDate:          startDate,
+		ExpireDate:         expireDate,
+		LastRechargeAmount: req.LastRechargeAmount,
+		Remark:             req.Remark,
+	}
+
+	if req.LastRechargeTime != "" {
+		t, err := time.Parse("2006-01-02 15:04:05", req.LastRechargeTime)
+		if err == nil {
+			card.LastRechargeTime = &t
+		}
+	}
+
 	if err := h.service.UpdateCard(&card); err != nil {
-		utils.BadRequest(c, "更新失败")
+		utils.BadRequest(c, "更新失败: "+err.Error())
 		return
 	}
 
