@@ -169,6 +169,8 @@ func (s *Service) HandlePaymentNotify(transactionID, tradeNo string, paidAt time
 		card.ExpireDate = record.NewExpireDate
 		card.TotalRechargeCount++
 		card.TotalRechargeAmount += record.RechargeAmount
+		card.LastRechargeTime = &paidAt
+		card.LastRechargeAmount = record.RechargeAmount
 
 		return repo.UpdateCard(card)
 	})

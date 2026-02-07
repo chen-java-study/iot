@@ -24,6 +24,12 @@
           </el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="last_recharge_time" label="最近充值时间" width="170" />
+      <el-table-column prop="last_recharge_amount" label="充值金额" width="120">
+        <template #default="{ row }">
+          {{ row.last_recharge_amount ? '¥' + row.last_recharge_amount : '-' }}
+        </template>
+      </el-table-column>
       <el-table-column prop="remark" label="备注" show-overflow-tooltip />
       <el-table-column label="操作" width="180" fixed="right">
         <template #default="{ row }">
@@ -66,6 +72,12 @@
         <el-form-item label="到期日期">
           <el-date-picker v-model="form.expire_date" type="date" style="width: 100%" value-format="YYYY-MM-DD" />
         </el-form-item>
+        <el-form-item label="最近充值时间">
+          <el-date-picker v-model="form.last_recharge_time" type="datetime" style="width: 100%" value-format="YYYY-MM-DD HH:mm:ss" placeholder="选择充值时间" />
+        </el-form-item>
+        <el-form-item label="充值金额">
+          <el-input-number v-model="form.last_recharge_amount" :min="0" :precision="2" :step="10" style="width: 100%" placeholder="请输入充值金额" />
+        </el-form-item>
         <el-form-item label="备注">
           <el-input v-model="form.remark" type="textarea" :rows="3" />
         </el-form-item>
@@ -79,9 +91,9 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { getCardList, createCard, updateCard, deleteCard } from '@/api/admin'
+import { createCard, deleteCard, getCardList, updateCard } from '@/api/admin';
+import { ElMessage, ElMessageBox } from 'element-plus';
+import { onMounted, reactive, ref } from 'vue';
 
 export default {
   name: 'CardManage',
@@ -107,6 +119,8 @@ export default {
       package_type: '年卡',
       start_date: '',
       expire_date: '',
+      last_recharge_time: '',
+      last_recharge_amount: 0,
       remark: ''
     })
 
@@ -135,6 +149,8 @@ export default {
           package_type: '年卡',
           start_date: '',
           expire_date: '',
+          last_recharge_time: '',
+          last_recharge_amount: 0,
           remark: ''
         })
       }

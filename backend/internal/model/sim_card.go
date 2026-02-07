@@ -5,19 +5,21 @@ import (
 )
 
 type SimCard struct {
-	ID                  uint      `gorm:"primaryKey" json:"id"`
-	CardNo              string    `gorm:"uniqueIndex;size:50;not null" json:"card_no"`
-	DeviceNo            string    `gorm:"uniqueIndex;size:50;not null" json:"device_no"`
-	StartDate           time.Time `gorm:"type:date;not null" json:"start_date"`
-	ExpireDate          time.Time `gorm:"type:date;not null" json:"expire_date"`
-	Status              int16     `gorm:"default:1" json:"status"`
-	Operator            string    `gorm:"size:20" json:"operator"`
-	PackageType         string    `gorm:"size:50" json:"package_type"`
-	TotalRechargeCount  int       `gorm:"default:0" json:"total_recharge_count"`
-	TotalRechargeAmount float64   `gorm:"type:decimal(10,2);default:0" json:"total_recharge_amount"`
-	Remark              string    `gorm:"type:text" json:"remark"`
-	CreatedAt           time.Time `json:"created_at"`
-	UpdatedAt           time.Time `json:"updated_at"`
+	ID                  uint       `gorm:"primaryKey" json:"id"`
+	CardNo              string     `gorm:"uniqueIndex;size:50;not null" json:"card_no"`
+	DeviceNo            string     `gorm:"uniqueIndex;size:50;not null" json:"device_no"`
+	StartDate           time.Time  `gorm:"type:date;not null" json:"start_date"`
+	ExpireDate          time.Time  `gorm:"type:date;not null" json:"expire_date"`
+	Status              int16      `gorm:"default:1" json:"status"`
+	Operator            string     `gorm:"size:20" json:"operator"`
+	PackageType         string     `gorm:"size:50" json:"package_type"`
+	TotalRechargeCount  int        `gorm:"default:0" json:"total_recharge_count"`
+	TotalRechargeAmount float64    `gorm:"type:decimal(10,2);default:0" json:"total_recharge_amount"`
+	LastRechargeTime    *time.Time `gorm:"type:timestamp" json:"last_recharge_time"`
+	LastRechargeAmount  float64    `gorm:"type:decimal(10,2);default:0" json:"last_recharge_amount"`
+	Remark              string     `gorm:"type:text" json:"remark"`
+	CreatedAt           time.Time  `json:"created_at"`
+	UpdatedAt           time.Time  `json:"updated_at"`
 }
 
 func (SimCard) TableName() string {

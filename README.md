@@ -755,3 +755,14 @@ MIT License
 - ✨ 微信支付集成
 - ✨ 管理后台
 - ✨ Docker部署支持
+
+cd /opt/iot-card-system/backend
+nohup ./iot-server > ../logs/backend.log 2>&1 &  
+
+cd /opt/iot-card-system/frontend/admin
+npm run build
+nohup npm run dev > ../../logs/admin.log 2>&1 &
+
+cd /opt/iot-card-system/frontend/h5
+npm run build
+nohup npm run dev > ../../logs/admin.log 2>&1 &
