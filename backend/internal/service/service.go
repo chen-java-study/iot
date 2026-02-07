@@ -8,6 +8,7 @@ import (
 	"iot-card-system/internal/model"
 	"iot-card-system/internal/repository"
 	"iot-card-system/internal/utils"
+	"log"
 	"math/big"
 	"time"
 )
@@ -27,16 +28,31 @@ func NewService(repo *repository.Repository, cfg *config.Config) *Service {
 // === Admin Service Methods ===
 
 func (s *Service) AdminLogin(username, password string) (string, *model.AdminUser, error) {
+	log.Printf("[LOGIN] 尝试登录 - username: %s", username)
+
 	user, err := s.repo.FindAdminByUsername(username)
 	if err != nil {
+		log.Printf("[LOGIN] 用户不存在 - username: %s, err: %v", username, err)
 		return "", nil, errors.New("用户名或密码错误")
 	}
 
+	log.Printf("[LOGIN] 找到用户 - id: %d, status: %d", user.ID, user.Status)
+	log.Printf("[LOGIN] 数据库中的密码hash: %s", user.PasswordHash)
+	log.Printf("[LOGIN] hash长度: %d", len(user.PasswordHash))
+	log.Printf("[LOGIN] 输入的密码: %s", password)
+	log.Printf("[LOGIN] 密码长度: %d", len(password))
+
 	if user.Status != 1 {
+		log.Printf("[LOGIN] 账号已禁用 - status: %d", user.Status)
 		return "", nil, errors.New("账号已被禁用")
 	}
 
-	if !utils.CheckPassword(password, user.PasswordHash) {
+	// 直接比对明文密码
+	passwordMatch := password == user.PasswordHash
+	log.Printf("[LOGIN] 密码验证结果: %v", passwordMatch)
+
+	if !passwordMatch {
+		log.Printf("[LOGIN] 密码错误")
 		return "", nil, errors.New("用户名或密码错误")
 	}
 

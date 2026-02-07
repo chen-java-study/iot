@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"iot-card-system/internal/model"
 	"iot-card-system/internal/service"
 	"iot-card-system/internal/utils"
@@ -138,6 +139,7 @@ func (h *Handler) AdminLogin(c *gin.Context) {
 
 	token, user, err := h.service.AdminLogin(req.Username, req.Password)
 	if err != nil {
+		fmt.Println("AdminLogin error: ", err)
 		utils.Unauthorized(c, err.Error())
 		return
 	}

@@ -18,9 +18,8 @@ CREATE INDEX idx_admin_username ON admin_users(username);
 CREATE INDEX idx_admin_status ON admin_users(status);
 
 -- 插入默认管理员账号 (密码: admin123)
--- bcrypt hash of "admin123"
 INSERT INTO admin_users (username, password_hash, real_name, status) VALUES
-('admin', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVKIUi', '系统管理员', 1);
+('admin', 'admin123', '系统管理员', 1);
 
 COMMENT ON TABLE admin_users IS '管理员用户表';
 COMMENT ON COLUMN admin_users.status IS '状态: 1=启用 0=禁用';

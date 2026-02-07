@@ -1,0 +1,16 @@
+[Unit]
+Description=IoT Card System
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/iot/iot-master/backend
+ExecStart=/home/iot/iot-master/backend/iot-server
+Restart=on-failure
+StandardOutput=append:/var/log/iot-server.log
+StandardError=append:/var/log/iot-server.log
+
+[Install]
+WantedBy=multi-user.target
+

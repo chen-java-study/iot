@@ -146,6 +146,32 @@ cd frontend/h5 && npm install && npm run dev &
 cd frontend/admin && npm install && npm run dev &
 ```
 
+### 方式三：生产环境部署（Systemd服务）
+
+```bash
+# 1. 编译后端程序
+cd /home/workspace/iot/backend
+GOMAXPROCS=1 CGO_ENABLED=0 go build -o iot-server ./cmd/server/
+
+# 2. 创建日志目录
+mkdir -p /home/workspace/iot/logs
+
+# 3. 安装systemd服务
+sudo cp /home/workspace/iot/backend/iot-backend.service /etc/systemd/system/
+sudo systemctl daemon-reload
+
+# 4. 启动并设置开机自启
+sudo systemctl start iot-backend
+sudo systemctl enable iot-backend
+```
+
+生产环境服务管理:
+```bash
+sudo systemctl status iot-backend    # 查看状态
+sudo systemctl restart iot-backend   # 重启服务
+sudo journalctl -u iot-backend -f    # 实时日志
+```
+
 ### 访问地址
 
 | 服务 | 地址 |
@@ -202,6 +228,7 @@ psql -U postgres -d iot_card_db -f backend/migrations/001_create_admin_users.sql
 
 #### 3. 启动后端
 
+**开发环境：**
 ```bash
 cd backend
 go mod download
@@ -213,6 +240,30 @@ go run cmd/server/main.go
 数据库连接成功
 服务器启动在端口 8080
 [GIN-debug] Listening and serving HTTP on :8080
+```
+
+**生产环境（Systemd服务）：**
+```bash
+# 1. 编译二进制程序
+cd /home/workspace/iot/backend
+GOMAXPROCS=1 CGO_ENABLED=0 go build -o iot-server ./cmd/server/
+
+# 2. 创建日志目录
+mkdir -p /home/workspace/iot/logs
+export DB_PASSWORD="adfhkIxcvYIK2189"
+nohup ./iot-server > /home/workspace/iot/logs/iot-server.log 2>&1 &
+# 3. 安装并启动服务
+sudo cp /home/workspace/iot/backend/iot-backend.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl start iot-backend
+sudo systemctl enable iot-backend
+```
+
+生产环境服务管理：
+```bash
+sudo systemctl status iot-backend     # 查看状态
+sudo systemctl restart iot-backend    # 重启服务
+sudo journalctl -u iot-backend -f     # 实时日志
 ```
 
 #### 4. 启动H5前端
@@ -235,6 +286,10 @@ VITE v5.x.x ready in xxx ms
 cd frontend/admin
 npm install
 npm run dev
+
+cd /home/iot/iot-master/frontend/admin
+nohup npm run dev > /home/workspace/iot/logs/vue.log 2>&1 &
+echo "前端已启动 (PID: $!)"
 ```
 
 成功标志：
@@ -469,7 +524,7 @@ GRANT ALL PRIVILEGES ON DATABASE iot_card_db TO iot_user;
 ```bash
 cd /opt/iot-card-system/backend
 go mod tidy
-CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o iot-server ./cmd/server/main.go
+GOMAXPROCS=1 CGO_ENABLED=0 go build -o iot-server ./cmd/server/
 ```
 
 #### 4. 构建部署前端
@@ -556,31 +611,54 @@ WECHAT_NOTIFY_URL=https://h5.yourdomain.com/api/v1/payment/notify
 
 #### 7. Systemd服务配置
 
-创建 `/etc/systemd/system/iot-card.service`:
+创建 `/etc/systemd/system/iot-backend.service`:
 
 ```ini
 [Unit]
-Description=IoT Card Management System
-After=network.target
+Description=IoT Backend Service
+After=network.target postgresql.service
+Wants=postgresql.service
 
 [Service]
 Type=simple
 User=root
-WorkingDirectory=/opt/iot-card-system/backend
-EnvironmentFile=/opt/iot-card-system/backend/.env
-ExecStart=/opt/iot-card-system/backend/iot-server
+WorkingDirectory=/home/workspace/iot/backend
+ExecStart=/home/workspace/iot/backend/iot-server
 Restart=always
 RestartSec=5
+
+# 日志配置
+StandardOutput=append:/home/workspace/iot/logs/backend.log
+StandardError=append:/home/workspace/iot/logs/backend_error.log
 
 [Install]
 WantedBy=multi-user.target
 ```
 
-启动服务:
+安装并启动服务:
 ```bash
+# 1. 编译后端程序
+cd /home/workspace/iot/backend
+GOMAXPROCS=1 CGO_ENABLED=0 go build -o iot-server ./cmd/server/
+
+# 2. 创建日志目录
+mkdir -p /home/workspace/iot/logs
+
+# 3. 安装systemd服务
+sudo cp /home/workspace/iot/backend/iot-backend.service /etc/systemd/system/
 sudo systemctl daemon-reload
-sudo systemctl start iot-card
-sudo systemctl enable iot-card
+
+# 4. 启动并设置开机自启
+sudo systemctl start iot-backend
+sudo systemctl enable iot-backend
+```
+
+服务管理命令:
+```bash
+sudo systemctl status iot-backend    # 查看状态
+sudo systemctl restart iot-backend   # 重启服务
+sudo systemctl stop iot-backend      # 停止服务
+sudo journalctl -u iot-backend -f    # 实时日志
 ```
 
 ### 部署检查清单
@@ -594,7 +672,7 @@ sudo systemctl enable iot-card
 - [ ] 前端代码已构建并部署
 - [ ] Nginx配置已完成
 - [ ] 环境变量已配置
-- [ ] Systemd服务已配置并启动
+- [ ] Systemd服务已配置并启动 (iot-backend)
 - [ ] 微信支付证书已上传
 
 ---
@@ -658,11 +736,20 @@ iot-card-management/
 ### 后端启动失败
 
 ```bash
-# 检查数据库连接
-docker ps | grep iot_postgres
-
+# ========== 开发环境 ==========
 # 查看详细日志
 cd backend && go run cmd/server/main.go
+
+# ========== 生产环境(Systemd服务) ==========
+# 查看服务状态
+sudo systemctl status iot-backend
+
+# 查看实时日志
+sudo journalctl -u iot-backend -f
+
+# 查看应用日志文件
+tail -f /home/workspace/iot/logs/backend.log
+tail -f /home/workspace/iot/logs/backend_error.log
 
 # 测试数据库连接
 psql -h localhost -U postgres -d iot_card_db
@@ -694,6 +781,23 @@ lsof -i :3001
 ### CORS跨域错误
 
 检查后端 `internal/middleware/cors.go` 中的配置，确保允许前端域名。
+
+### Systemd服务异常
+
+```bash
+# 检查服务状态和错误信息
+sudo systemctl status iot-backend
+
+# 查看详细日志
+sudo journalctl -u iot-backend -e  # 从末尾开始显示
+
+# 重新加载配置
+sudo systemctl daemon-reload
+sudo systemctl restart iot-backend
+
+# 检查配置文件语法
+sudo systemd-analyze verify /etc/systemd/system/iot-backend.service
+```
 
 ### 微信支付回调失败
 
@@ -739,6 +843,11 @@ MIT License
 ---
 
 ## 更新日志
+
+### v1.0.2
+- 📝 添加生产环境 systemd 服务配置文档
+- 📝 添加 systemd 服务异常排查指南
+- 📝 完善快速开始和手动分步启动章节
 
 ### v1.0.1
 - 🐛 修复CORS配置冲突问题
