@@ -72,9 +72,6 @@
         <el-form-item label="到期日期">
           <el-date-picker v-model="form.expire_date" type="date" style="width: 100%" value-format="YYYY-MM-DD" />
         </el-form-item>
-        <el-form-item label="最近充值时间">
-          <el-date-picker v-model="form.last_recharge_time" type="datetime" style="width: 100%" value-format="YYYY-MM-DD HH:mm:ss" placeholder="选择充值时间" />
-        </el-form-item>
         <el-form-item label="充值金额">
           <el-input-number v-model="form.last_recharge_amount" :min="0" :precision="2" :step="10" style="width: 100%" placeholder="请输入充值金额" />
         </el-form-item>
@@ -119,7 +116,6 @@ export default {
       package_type: '年卡',
       start_date: '',
       expire_date: '',
-      last_recharge_time: '',
       last_recharge_amount: 0,
       remark: ''
     })
@@ -149,7 +145,6 @@ export default {
           package_type: '年卡',
           start_date: '',
           expire_date: '',
-          last_recharge_time: '',
           last_recharge_amount: 0,
           remark: ''
         })

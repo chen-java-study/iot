@@ -222,7 +222,6 @@ func (h *Handler) CreateCard(c *gin.Context) {
 		PackageType        string  `json:"package_type"`
 		StartDate          string  `json:"start_date"`
 		ExpireDate         string  `json:"expire_date"`
-		LastRechargeTime   string  `json:"last_recharge_time"`
 		LastRechargeAmount float64 `json:"last_recharge_amount"`
 		Remark             string  `json:"remark"`
 	}
@@ -253,11 +252,10 @@ func (h *Handler) CreateCard(c *gin.Context) {
 		Remark:             req.Remark,
 	}
 
-	if req.LastRechargeTime != "" {
-		t, err := time.Parse("2006-01-02 15:04:05", req.LastRechargeTime)
-		if err == nil {
-			card.LastRechargeTime = &t
-		}
+	// 有充值金额时，自动记录当前时间为充值时间
+	if req.LastRechargeAmount > 0 {
+		now := time.Now()
+		card.LastRechargeTime = &now
 	}
 
 	if err := h.service.CreateCard(&card); err != nil {
@@ -278,7 +276,6 @@ func (h *Handler) UpdateCard(c *gin.Context) {
 		PackageType        string  `json:"package_type"`
 		StartDate          string  `json:"start_date"`
 		ExpireDate         string  `json:"expire_date"`
-		LastRechargeTime   string  `json:"last_recharge_time"`
 		LastRechargeAmount float64 `json:"last_recharge_amount"`
 		Remark             string  `json:"remark"`
 	}
@@ -310,11 +307,10 @@ func (h *Handler) UpdateCard(c *gin.Context) {
 		Remark:             req.Remark,
 	}
 
-	if req.LastRechargeTime != "" {
-		t, err := time.Parse("2006-01-02 15:04:05", req.LastRechargeTime)
-		if err == nil {
-			card.LastRechargeTime = &t
-		}
+	// 有充值金额时，自动记录当前时间为充值时间
+	if req.LastRechargeAmount > 0 {
+		now := time.Now()
+		card.LastRechargeTime = &now
 	}
 
 	if err := h.service.UpdateCard(&card); err != nil {
