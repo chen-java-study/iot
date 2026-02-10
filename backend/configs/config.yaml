@@ -3,20 +3,20 @@ server:
   mode: release  # 生产用 release
 
 database:
-  host: 127.0.0.1       # 或 RDS 内网地址，生产环境使用环境变量 DB_HOST
+  host: "127.0.0.1"        # 或 RDS 内网地址
   port: 5432
-  user: iot_user        # 生产环境使用环境变量 DB_USER
-  password: ""          # 生产环境使用环境变量 DB_PASSWORD
-  dbname: iot_card_db
+  user: "iot_user"
+  password: ""             # 生产环境请使用环境变量: DB_PASSWORD
+  dbname: "iot_card_db"
 
 jwt:
-  secret_key: ""        # 生产环境使用环境变量 JWT_SECRET
-  expire_hours: 24      # 可按需调整
+  secret_key: ""            # 生产环境请使用环境变量: JWT_SECRET
+  expire_hours: 24
 
 wechat:
-  app_id: ""            # 生产环境使用环境变量 WECHAT_APP_ID
-  mch_id: ""            # 生产环境使用环境变量 WECHAT_MCH_ID
-  api_v3_key: ""        # 生产环境使用环境变量 WECHAT_API_V3_KEY
-  serial_no: ""         # 生产环境使用环境变量 WECHAT_SERIAL_NO
-  private_key_path: "/path/to/apiclient_key.pem"  # 服务器上的绝对路径
-  notify_url: "https://yourdomain.com/api/v1/payment/notify"  # 用你的正式域名，需 HTTPS
+  app_id: ""                # 生产环境请使用环境变量: WECHAT_APP_ID
+  mch_id: ""                # 生产环境请使用环境变量: WECHAT_MCH_ID
+  api_v3_key: ""            # 生产环境请使用环境变量: WECHAT_API_V3_KEY
+  serial_no: ""             # 生产环境请使用环境变量: WECHAT_SERIAL_NO
+  private_key_path: ""      # 生产环境请使用环境变量: WECHAT_PRIVATE_KEY_PATH
+  notify_url: ""            # 回调通知地址，如: https://yourdomain.com/api/v1/payment/notify

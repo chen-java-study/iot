@@ -121,15 +121,8 @@ chmod +x start-dev.sh
 
 ```bash
 # 1. 启动PostgreSQL
-docker run -d --name iot_postgres \
-  -e POSTGRES_DB=iot_card_db \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_PASSWORD=postgres123 \
-  -p 5432:5432 \
-  postgres:15-alpine
 
-# 2. 等待数据库启动
-sleep 10
+
 
 # 3. 执行数据库迁移
 for sql in backend/migrations/00*.sql backend/migrations/insert_test_data.sql; do
@@ -187,60 +180,7 @@ sudo journalctl -u iot-backend -f    # 实时日志
 
 ---
 
-## 本地开发
 
-### 手动分步启动
-
-#### 1. 启动数据库
-
-**使用Docker:**
-```bash
-docker run -d --name iot_postgres \
-  -e POSTGRES_DB=iot_card_db \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_PASSWORD=postgres123 \
-  -p 5432:5432 \
-  postgres:15-alpine
-```
-
-**使用本地PostgreSQL:**
-```bash
-# Ubuntu/Debian
-sudo apt install postgresql postgresql-contrib
-sudo systemctl start postgresql
-sudo -u postgres createdb iot_card_db
-```
-
-#### 2. 初始化数据库
-
-```bash
-# Docker方式
-docker exec -i iot_postgres psql -U postgres -d iot_card_db < backend/migrations/001_create_admin_users.sql
-docker exec -i iot_postgres psql -U postgres -d iot_card_db < backend/migrations/002_create_sim_cards.sql
-docker exec -i iot_postgres psql -U postgres -d iot_card_db < backend/migrations/003_create_recharge_records.sql
-docker exec -i iot_postgres psql -U postgres -d iot_card_db < backend/migrations/004_create_system_config.sql
-docker exec -i iot_postgres psql -U postgres -d iot_card_db < backend/migrations/insert_test_data.sql
-
-# 本地PostgreSQL方式
-psql -U postgres -d iot_card_db -f backend/migrations/001_create_admin_users.sql
-# ... 依次执行其他SQL文件
-```
-
-#### 3. 启动后端
-
-**开发环境：**
-```bash
-cd backend
-go mod download
-go run cmd/server/main.go
-```
-
-成功标志：
-```
-数据库连接成功
-服务器启动在端口 8080
-[GIN-debug] Listening and serving HTTP on :8080
-```
 
 **生产环境（Systemd服务）：**
 ```bash
@@ -875,3 +815,147 @@ nohup npm run dev > ../../logs/admin.log 2>&1 &
 cd /opt/iot-card-system/frontend/h5
 npm run build
 nohup npm run dev > ../../logs/h5.log 2>&1 &
+
+管理端：http://iot4you.top/admin
+H5端：http://iot4you.top/h5
+
+sudo nginx -s reload 
+
+
+第一步：创建 .env 文件（存放敏感配置）
+# 进入项目目录
+cd /opt/iot-backend
+
+# 创建 .env 文件
+vim .env
+# 进入项目目录cd /opt/iot-backend# 创建 .env 文件vim .env
+写入以下内容（改成你自己的）：
+DB_PASSWORD=your_db_password
+WECHAT_APP_ID=wx1234567890abcdef
+WECHAT_MCH_ID=1234567890
+WECHAT_API_V3_KEY=your_api_v3_key_xxx
+WECHAT_SERIAL_NO=ABC123456789
+WECHAT_PRIVATE_KEY_PATH=/etc/ssl/wechat/apiclient_key.pem
+JWT_SECRET=your_jwt_secret_xxx
+DB_PASSWORD=your_db_passwordWECHAT_APP_ID=wx1234567890abcdefWECHAT_MCH_ID=1234567890WECHAT_API_V3_KEY=your_api_v3_key_xxxWECHAT_SERIAL_NO=ABC123456789WECHAT_PRIVATE_KEY_PATH=/etc/ssl/wechat/apiclient_key.pemJWT_SECRET=your_jwt_secret_xxx
+第二步：创建 start.sh 启动脚本
+vim start.sh
+vim start.sh
+写入：
+#!/bin/bash
+# 加载 .env 文件中的环境变量
+export $(cat .env | xargs)
+
+# 启动程序
+./main
+#!/bin/bash# 加载 .env 文件中的环境变量export $(cat .env | xargs)# 启动程序./main
+第三步：设置权限
+# 只有你能读写 .env（其他人看不到）
+chmod 600 .env
+
+# start.sh 可以执行
+chmod +x start.sh
+# 只有你能读写 .env（其他人看不到）chmod 600 .env# start.sh 可以执行chmod +x start.sh
+第四步：启动服务（后台运行）
+# 启动（输出日志到 nohup.out）
+nohup ./start.sh > nohup.out 2>&1 &
+
+# 说明：
+# nohup        不挂断运行（退出终端后继续运行）
+# ./start.sh   运行启动脚本
+# > nohup.out  标准输出写入 nohup.out 文件
+# 2>&1        错误输出也写入同一文件
+# &           后台运行
+# 启动（输出日志到 nohup.out）nohup ./start.sh > nohup.out 2>&1 &# 说明：# nohup        不挂断运行（退出终端后继续运行）# ./start.sh   运行启动脚本# > nohup.out  标准输出写入 nohup.out 文件# 2>&1        错误输出也写入同一文件# &           后台运行
+第五步：验证是否启动成功
+# 方式1：看日志
+tail -f nohup.out
+
+# 方式2：看进程
+ps aux | grep main
+# 应该能看到类似：
+# www-data 12345  0.0  0.5 123456  5432 ?        S    14:30   0:00 ./main
+
+# 方式3：看端口（如果监听 8080）
+netstat -tlnp | grep 8080
+# 或
+ss -tlnp | grep 8080
+# 方式1：看日志tail -f nohup.out# 方式2：看进程ps aux | grep main# 应该能看到类似：# www-data 12345  0.0  0.5 123456  5432 ?        S    14:30   0:00 ./main# 方式3：看端口（如果监听 8080）netstat -tlnp | grep 8080# 或ss -tlnp | grep 8080
+第六步：停止服务
+# 找到进程 ID
+ps aux | grep ./main
+
+# 杀掉进程
+kill 12345   # 替换成实际的 PID
+
+# 或者强制杀掉
+kill -9 12345
+# 找到进程 IDps aux | grep ./main# 杀掉进程kill 12345   # 替换成实际的 PID# 或者强制杀掉kill -9 12345
+完整流程演示
+# 1. 创建配置
+cd /opt/iot-backend
+cat > .env << 'EOF'
+DB_PASSWORD=mypassword123
+WECHAT_APP_ID=wx1234567890
+WECHAT_MCH_ID=9876543210
+WECHAT_API_V3_KEY=abc123xyz
+WECHAT_SERIAL_NO=XYZ123456
+WECHAT_PRIVATE_KEY_PATH=/etc/ssl/wechat/apiclient_key.pem
+EOF
+
+# 2. 创建启动脚本
+cat > start.sh << 'EOF'
+#!/bin/bash
+export $(cat .env | xargs)
+./main
+EOF
+
+# 3. 设置权限
+chmod 600 .env
+chmod +x start.sh
+
+# 4. 启动
+nohup ./start.sh > nohup.out 2>&1 &
+
+# 5. 检查
+ps aux | grep main
+tail -f nohup.out
+# 1. 创建配置cd /opt/iot-backendcat > .env << 'EOF'DB_PASSWORD=mypassword123WECHAT_APP_ID=wx1234567890WECHAT_MCH_ID=9876543210WECHAT_API_V3_KEY=abc123xyzWECHAT_SERIAL_NO=XYZ123456WECHAT_PRIVATE_KEY_PATH=/etc/ssl/wechat/apiclient_key.pemEOF# 2. 创建启动脚本cat > start.sh << 'EOF'#!/bin/bashexport $(cat .env | xargs)./mainEOF# 3. 设置权限chmod 600 .envchmod +x start.sh# 4. 启动nohup ./start.sh > nohup.out 2>&1 &# 5. 检查ps aux | grep maintail -f nohup.out
+文件结构
+/opt/iot-backend/
+├── main              # 程序文件
+├── start.sh          # 启动脚本
+├── .env              # 敏感配置（600 权限）
+├── configs/         # 配置文件
+│   └── config.yaml
+└── nohup.out         # 日志文件（启动后自动生成）
+/opt/iot-backend/├── main              # 程序文件├── start.sh          # 启动脚本├── .env              # 敏感配置（600 权限）├── configs/         # 配置文件│   └── config.yaml└── nohup.out         # 日志文件（启动后自动生成）
+
+
+修改配置步骤
+# 1. 编辑 .env 文件
+vim /opt/iot-backend/.env
+
+# 2. 修改内容，比如改密码：
+DB_PASSWORD=new_password_here
+WECHAT_APP_ID=new_app_id
+# ... 其他配置
+
+# 3. 保存退出（:wq）
+
+# 4. 重启服务
+#    先找到进程
+ps aux | grep ./main
+#    杀掉
+kill 12345
+
+#    重新启动
+nohup ./start.sh > nohup.out 2>&1 &
+# 1. 编辑 .env 文件vim /opt/iot-backend/.env# 2. 修改内容，比如改密码：DB_PASSWORD=new_password_hereWECHAT_APP_ID=new_app_id# ... 其他配置# 3. 保存退出（:wq）# 4. 重启服务#    先找到进程ps aux | grep ./main#    杀掉kill 12345#    重新启动nohup ./start.sh > nohup.out 2>&1 &
+一条命令完成（不进入 vim）
+# 用 sed 直接修改（以 DB_PASSWORD 为例）
+sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=new_password/' /opt/iot-backend/.env
+
+# 重启
+pkill -f ./main && nohup ./start.sh > nohup.out 2>&1 &
+# 用 sed 直接修改（以 DB_PASSWORD 为例）sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=new_password/' /opt/iot-backend/.env# 重启pkill -f ./main && nohup ./start.sh > nohup.out 2>&1 &
