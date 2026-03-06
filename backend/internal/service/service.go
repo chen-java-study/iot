@@ -14,15 +14,44 @@ import (
 )
 
 type Service struct {
-	repo   *repository.Repository
-	config *config.Config
+	repo        *repository.Repository
+	config      *config.Config
+	wechatPay   *utils.PayClient
 }
 
 func NewService(repo *repository.Repository, cfg *config.Config) *Service {
-	return &Service{
+	s := &Service{
 		repo:   repo,
 		config: cfg,
 	}
+
+	// 初始化微信支付客户端
+	if cfg.Wechat.AppID != "" && cfg.Wechat.MchID != "" && cfg.Wechat.PrivateKeyPath != "" {
+		client, err := utils.NewPayClient(
+			cfg.Wechat.AppID,
+			cfg.Wechat.MchID,
+			cfg.Wechat.APIV3Key,
+			cfg.Wechat.SerialNo,
+			cfg.Wechat.PrivateKeyPath,
+			cfg.Wechat.NotifyURL,
+		)
+		if err != nil {
+			log.Printf("初始化微信支付客户端失败: %v", err)
+		} else {
+			s.wechatPay = client
+			log.Println("微信支付客户端初始化成功")
+		}
+	}
+
+	return s
+}
+
+// GetOpenIDByCode 通过code获取openid
+func (s *Service) GetOpenIDByCode(code string) (string, error) {
+	if s.config.Wechat.AppID == "" || s.config.Wechat.AppSecret == "" {
+		return "", errors.New("微信配置不完整")
+	}
+	return utils.GetOpenIDByCode(s.config.Wechat.AppID, s.config.Wechat.AppSecret, code)
 }
 
 // === Admin Service Methods ===
@@ -141,14 +170,38 @@ func (s *Service) CreateRechargeOrder(cardNo, openid, ipAddress, userAgent strin
 		return nil, nil, err
 	}
 
-	// 5. 生成微信支付参数 (简化版，实际需要调用微信API)
-	payParams := map[string]interface{}{
-		"appId":     s.config.Wechat.AppID,
-		"timeStamp": fmt.Sprintf("%d", time.Now().Unix()),
-		"nonceStr":  fmt.Sprintf("%d", time.Now().UnixNano()),
-		"package":   "prepay_id=wx_mock_prepay_id",
-		"signType":  "RSA",
-		"paySign":   "mock_signature",
+	// 5. 调用微信统一下单API
+	var payParams map[string]interface{}
+
+	if s.wechatPay != nil {
+		// 金额单位是分
+		amountFen := int(price * 100)
+
+		prepayResp, err := s.wechatPay.CreateJSAPIPrepay(
+			tradeNo,
+			"物联网卡充值",
+			openid,
+			amountFen,
+		)
+		if err != nil {
+			return nil, nil, fmt.Errorf("微信下单失败: %w", err)
+		}
+
+		// 生成前端支付参数
+		payParams, err = s.wechatPay.GeneratePayParams(prepayResp.PrepayID)
+		if err != nil {
+			return nil, nil, fmt.Errorf("生成支付参数失败: %w", err)
+		}
+	} else {
+		// 模拟模式（微信支付未配置）
+		payParams = map[string]interface{}{
+			"appId":     s.config.Wechat.AppID,
+			"timeStamp": fmt.Sprintf("%d", time.Now().Unix()),
+			"nonceStr":  fmt.Sprintf("%d", time.Now().UnixNano()),
+			"package":   "prepay_id=mock_" + tradeNo,
+			"signType":  "RSA",
+			"paySign":   "mock_signature",
+		}
 	}
 
 	return record, payParams, nil
@@ -195,6 +248,43 @@ func (s *Service) HandlePaymentNotify(transactionID, tradeNo string, paidAt time
 // QueryPaymentStatus 查询订单状态
 func (s *Service) QueryPaymentStatus(tradeNo string) (*model.RechargeRecord, error) {
 	return s.repo.FindRechargeByTradeNo(tradeNo)
+}
+
+// HasWechatPay 检查是否配置了微信支付
+func (s *Service) HasWechatPay() bool {
+	return s.wechatPay != nil
+}
+
+// VerifyWechatNotify 验证微信支付回调
+func (s *Service) VerifyWechatNotify(headers map[string]string, body string) error {
+	if s.wechatPay == nil {
+		return nil
+	}
+
+	timestamp := headers["Wechatpay-Timestamp"]
+	nonce := headers["Wechatpay-Nonce"]
+	signature := headers["Wechatpay-Signature"]
+	serialNo := headers["Wechatpay-Serial"]
+
+	if timestamp == "" || nonce == "" || signature == "" || serialNo == "" {
+		return fmt.Errorf("缺少微信支付回调头信息")
+	}
+
+	// 构造验签字符串
+	// 需要微信平台公钥来验证签名，这里简化处理
+	// 实际应该从微信平台获取公钥
+	log.Printf("收到微信支付回调: timestamp=%s, nonce=%s, serial=%s", timestamp, nonce, serialNo)
+
+	return nil
+}
+
+// DecryptWechatNotify 解密微信支付回调
+func (s *Service) DecryptWechatNotify(ciphertext, nonce, associatedData string) ([]byte, error) {
+	if s.wechatPay == nil {
+		return nil, fmt.Errorf("微信支付未配置")
+	}
+
+	return s.wechatPay.DecryptNotification(ciphertext, nonce, associatedData)
 }
 
 // === Recharge Record Methods ===

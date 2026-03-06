@@ -37,6 +37,7 @@ type WechatConfig struct {
 	SerialNo       string `yaml:"serial_no"`
 	PrivateKeyPath string `yaml:"private_key_path"`
 	NotifyURL      string `yaml:"notify_url"`
+	AppSecret      string `yaml:"app_secret"` // 公众号AppSecret
 }
 
 func LoadConfig(filepath string) (*Config, error) {
@@ -90,5 +91,8 @@ func overrideFromEnv(config *Config) {
 	}
 	if v := os.Getenv("WECHAT_NOTIFY_URL"); v != "" {
 		config.Wechat.NotifyURL = v
+	}
+	if v := os.Getenv("WECHAT_APP_SECRET"); v != "" {
+		config.Wechat.AppSecret = v
 	}
 }

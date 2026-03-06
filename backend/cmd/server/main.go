@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"iot-card-system/internal/config"
 	"iot-card-system/internal/handler"
 	"iot-card-system/internal/repository"
@@ -42,6 +43,7 @@ func main() {
 	h := handler.NewHandler(svc)
 
 	// 设置路由
+	gin.SetMode(gin.ReleaseMode)
 	r := router.SetupRouter(h, cfg.JWT.SecretKey)
 
 	// 启动服务器

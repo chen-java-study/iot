@@ -6,10 +6,12 @@ import (
 	"crypto/sha256"
 	"crypto/x509"
 	"encoding/base64"
+	"encoding/json"
 	"encoding/pem"
 	"errors"
 	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"strings"
 )
@@ -121,4 +123,39 @@ func ValidateNotifyRequest(timestamp, nonce, body string) error {
 	}
 
 	return nil
+}
+
+// GetOpenIDByCode 通过授权code获取用户openid
+func GetOpenIDByCode(appID, appSecret, code string) (string, error) {
+	url := fmt.Sprintf("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code",
+		appID, appSecret, code)
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return "", fmt.Errorf("请求微信API失败: %w", err)
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", fmt.Errorf("读取响应失败: %w", err)
+	}
+
+	var result struct {
+		AccessToken string `json:"access_token"`
+		ExpiresIn   int    `json:"expires_in"`
+		OpenID      string `json:"openid"`
+		ErrCode     int    `json:"errcode"`
+		ErrMsg      string `json:"errmsg"`
+	}
+
+	if err := json.Unmarshal(body, &result); err != nil {
+		return "", fmt.Errorf("解析响应失败: %w, body: %s", err, string(body))
+	}
+
+	if result.ErrCode != 0 {
+		return "", fmt.Errorf("微信API返回错误: %s, errcode: %d", result.ErrMsg, result.ErrCode)
+	}
+
+	return result.OpenID, nil
 }

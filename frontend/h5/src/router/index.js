@@ -19,6 +19,7 @@ const routes = [
 ]
 
 const router = createRouter({
+  // H5 部署在 /h5/ 子路径下，需要设置 base
   history: createWebHistory('/h5/'),
   routes
 })

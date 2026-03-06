@@ -80,4 +80,3 @@ echo "  - sim_cards (SIM卡信息表)"
 echo "  - recharge_records (充值记录表)"
 echo "  - system_config (系统配置表)"
 echo ""
-

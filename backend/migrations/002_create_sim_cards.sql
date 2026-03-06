@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS sim_cards (
     package_type VARCHAR(50),                  -- 套餐类型
     total_recharge_count INT DEFAULT 0,        -- 总充值次数
     total_recharge_amount DECIMAL(10,2) DEFAULT 0, -- 总充值金额
+    last_recharge_time TIMESTAMP,              -- 最近充值时间
+    last_recharge_amount DECIMAL(10,2) DEFAULT 0, -- 最近充值金额
     remark TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -47,3 +49,5 @@ COMMENT ON TABLE sim_cards IS 'SIM卡信息表';
 COMMENT ON COLUMN sim_cards.status IS '状态: 1=正常 2=即将到期 3=已过期 0=禁用';
 COMMENT ON COLUMN sim_cards.card_no IS '卡号(ICCID)';
 COMMENT ON COLUMN sim_cards.device_no IS '设备号(IMEI)';
+COMMENT ON COLUMN sim_cards.last_recharge_time IS '最近充值时间';
+COMMENT ON COLUMN sim_cards.last_recharge_amount IS '最近充值金额';

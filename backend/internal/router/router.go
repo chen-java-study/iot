@@ -17,6 +17,7 @@ func SetupRouter(h *handler.Handler, jwtSecret string) *gin.Engine {
 	{
 		// H5端API (无需认证)
 		v1.GET("/card/query", h.QueryCard)
+		v1.GET("/wechat/auth", h.GetOpenIDByCode) // 微信授权获取openid
 		v1.POST("/payment/create", h.CreatePaymentOrder)
 		v1.POST("/payment/notify", h.WechatPaymentNotify)
 		v1.GET("/payment/status", h.QueryPaymentStatus)

@@ -1,10 +1,13 @@
 package handler
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"iot-card-system/internal/model"
 	"iot-card-system/internal/service"
 	"iot-card-system/internal/utils"
+	"log"
 	"strconv"
 	"time"
 
@@ -48,6 +51,23 @@ func (h *Handler) QueryCard(c *gin.Context) {
 	})
 }
 
+// GetOpenIDByCode 通过微信授权code获取openid
+func (h *Handler) GetOpenIDByCode(c *gin.Context) {
+	code := c.Query("code")
+	if code == "" {
+		utils.BadRequest(c, "缺少code参数")
+		return
+	}
+
+	openid, err := h.service.GetOpenIDByCode(code)
+	if err != nil {
+		utils.Error(c, 500, "获取openid失败: "+err.Error())
+		return
+	}
+
+	utils.Success(c, gin.H{"openid": openid})
+}
+
 // CreatePaymentOrder 创建充值订单
 func (h *Handler) CreatePaymentOrder(c *gin.Context) {
 	var req struct {
@@ -78,27 +98,101 @@ func (h *Handler) CreatePaymentOrder(c *gin.Context) {
 
 // WechatPaymentNotify 微信支付回调
 func (h *Handler) WechatPaymentNotify(c *gin.Context) {
-	// 简化版实现，实际需要验证签名并解密
-	var req struct {
-		TransactionID string `json:"transaction_id"`
-		OutTradeNo    string `json:"out_trade_no"`
-		TradeState    string `json:"trade_state"`
+	// 获取微信回调请求头
+	headers := map[string]string{
+		"Wechatpay-Timestamp": c.GetHeader("Wechatpay-Timestamp"),
+		"Wechatpay-Nonce":    c.GetHeader("Wechatpay-Nonce"),
+		"Wechatpay-Serial":   c.GetHeader("Wechatpay-Serial"),
+		"Wechatpay-Signature": c.GetHeader("Wechatpay-Signature"),
 	}
 
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(400, gin.H{"code": "FAIL", "message": "参数错误"})
+	// 读取请求体
+	body, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		c.JSON(400, gin.H{"code": "FAIL", "message": "读取请求体失败"})
 		return
 	}
 
-	if req.TradeState == "SUCCESS" {
-		err := h.service.HandlePaymentNotify(req.TransactionID, req.OutTradeNo, time.Now())
+	// 验证签名（如果配置了微信支付）
+	if h.service.HasWechatPay() {
+		err := h.service.VerifyWechatNotify(headers, string(body))
 		if err != nil {
+			log.Printf("微信支付回调验签失败: %v", err)
+			c.JSON(400, gin.H{"code": "FAIL", "message": "验签失败"})
+			return
+		}
+	}
+
+	// 解析回调数据
+	var notifyData struct {
+		ID           string `json:"id"`
+		CreateTime   string `json:"create_time"`
+		ResourceType string `json:"resource_type"`
+		EventType    string `json:"event_type"`
+		Resource     struct {
+			Algorithm      string `json:"algorithm"`
+			Ciphertext     string `json:"ciphertext"`
+			Nonce          string `json:"nonce"`
+			AssociatedData string `json:"associated_data"`
+		} `json:"resource"`
+		Summary string `json:"summary"`
+	}
+
+	if err := json.Unmarshal(body, &notifyData); err != nil {
+		c.JSON(400, gin.H{"code": "FAIL", "message": "解析回调数据失败"})
+		return
+	}
+
+	// 只处理支付成功通知
+	if notifyData.EventType != "TRANSACTION.SUCCESS" {
+		c.JSON(200, gin.H{"code": "SUCCESS", "message": "ok"})
+		return
+	}
+
+	// 解密通知数据
+	plaintext, err := h.service.DecryptWechatNotify(
+		notifyData.Resource.Ciphertext,
+		notifyData.Resource.Nonce,
+		notifyData.Resource.AssociatedData,
+	)
+	if err != nil {
+		log.Printf("解密微信支付回调失败: %v", err)
+		c.JSON(500, gin.H{"code": "FAIL", "message": "解密失败"})
+		return
+	}
+
+	// 解析明文
+	var paymentResult struct {
+		OutTradeNo    string `json:"out_trade_no"`
+		TransactionID string `json:"transaction_id"`
+		TradeState    string `json:"trade_state"`
+		TradeStateDesc string `json:"trade_state_desc"`
+		Amount        struct {
+			Total         int    `json:"total"`
+			PayerTotal    int    `json:"payer_total"`
+			Currency      string `json:"currency"`
+			PayerCurrency string `json:"payer_currency"`
+		} `json:"amount"`
+	}
+
+	if err := json.Unmarshal(plaintext, &paymentResult); err != nil {
+		log.Printf("解析支付结果失败: %v", err)
+		c.JSON(500, gin.H{"code": "FAIL", "message": "解析支付结果失败"})
+		return
+	}
+
+	// 处理支付成功
+	if paymentResult.TradeState == "SUCCESS" {
+		paidAt, _ := time.Parse("2006-01-02T15:04:05+08:00", notifyData.CreateTime)
+		err := h.service.HandlePaymentNotify(paymentResult.TransactionID, paymentResult.OutTradeNo, paidAt)
+		if err != nil {
+			log.Printf("处理支付通知失败: %v", err)
 			c.JSON(500, gin.H{"code": "FAIL", "message": "处理失败"})
 			return
 		}
 	}
 
-	c.JSON(200, gin.H{"code": "SUCCESS", "message": ""})
+	c.JSON(200, gin.H{"code": "SUCCESS", "message": "ok"})
 }
 
 // QueryPaymentStatus 查询订单状态

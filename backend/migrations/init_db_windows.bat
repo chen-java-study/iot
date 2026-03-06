@@ -61,7 +61,16 @@ if %ERRORLEVEL% neq 0 (
 )
 
 echo.
-echo [步骤6] 插入测试数据...
+echo [步骤6] 更新SIM卡表字段(最近充值时间/金额)...
+psql -U iot_user -h localhost -d iot_card_db -f "%~dp0\005_add_recharge_fields_to_sim_cards.sql"
+if %ERRORLEVEL% neq 0 (
+    echo [错误] 更新sim_cards表字段失败
+    pause
+    exit /b 1
+)
+
+echo.
+echo [步骤7] 插入测试数据...
 psql -U iot_user -h localhost -d iot_card_db -f "%~dp0\insert_test_data.sql"
 if %ERRORLEVEL% neq 0 (
     echo [警告] 插入测试数据失败，但表已成功创建

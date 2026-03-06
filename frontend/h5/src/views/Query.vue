@@ -172,6 +172,54 @@ export default {
       })
     }
 
+    // 调起微信 JSAPI 支付
+    const invokeWxPay = (payParams, tradeNo) => {
+      return new Promise((resolve, reject) => {
+        if (!window.WeixinJSBridge) {
+          showToast('请在微信内打开此页面')
+          reject(new Error('非微信环境'))
+          return
+        }
+
+        window.WeixinJSBridge.invoke('getBrandWCPayRequest', {
+          appId:     payParams.appId,
+          timeStamp: payParams.timeStamp,
+          nonceStr:  payParams.nonceStr,
+          package:   payParams.package,
+          signType:  payParams.signType,
+          paySign:   payParams.paySign
+        }, async (res) => {
+          if (res.err_msg === 'get_brand_wcpay_request:ok') {
+            // 支付成功，轮询确认
+            showLoadingToast({ message: '支付成功，正在更新...', forbidClick: true, duration: 0 })
+            try {
+              await pollPaymentStatus(tradeNo)
+              closeToast()
+              const updatedCard = await queryCard(cardInfo.value.card_no)
+              rechargeResult.value = {
+                amount: payParams._amount,
+                trade_no: tradeNo,
+                new_expire_date: updatedCard.expire_date
+              }
+              cardInfo.value = updatedCard
+              rechargeSuccess.value = true
+              resolve()
+            } catch (e) {
+              closeToast()
+              showToast('支付成功，请稍后刷新查看最新状态')
+              resolve()
+            }
+          } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
+            showToast('已取消支付')
+            reject(new Error('用户取消支付'))
+          } else {
+            showToast('支付失败，请重试')
+            reject(new Error(res.err_msg || '支付失败'))
+          }
+        })
+      })
+    }
+
     // 充值
     const onRecharge = async () => {
       try {
@@ -199,45 +247,11 @@ export default {
 
         closeToast()
 
-        // 实际项目中这里调用微信JSAPI支付
-        // 简化版：模拟支付成功并轮询状态
-        showLoadingToast({ message: '支付处理中...', forbidClick: true, duration: 0 })
+        // 把金额挂到 pay_params 上，方便回调里取
+        orderData.pay_params._amount = orderData.amount
 
-        try {
-          const statusData = await pollPaymentStatus(orderData.trade_no)
-          closeToast()
-
-          // 重新查询最新卡片信息
-          const updatedCard = await queryCard(cardInfo.value.card_no)
-          
-          rechargeResult.value = {
-            amount: orderData.amount,
-            trade_no: orderData.trade_no,
-            new_expire_date: updatedCard.expire_date
-          }
-          cardInfo.value = updatedCard
-          rechargeSuccess.value = true
-
-        } catch (pollError) {
-          closeToast()
-          // 支付可能成功但轮询超时，也重新查询一次
-          try {
-            const updatedCard = await queryCard(cardInfo.value.card_no)
-            if (updatedCard.expire_date !== cardInfo.value.expire_date) {
-              rechargeResult.value = {
-                amount: orderData.amount,
-                trade_no: orderData.trade_no,
-                new_expire_date: updatedCard.expire_date
-              }
-              cardInfo.value = updatedCard
-              rechargeSuccess.value = true
-            } else {
-              showToast(pollError.message || '支付未完成，请稍后重试')
-            }
-          } catch {
-            showToast('订单已创建，订单号：' + orderData.trade_no + '，请稍后查询结果')
-          }
-        }
+        // 调起微信 JSAPI 支付
+        await invokeWxPay(orderData.pay_params, orderData.trade_no)
       } catch (error) {
         closeToast()
         showToast(error.message || '创建订单失败，请重试')

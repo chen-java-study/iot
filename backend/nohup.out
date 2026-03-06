@@ -393,3 +393,6 @@ Please check https://github.com/gin-gonic/gin/blob/master/docs/doc.md#dont-trust
 2026/03/06 06:43:40 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:151
 [0m[33m[1.502ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
 [GIN] 2026/03/06 - 06:43:40 | 200 |    1.657989ms |       127.0.0.1 | GET      "/api/v1/admin/config"
+2026/03/06 13:31:50 数据库连接成功
+2026/03/06 13:31:50 微信支付客户端初始化成功
+2026/03/06 13:31:50 服务器启动在端口 8080

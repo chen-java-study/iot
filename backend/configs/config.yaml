@@ -14,9 +14,10 @@ jwt:
   expire_hours: 24
 
 wechat:
-  app_id: ""                # 生产环境请使用环境变量: WECHAT_APP_ID
-  mch_id: ""                # 生产环境请使用环境变量: WECHAT_MCH_ID
-  api_v3_key: ""            # 生产环境请使用环境变量: WECHAT_API_V3_KEY
-  serial_no: ""             # 生产环境请使用环境变量: WECHAT_SERIAL_NO
-  private_key_path: ""      # 生产环境请使用环境变量: WECHAT_PRIVATE_KEY_PATH
-  notify_url: ""            # 回调通知地址，如: https://yourdomain.com/api/v1/payment/notify
+  app_id: "wxd7fd41032d8269a9"           # 微信AppID
+  app_secret: "4b585e5bd33aac7a0a8926cc5fb61ee7"        # 公众号AppSecret，需要在微信公众平台获取
+  mch_id: "1580180261"                   # 商户号
+  api_v3_key: "wangmaoquan163412945013mrchenlin"  # APIv3密钥
+  serial_no: "56EA085061C77BCAB7C7774774BB1FBD82E78020"  # 证书序列号
+  private_key_path: "/home/code/cert/apiclient_key.pem"  # 私钥文件路径
+  notify_url: "https://iot4you.top/api/v1/payment/notify"  # 支付回调地址
