@@ -469,6 +469,12 @@ func (h *Handler) ListRechargeRecords(c *gin.Context) {
 	})
 }
 
+// 允许通过接口读写的配置项白名单（微信支付相关敏感配置只在 config.yaml 里维护）
+var allowedConfigKeys = map[string]bool{
+	"recharge_price": true,
+	"alert_days":     true,
+}
+
 // GetConfig 获取系统配置
 func (h *Handler) GetConfig(c *gin.Context) {
 	configs, err := h.service.GetAllConfigs()
@@ -477,7 +483,15 @@ func (h *Handler) GetConfig(c *gin.Context) {
 		return
 	}
 
-	utils.Success(c, configs)
+	// 只返回白名单内的配置，屏蔽微信支付等敏感信息
+	safeConfigs := make(map[string]string)
+	for k, v := range configs {
+		if allowedConfigKeys[k] {
+			safeConfigs[k] = v
+		}
+	}
+
+	utils.Success(c, safeConfigs)
 }
 
 // UpdateConfig 更新系统配置
@@ -488,10 +502,19 @@ func (h *Handler) UpdateConfig(c *gin.Context) {
 		return
 	}
 
-	if err := h.service.UpdateConfigs(configs); err != nil {
+	// 只允许更新白名单内的配置
+	safeConfigs := make(map[string]string)
+	for k, v := range configs {
+		if allowedConfigKeys[k] {
+			safeConfigs[k] = v
+		}
+	}
+
+	if err := h.service.UpdateConfigs(safeConfigs); err != nil {
 		utils.InternalError(c, "更新配置失败")
 		return
 	}
 
 	utils.Success(c, nil)
 }
+
