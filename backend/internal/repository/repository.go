@@ -31,7 +31,9 @@ func (r *Repository) UpdateAdminUser(user *model.AdminUser) error {
 
 func (r *Repository) FindCardByKeyword(keyword string) (*model.SimCard, error) {
 	var card model.SimCard
-	err := r.db.Where("card_no = ? OR device_no = ?", keyword, keyword).First(&card).Error
+	like := "%" + keyword + "%"
+	err := r.db.Where("card_no = ? OR device_no = ? OR card_no LIKE ? OR device_no LIKE ?",
+		keyword, keyword, like, like).First(&card).Error
 	return &card, err
 }
 

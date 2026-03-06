@@ -34,7 +34,7 @@ func (h *Handler) QueryCard(c *gin.Context) {
 
 	card, err := h.service.QueryCard(keyword)
 	if err != nil {
-		utils.NotFound(c, "卡片不存在")
+		utils.BadRequest(c, "未找到卡号「"+keyword+"」，请检查输入是否正确")
 		return
 	}
 
