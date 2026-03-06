@@ -9,7 +9,7 @@ SELECT 'CREATE DATABASE iot_card_db' WHERE NOT EXISTS (SELECT FROM pg_database W
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT FROM pg_user WHERE usename = 'iot_user') THEN
-        CREATE USER iot_user WITH PASSWORD 'adfhkIxcvYIK2189';
+        CREATE USER iot_user WITH PASSWORD 'djkfhAIU12945%^$%';
     END IF;
 END
 $$;
@@ -25,3 +25,4 @@ GRANT ALL ON SCHEMA public TO iot_user;
 -- 设置默认权限
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO iot_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO iot_user;
+

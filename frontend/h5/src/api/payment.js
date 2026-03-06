@@ -2,7 +2,7 @@ import request from '../utils/request'
 
 export function createRechargeOrder(data) {
   return request({
-    url: '/payment/create',
+    url: '/v1/payment/create',
     method: 'post',
     data
   })
@@ -10,8 +10,9 @@ export function createRechargeOrder(data) {
 
 export function queryPaymentStatus(tradeNo) {
   return request({
-    url: '/payment/status',
+    url: '/v1/payment/status',
     method: 'get',
     params: { trade_no: tradeNo }
   })
 }
+
