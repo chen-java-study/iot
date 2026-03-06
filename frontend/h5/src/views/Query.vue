@@ -237,9 +237,16 @@ export default {
       paying.value = true
 
       try {
+        // 检查 openid，未获取到则提示用户在微信中打开
+        const openid = localStorage.getItem('wechat_openid')
+        if (!openid) {
+          showToast('请在微信公众号中打开此页面进行支付')
+          paying.value = false
+          return
+        }
+
         showLoadingToast({ message: '正在创建订单...', forbidClick: true, duration: 0 })
 
-        const openid = localStorage.getItem('wechat_openid') || 'test_openid'
         const orderData = await createRechargeOrder({
           card_no: cardInfo.value.card_no,
           openid
@@ -425,3 +432,4 @@ export default {
   font-weight: 600;
 }
 </style>
+
