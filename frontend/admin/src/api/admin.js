@@ -73,3 +73,12 @@ export function updateConfig(data) {
     data
   })
 }
+
+// 修改密码
+export function changePassword(data) {
+  return request({
+    url: '/api/v1/admin/password',
+    method: 'post',
+    data
+  })
+}

@@ -7,7 +7,7 @@
       <van-cell title="设备号" :value="cardInfo.device_no" />
       <van-cell title="当前到期时间" :value="cardInfo.expire_date" />
       <van-cell title="充值年限" value="1年" />
-      <van-cell title="充值金额" :value="'¥100.00'" />
+      <van-cell title="充值金额" :value="cardInfo.last_recharge_amount ? '¥' + cardInfo.last_recharge_amount.toFixed(2) : '未设置'" />
     </van-cell-group>
 
     <!-- 充值成功结果 -->
@@ -91,10 +91,11 @@ export default {
     }
 
     const onPay = async () => {
+      const amount = cardInfo.value.last_recharge_amount ? cardInfo.value.last_recharge_amount.toFixed(2) : '未设置'
       try {
         await showDialog({
           title: '确认支付',
-          message: `确认支付 ¥100.00 为卡号 ${cardInfo.value.card_no} 续费？`,
+          message: `确认支付 ¥${amount} 为卡号 ${cardInfo.value.card_no} 续费？`,
           confirmButtonText: '确认',
           cancelButtonText: '取消',
           showCancelButton: true

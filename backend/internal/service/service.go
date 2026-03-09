@@ -14,9 +14,9 @@ import (
 )
 
 type Service struct {
-	repo        *repository.Repository
-	config      *config.Config
-	wechatPay   *utils.PayClient
+	repo      *repository.Repository
+	config    *config.Config
+	wechatPay *utils.PayClient
 }
 
 func NewService(repo *repository.Repository, cfg *config.Config) *Service {
@@ -99,10 +99,31 @@ func (s *Service) AdminLogin(username, password string) (string, *model.AdminUse
 	return token, user, nil
 }
 
+// ChangePassword 修改密码
+func (s *Service) ChangePassword(userID uint, oldPassword, newPassword string) error {
+	user, err := s.repo.FindAdminByID(userID)
+	if err != nil {
+		return errors.New("用户不存在")
+	}
+
+	// 验证旧密码
+	if oldPassword != user.PasswordHash {
+		return errors.New("原密码错误")
+	}
+
+	// 更新密码
+	user.PasswordHash = newPassword
+	return s.repo.UpdateAdminUser(user)
+}
+
 // === Card Service Methods ===
 
 func (s *Service) QueryCard(keyword string) (*model.SimCard, error) {
 	return s.repo.FindCardByKeyword(keyword)
+}
+
+func (s *Service) GetCardByID(id uint) (*model.SimCard, error) {
+	return s.repo.FindCardByID(id)
 }
 
 func (s *Service) CreateCard(card *model.SimCard) error {
@@ -137,10 +158,10 @@ func (s *Service) CreateRechargeOrder(cardNo, openid, ipAddress, userAgent strin
 		return nil, nil, errors.New("卡片不存在")
 	}
 
-	// 2. 获取充值价格
-	price, err := s.repo.GetConfigFloat("recharge_price")
-	if err != nil {
-		price = 100.00 // 默认价格
+	// 2. 获取充值价格（使用卡片记录中的价格）
+	price := card.LastRechargeAmount
+	if price < 0 {
+		return nil, nil, errors.New("该卡片未设置充值金额，请联系管理员")
 	}
 
 	// 3. 计算新的到期日期

@@ -5,13 +5,13 @@
         <el-card><el-statistic title="卡片总数" :value="stats.total_cards || 0" /></el-card>
       </el-col>
       <el-col :span="6">
-        <el-card><el-statistic title="充值总金额" :value="stats.total_recharge_amount || 0" prefix="¥" /></el-card>
+        <el-card><el-statistic title="充值总金额" :value="Number(stats.total_recharge_amount) || 0" :precision="2" prefix="¥" /></el-card>
       </el-col>
       <el-col :span="6">
-        <el-card><el-statistic title="今日收入" :value="stats.today_amount || 0" prefix="¥" /></el-card>
+        <el-card><el-statistic title="今日收入" :value="Number(stats.today_amount) || 0" :precision="2" prefix="¥" /></el-card>
       </el-col>
       <el-col :span="6">
-        <el-card><el-statistic title="本月收入" :value="stats.month_amount || 0" prefix="¥" /></el-card>
+        <el-card><el-statistic title="本月收入" :value="Number(stats.month_amount) || 0" :precision="2" prefix="¥" /></el-card>
       </el-col>
     </el-row>
   </div>

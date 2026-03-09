@@ -45,6 +45,9 @@ func SetupRouter(h *handler.Handler, jwtSecret string) *gin.Engine {
 				// 系统配置
 				auth.GET("/config", h.GetConfig)
 				auth.POST("/config", h.UpdateConfig)
+
+				// 修改密码
+				auth.POST("/password", h.ChangePassword)
 			}
 		}
 	}

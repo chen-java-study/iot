@@ -22,6 +22,12 @@ func (r *Repository) FindAdminByUsername(username string) (*model.AdminUser, err
 	return &user, err
 }
 
+func (r *Repository) FindAdminByID(id uint) (*model.AdminUser, error) {
+	var user model.AdminUser
+	err := r.db.First(&user, id).Error
+	return &user, err
+}
+
 // UpdateAdminUser 更新管理员用户信息
 func (r *Repository) UpdateAdminUser(user *model.AdminUser) error {
 	return r.db.Save(user).Error

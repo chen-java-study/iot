@@ -115,11 +115,14 @@ func (p *PayClient) CreateJSAPIPrepay(outTradeNo, description, openID string, am
 		return nil, fmt.Errorf("序列化请求失败: %w", err)
 	}
 
-	// 构建签名
+	// 构建签名（微信支付v3签名规范）
 	timestamp := fmt.Sprintf("%d", time.Now().Unix())
 	nonceStr := generateNonce()
-	signStr := fmt.Sprintf("%s\n%s\n%s\n%s\n", "POST", "/v3/pay/transactions/jsapi", timestamp, nonceStr)
-	signStr += string(reqBody) + "\n"
+	signStr := "POST" + "\n" +
+		"/v3/pay/transactions/jsapi" + "\n" +
+		timestamp + "\n" +
+		nonceStr + "\n" +
+		string(reqBody) + "\n"
 
 	signature, err := p.sign(signStr)
 	if err != nil {
@@ -166,8 +169,11 @@ func (p *PayClient) GeneratePayParams(prepayID string) (map[string]interface{}, 
 	timestamp := fmt.Sprintf("%d", time.Now().Unix())
 	nonceStr := generateNonce()
 
-	// 前端签名串: appId\ntimeStamp\nnonceStr\npackage\n\n
-	paySignStr := fmt.Sprintf("%s\n%s\n%s\nprepay_id=%s\n\n", p.AppID, timestamp, nonceStr, prepayID)
+	// 前端签名串: appId\ntimeStamp\nnonceStr\npackage\n
+	paySignStr := p.AppID + "\n" +
+		timestamp + "\n" +
+		nonceStr + "\n" +
+		"prepay_id=" + prepayID + "\n"
 
 	signature, err := p.sign(paySignStr)
 	if err != nil {
@@ -184,10 +190,15 @@ func (p *PayClient) GeneratePayParams(prepayID string) (map[string]interface{}, 
 	}, nil
 }
 
-// sign 生成RSA签名
+// sign 生成RSA签名（微信支付v3使用SHA256WithRSA，即PKCS1v15）
 func (p *PayClient) sign(message string) (string, error) {
-	h := sha256.Sum256([]byte(message))
-	signature, err := rsa.SignPKCS1v15(rand.Reader, p.PrivateKey, crypto.SHA256, h[:])
+	msgHash := sha256.New()
+	_, err := io.WriteString(msgHash, message)
+	if err != nil {
+		return "", fmt.Errorf("计算哈希失败: %w", err)
+	}
+	hashed := msgHash.Sum(nil)
+	signature, err := rsa.SignPKCS1v15(rand.Reader, p.PrivateKey, crypto.SHA256, hashed)
 	if err != nil {
 		return "", fmt.Errorf("签名失败: %w", err)
 	}

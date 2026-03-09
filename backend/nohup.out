@@ -1,0 +1,1041 @@
+2026/03/06 17:37:48 数据库连接成功
+2026/03/06 17:37:48 微信支付客户端初始化成功
+2026/03/06 17:37:48 服务器启动在端口 8080
+
+2026/03/06 17:37:54 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[2.835ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 17:37:54 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[1.063ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 17:37:54 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[1.988ms] [34;1m[rows:10][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 17:37:54 | 200 |     6.44321ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 17:37:55 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:153
+[0m[33m[1.328ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/06 - 17:37:55 | 200 |     1.50732ms |       127.0.0.1 | GET      "/api/v1/admin/config"
+
+2026/03/06 17:37:58 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[1.653ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 17:37:58 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.937ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 17:37:58 | 200 |    2.908996ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 17:37:59 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:180
+[0m[33m[3.400ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/06 - 17:37:59 | 200 |     3.67282ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/06 17:38:00 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.434ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 17:38:00 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.604ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 17:38:00 | 200 |     1.38051ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 17:38:00 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[0.697ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 17:38:00 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[0.481ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 17:38:00 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[0.649ms] [34;1m[rows:10][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 17:38:00 | 200 |    2.342171ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 17:38:01 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:153
+[0m[33m[0.805ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/06 - 17:38:01 | 200 |    1.023733ms |       127.0.0.1 | GET      "/api/v1/admin/config"
+
+2026/03/06 17:38:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[0.552ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 17:38:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[0.990ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 17:38:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[0.788ms] [34;1m[rows:10][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 17:38:02 | 200 |     2.78758ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 17:38:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.587ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 17:38:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.556ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 17:38:02 | 200 |    1.485433ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 17:38:03 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:180
+[0m[33m[0.625ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/06 - 17:38:03 | 200 |     778.323µs |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/06 17:38:04 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.887ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 17:38:04 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[1.019ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 17:38:04 | 200 |    2.413569ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 17:38:04 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[1.202ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 17:38:04 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[1.055ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 17:38:04 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[1.473ms] [34;1m[rows:10][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 17:38:04 | 200 |     4.86827ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 18:18:26 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[0.749ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 18:18:26 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[0.503ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 18:18:26 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[0.692ms] [34;1m[rows:10][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 18:18:26 | 200 |    2.528686ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 18:18:28 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[0.489ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 18:18:28 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[0.367ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 18:18:28 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[1.287ms] [34;1m[rows:10][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 18:18:28 | 200 |    2.537604ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 18:18:28 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.528ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 18:18:28 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.526ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 18:18:28 | 200 |    1.397506ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 18:18:29 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.451ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 18:18:29 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.623ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 18:18:29 | 200 |    1.416077ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 18:18:29 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.476ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 18:18:29 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.443ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 18:18:29 | 200 |    1.645762ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 18:18:30 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.419ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 18:18:30 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.516ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 18:18:30 | 200 |    1.340978ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 18:18:30 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.476ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 18:18:30 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.377ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 18:18:30 | 200 |    1.249108ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 18:18:31 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.793ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 18:18:31 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.419ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 18:18:31 | 200 |    1.564089ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 18:18:31 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.569ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 18:18:31 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.472ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 18:18:31 | 200 |    1.347188ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 18:18:31 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.404ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 18:18:31 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.425ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 18:18:31 | 200 |    1.135664ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 18:18:31 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.407ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 18:18:31 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.541ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 18:18:31 | 200 |    1.479298ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 18:18:32 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.608ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 18:18:32 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.532ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 18:18:32 | 200 |    1.500334ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 18:18:33 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:180
+[0m[33m[0.932ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/06 - 18:18:33 | 200 |    1.176207ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/06 18:18:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:153
+[0m[33m[0.644ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/06 - 18:18:35 | 200 |     833.943µs |       127.0.0.1 | GET      "/api/v1/admin/config"
+2026/03/06 20:20:02 [LOGIN] 尝试登录 - username: admin
+
+2026/03/06 20:20:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[11.537ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/06 20:20:02 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/06 20:20:02 [LOGIN] 数据库中的密码hash: admin123
+2026/03/06 20:20:02 [LOGIN] hash长度: 8
+2026/03/06 20:20:02 [LOGIN] 输入的密码: admin123
+2026/03/06 20:20:02 [LOGIN] 密码长度: 8
+2026/03/06 20:20:02 [LOGIN] 密码验证结果: true
+
+2026/03/06 20:20:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:27
+[0m[33m[2.657ms] [34;1m[rows:1][0m UPDATE "admin_users" SET "username"='admin',"password_hash"='admin123',"real_name"='系统管理员',"phone"='',"email"='',"status"=1,"last_login_at"='2026-03-06 20:20:02.395',"created_at"='2026-03-05 14:36:10.502',"updated_at"='2026-03-06 20:20:02.396' WHERE "id" = 1
+[GIN] 2026/03/06 - 20:20:02 | 200 |   14.758647ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+
+2026/03/06 20:20:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:180
+[0m[33m[3.978ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/06 - 20:20:02 | 200 |     4.18858ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/06 20:20:06 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[1.068ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 20:20:06 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.913ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:20:06 | 200 |    2.330508ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 20:20:10 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:153
+[0m[33m[1.760ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/06 - 20:20:10 | 200 |    1.925972ms |       127.0.0.1 | GET      "/api/v1/admin/config"
+
+2026/03/06 20:20:19 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:165
+[0m[33m[4.225ms] [34;1m[rows:1][0m UPDATE "system_config" SET "config_value"='30',"updated_at"='2026-03-06 20:20:19.058' WHERE config_key = 'alert_days'
+
+2026/03/06 20:20:19 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:165
+[0m[33m[1.890ms] [34;1m[rows:1][0m UPDATE "system_config" SET "config_value"='0.1',"updated_at"='2026-03-06 20:20:19.062' WHERE config_key = 'recharge_price'
+[GIN] 2026/03/06 - 20:20:19 | 200 |    6.447232ms |       127.0.0.1 | POST     "/api/v1/admin/config"
+
+2026/03/06 20:20:21 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[1.492ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 20:20:21 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[1.112ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 20:20:21 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[1.510ms] [34;1m[rows:10][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:20:21 | 200 |    4.606894ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 20:20:28 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[1.181ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 20:20:28 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.581ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:20:28 | 200 |     2.11155ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 20:20:37 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:180
+[0m[33m[1.031ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/06 - 20:20:37 | 200 |    1.208987ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/06 20:20:39 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.532ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 20:20:39 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.548ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:20:39 | 200 |    1.374815ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 20:20:43 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:153
+[0m[33m[0.723ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/06 - 20:20:43 | 200 |     940.114µs |       127.0.0.1 | GET      "/api/v1/admin/config"
+
+2026/03/06 20:20:44 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[0.496ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 20:20:44 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[0.320ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 20:20:44 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[0.757ms] [34;1m[rows:10][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:20:44 | 200 |    1.976045ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 20:20:50 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:180
+[0m[33m[1.032ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/06 - 20:20:50 | 200 |    1.256313ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/06 20:20:51 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.541ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 20:20:51 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.630ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:20:51 | 200 |    1.591972ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 20:20:52 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[0.448ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 20:20:52 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[0.394ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 20:20:52 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[0.938ms] [34;1m[rows:10][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:20:52 | 200 |    2.346186ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 20:20:53 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:153
+[0m[33m[0.684ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/06 - 20:20:53 | 200 |     855.622µs |       127.0.0.1 | GET      "/api/v1/admin/config"
+
+2026/03/06 20:21:57 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:36
+[0m[33m[2.028ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '12' OR device_no = '12' OR card_no LIKE '%12%' OR device_no LIKE '%12%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/06 - 20:21:57 | 200 |    2.205755ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=12"
+
+2026/03/06 20:22:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:36
+[0m[33m[1.129ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012347' OR device_no = '89860123456789012347' OR card_no LIKE '%89860123456789012347%' OR device_no LIKE '%89860123456789012347%' ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/06 20:22:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:147
+[0m[33m[1.004ms] [34;1m[rows:1][0m SELECT * FROM "system_config" WHERE config_key = 'recharge_price' ORDER BY "system_config"."id" LIMIT 1
+
+2026/03/06 20:22:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:83
+[0m[33m[2.946ms] [34;1m[rows:1][0m INSERT INTO "recharge_records" ("card_id","card_no","device_no","recharge_amount","recharge_years","old_expire_date","new_expire_date","payment_method","trade_no","transaction_id","payment_status","paid_at","openid","ip_address","user_agent","created_at","updated_at") VALUES (3,'89860123456789012347','866123456789014',0.1,1,'2026-02-03 00:00:00','2027-03-06 20:22:02.626','wechat','R2026030620220297434','',0,NULL,'o0mUMtxstWEcLc4BD9KtCAdNrsKY','127.0.0.1','Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452d) NetType/WIFI Language/zh_CN','2026-03-06 20:22:02.626','2026-03-06 20:22:02.626') RETURNING "id"
+[GIN] 2026/03/06 - 20:22:03 | 200 |  437.836558ms |       127.0.0.1 | POST     "/api/v1/payment/create"
+2026/03/06 20:22:10 收到微信支付回调: timestamp=1772799729, nonce=svJbbNGE5TkGjZ7tg9A7d5PnUFEzabpy, serial=PUB_KEY_ID_0115801802612026020900192206002200
+
+2026/03/06 20:22:10 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:88
+[0m[33m[0.976ms] [34;1m[rows:1][0m SELECT * FROM "recharge_records" WHERE trade_no = 'R2026030620220297434' ORDER BY "recharge_records"."id" LIMIT 1
+
+2026/03/06 20:22:10 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:93
+[0m[33m[1.576ms] [34;1m[rows:1][0m UPDATE "recharge_records" SET "card_id"=3,"card_no"='89860123456789012347',"device_no"='866123456789014',"recharge_amount"=0.1,"recharge_years"=1,"old_expire_date"='2026-02-03 00:00:00',"new_expire_date"='2027-03-06 00:00:00',"payment_method"='wechat',"trade_no"='R2026030620220297434',"transaction_id"='4200003025202603069423009849',"payment_status"=1,"paid_at"='2026-03-06 20:22:09',"openid"='o0mUMtxstWEcLc4BD9KtCAdNrsKY',"ip_address"='127.0.0.1',"user_agent"='Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452d) NetType/WIFI Language/zh_CN',"created_at"='2026-03-06 20:22:02.626',"updated_at"='2026-03-06 20:22:10.073' WHERE "id" = 13
+
+2026/03/06 20:22:10 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[1.246ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE "sim_cards"."id" = 3 ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/06 20:22:10 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:51
+[0m[33m[1.734ms] [34;1m[rows:1][0m UPDATE "sim_cards" SET "card_no"='89860123456789012347',"device_no"='866123456789014',"start_date"='2024-01-01 00:00:00',"expire_date"='2027-03-06 00:00:00',"status"=3,"operator"='中国电信',"package_type"='年卡',"total_recharge_count"=1,"total_recharge_amount"=0.1,"last_recharge_time"='2026-03-06 20:22:09',"last_recharge_amount"=0.1,"remark"='测试卡片3 - 已过期',"created_at"='2026-03-05 14:36:18.136',"updated_at"='2026-03-06 20:22:10.076' WHERE "id" = 3
+[GIN] 2026/03/06 - 20:22:10 | 200 |    8.135722ms |       127.0.0.1 | POST     "/api/v1/payment/notify"
+
+2026/03/06 20:22:13 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:88
+[0m[33m[1.055ms] [34;1m[rows:1][0m SELECT * FROM "recharge_records" WHERE trade_no = 'R2026030620220297434' ORDER BY "recharge_records"."id" LIMIT 1
+[GIN] 2026/03/06 - 20:22:13 | 200 |    1.254236ms |       127.0.0.1 | GET      "/api/v1/payment/status?trade_no=R2026030620220297434"
+
+2026/03/06 20:22:13 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:36
+[0m[33m[0.832ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012347' OR device_no = '89860123456789012347' OR card_no LIKE '%89860123456789012347%' OR device_no LIKE '%89860123456789012347%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/06 - 20:22:13 | 200 |    1.002664ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=89860123456789012347"
+
+2026/03/06 20:23:01 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:36
+[0m[33m[0.987ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '12' OR device_no = '12' OR card_no LIKE '%12%' OR device_no LIKE '%12%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/06 - 20:23:01 | 200 |     1.16227ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=12"
+
+2026/03/06 20:23:07 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[0.564ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 20:23:07 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[0.383ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 20:23:07 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[0.609ms] [34;1m[rows:11][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:23:07 | 200 |    1.961074ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 20:23:19 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:180
+[0m[33m[1.023ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/06 - 20:23:19 | 200 |     1.22803ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/06 20:23:22 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:180
+[0m[33m[0.970ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/06 - 20:23:22 | 200 |    1.330919ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/06 20:23:25 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.632ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 20:23:25 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.683ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:23:25 | 200 |    1.698411ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 20:23:26 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[0.518ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 20:23:26 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[0.403ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 20:23:26 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[0.661ms] [34;1m[rows:11][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:23:26 | 200 |     2.03674ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 20:23:28 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:153
+[0m[33m[0.797ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/06 - 20:23:28 | 200 |    1.560992ms |       127.0.0.1 | GET      "/api/v1/admin/config"
+
+2026/03/06 20:23:28 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[0.418ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 20:23:28 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[0.490ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 20:23:28 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[0.709ms] [34;1m[rows:11][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:23:28 | 200 |    2.298663ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 20:23:33 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:180
+[0m[33m[1.223ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/06 - 20:23:33 | 200 |    1.462766ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/06 20:23:34 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.452ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 20:23:34 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[1.437ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:23:34 | 200 |    2.256181ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 20:23:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[0.517ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 20:23:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[0.613ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 20:23:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[0.604ms] [34;1m[rows:11][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:23:35 | 200 |    2.194563ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 20:23:38 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:153
+[0m[33m[0.708ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/06 - 20:23:38 | 200 |     978.205µs |       127.0.0.1 | GET      "/api/v1/admin/config"
+
+2026/03/06 20:23:40 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[0.748ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 20:23:40 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[0.463ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 20:23:40 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[0.454ms] [34;1m[rows:11][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:23:40 | 200 |    2.104885ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 20:23:43 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:153
+[0m[33m[0.587ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/06 - 20:23:43 | 200 |     855.093µs |       127.0.0.1 | GET      "/api/v1/admin/config"
+
+2026/03/06 20:23:47 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[0.728ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 20:23:47 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[0.415ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 20:23:47 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[0.576ms] [34;1m[rows:11][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:23:47 | 200 |    2.180924ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 20:24:10 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.584ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 20:24:10 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.900ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:24:10 | 200 |    1.820758ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 20:24:58 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:51
+[0m[33m[2.874ms] [34;1m[rows:1][0m UPDATE "sim_cards" SET "card_no"='89860123456789012347',"device_no"='866123456789014',"start_date"='2024-01-01 00:00:00',"expire_date"='2027-03-06 00:00:00',"status"=0,"operator"='中国电信',"package_type"='年卡',"total_recharge_count"=0,"total_recharge_amount"=0,"last_recharge_time"='2026-03-06 20:24:58.741',"last_recharge_amount"=0.01,"remark"='测试卡片3 - 已过期',"created_at"='0000-00-00 00:00:00',"updated_at"='2026-03-06 20:24:58.742' WHERE "id" = 3
+[GIN] 2026/03/06 - 20:24:58 | 200 |    3.338346ms |       127.0.0.1 | PUT      "/api/v1/admin/cards/3"
+
+2026/03/06 20:24:58 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.391ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 20:24:58 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.593ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:24:58 | 200 |    1.273814ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 20:25:23 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:36
+[0m[33m[1.095ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '2347' OR device_no = '2347' OR card_no LIKE '%2347%' OR device_no LIKE '%2347%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/06 - 20:25:23 | 200 |    1.241561ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=2347"
+
+2026/03/06 20:25:26 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:36
+[0m[33m[0.887ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012347' OR device_no = '89860123456789012347' OR card_no LIKE '%89860123456789012347%' OR device_no LIKE '%89860123456789012347%' ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/06 20:25:26 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:147
+[0m[33m[0.773ms] [34;1m[rows:1][0m SELECT * FROM "system_config" WHERE config_key = 'recharge_price' ORDER BY "system_config"."id" LIMIT 1
+
+2026/03/06 20:25:26 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:83
+[0m[33m[2.573ms] [34;1m[rows:1][0m INSERT INTO "recharge_records" ("card_id","card_no","device_no","recharge_amount","recharge_years","old_expire_date","new_expire_date","payment_method","trade_no","transaction_id","payment_status","paid_at","openid","ip_address","user_agent","created_at","updated_at") VALUES (3,'89860123456789012347','866123456789014',0.1,1,'2027-03-06 00:00:00','2028-03-06 00:00:00','wechat','R2026030620252663257','',0,NULL,'o0mUMtxstWEcLc4BD9KtCAdNrsKY','127.0.0.1','Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452d) NetType/WIFI Language/zh_CN','2026-03-06 20:25:26.408','2026-03-06 20:25:26.408') RETURNING "id"
+[GIN] 2026/03/06 - 20:25:26 | 200 |  369.547264ms |       127.0.0.1 | POST     "/api/v1/payment/create"
+
+2026/03/06 20:33:32 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:153
+[0m[33m[0.628ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/06 - 20:33:32 | 200 |     904.534µs |       127.0.0.1 | GET      "/api/v1/admin/config"
+
+2026/03/06 20:33:33 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[0.617ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 20:33:33 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[0.379ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 20:33:33 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[0.450ms] [34;1m[rows:12][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:33:33 | 200 |    2.394216ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 20:33:34 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:153
+[0m[33m[0.938ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/06 - 20:33:34 | 200 |    1.242788ms |       127.0.0.1 | GET      "/api/v1/admin/config"
+
+2026/03/06 20:33:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[0.868ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/06 20:33:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[1.124ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/06 20:33:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[1.057ms] [34;1m[rows:12][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:33:35 | 200 |    4.413396ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/06 20:33:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:72
+[0m[33m[0.458ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/06 20:33:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:75
+[0m[33m[0.494ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/06 - 20:33:35 | 200 |    1.359748ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/06 20:33:36 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:153
+[0m[33m[0.535ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/06 - 20:33:36 | 200 |     732.707µs |       127.0.0.1 | GET      "/api/v1/admin/config"
+[GIN] 2026/03/06 - 20:40:42 | 200 |  388.107318ms |       127.0.0.1 | GET      "/api/v1/wechat/auth?code=011a7Ull2wd6kh4XmPll2l9wiH0a7UlH"
+
+2026/03/06 20:40:50 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:36
+[0m[33m[0.796ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '47' OR device_no = '47' OR card_no LIKE '%47%' OR device_no LIKE '%47%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/06 - 20:40:50 | 200 |     1.02393ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=47"
+
+2026/03/06 20:40:56 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:36
+[0m[33m[0.888ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012347' OR device_no = '89860123456789012347' OR card_no LIKE '%89860123456789012347%' OR device_no LIKE '%89860123456789012347%' ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/06 20:40:56 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:147
+[0m[33m[0.554ms] [34;1m[rows:1][0m SELECT * FROM "system_config" WHERE config_key = 'recharge_price' ORDER BY "system_config"."id" LIMIT 1
+
+2026/03/06 20:40:56 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:83
+[0m[33m[2.466ms] [34;1m[rows:1][0m INSERT INTO "recharge_records" ("card_id","card_no","device_no","recharge_amount","recharge_years","old_expire_date","new_expire_date","payment_method","trade_no","transaction_id","payment_status","paid_at","openid","ip_address","user_agent","created_at","updated_at") VALUES (3,'89860123456789012347','866123456789014',0.1,1,'2027-03-06 00:00:00','2028-03-06 00:00:00','wechat','R2026030620405628296','',0,NULL,'o0mUMt4U1j1DFdmjeuA_l_rqkEd0','127.0.0.1','Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452d) NetType/WIFI Language/zh_CN','2026-03-06 20:40:56.163','2026-03-06 20:40:56.163') RETURNING "id"
+[GIN] 2026/03/06 - 20:40:56 | 200 |  362.185785ms |       127.0.0.1 | POST     "/api/v1/payment/create"
+
+2026/03/06 20:42:17 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:36
+[0m[33m[1.156ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '47' OR device_no = '47' OR card_no LIKE '%47%' OR device_no LIKE '%47%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/06 - 20:42:17 | 200 |    1.333845ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=47"
+[GIN] 2026/03/07 - 11:39:45 | 200 |  393.079928ms |       127.0.0.1 | GET      "/api/v1/wechat/auth?code=021Bbl100qvMZV1slw200jLth90Bbl15"
+[GIN] 2026/03/07 - 14:01:42 | 404 |       2.751µs |       127.0.0.1 | GET      "/api/xxx"
+[GIN] 2026/03/07 - 14:01:51 | 404 |         2.3µs |       127.0.0.1 | GET      "/api/xxx"
+2026/03/07 16:27:00 [LOGIN] 尝试登录 - username: admin
+
+2026/03/07 16:27:00 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[11.576ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/07 16:27:00 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/07 16:27:00 [LOGIN] 数据库中的密码hash: admin123
+2026/03/07 16:27:00 [LOGIN] hash长度: 8
+2026/03/07 16:27:00 [LOGIN] 输入的密码: admin123
+2026/03/07 16:27:00 [LOGIN] 密码长度: 8
+2026/03/07 16:27:00 [LOGIN] 密码验证结果: true
+
+2026/03/07 16:27:00 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:27
+[0m[33m[2.633ms] [34;1m[rows:1][0m UPDATE "admin_users" SET "username"='admin',"password_hash"='admin123',"real_name"='系统管理员',"phone"='',"email"='',"status"=1,"last_login_at"='2026-03-07 16:27:00.201',"created_at"='2026-03-05 14:36:10.502',"updated_at"='2026-03-07 16:27:00.202' WHERE "id" = 1
+[GIN] 2026/03/07 - 16:27:00 | 200 |   14.764056ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+
+2026/03/07 16:27:00 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:180
+[0m[33m[4.258ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/07 - 16:27:00 | 200 |    4.469746ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/07 16:27:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:119
+[0m[33m[1.192ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/07 16:27:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:135
+[0m[33m[1.010ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/07 16:27:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:138
+[0m[33m[1.123ms] [34;1m[rows:13][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 16:27:02 | 200 |    3.823403ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+2026/03/07 16:35:56 数据库连接成功
+2026/03/07 16:35:56 微信支付客户端初始化成功
+2026/03/07 16:35:56 服务器启动在端口 8080
+
+2026/03/07 16:36:05 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:125
+[0m[33m[14.729ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/07 16:36:05 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:141
+[0m[33m[1.489ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/07 16:36:05 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:144
+[0m[33m[1.864ms] [34;1m[rows:13][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 16:36:05 | 200 |   19.068568ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+2026/03/07 16:36:11 [LOGIN] 尝试登录 - username: admin
+
+2026/03/07 16:36:11 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[2.573ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/07 16:36:11 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/07 16:36:11 [LOGIN] 数据库中的密码hash: admin123
+2026/03/07 16:36:11 [LOGIN] hash长度: 8
+2026/03/07 16:36:11 [LOGIN] 输入的密码: admin123
+2026/03/07 16:36:11 [LOGIN] 密码长度: 8
+2026/03/07 16:36:11 [LOGIN] 密码验证结果: true
+
+2026/03/07 16:36:11 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:33
+[0m[33m[4.122ms] [34;1m[rows:1][0m UPDATE "admin_users" SET "username"='admin',"password_hash"='admin123',"real_name"='系统管理员',"phone"='',"email"='',"status"=1,"last_login_at"='2026-03-07 16:36:11.164',"created_at"='2026-03-05 14:36:10.502',"updated_at"='2026-03-07 16:36:11.164' WHERE "id" = 1
+[GIN] 2026/03/07 - 16:36:11 | 200 |    7.183735ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+
+2026/03/07 16:36:11 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:186
+[0m[33m[3.912ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/07 - 16:36:11 | 200 |    4.141979ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/07 16:36:12 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[1.673ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/07 16:36:12 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[0.878ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 16:36:12 | 200 |    3.092768ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/07 16:36:14 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:125
+[0m[33m[0.642ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/07 16:36:14 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:141
+[0m[33m[0.353ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/07 16:36:14 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:144
+[0m[33m[0.692ms] [34;1m[rows:13][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 16:36:14 | 200 |    2.211061ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/07 16:36:16 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:159
+[0m[33m[1.489ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/07 - 16:36:16 | 200 |    1.714702ms |       127.0.0.1 | GET      "/api/v1/admin/config"
+
+2026/03/07 16:36:18 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:125
+[0m[33m[0.953ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/07 16:36:18 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:141
+[0m[33m[0.335ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/07 16:36:18 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:144
+[0m[33m[0.757ms] [34;1m[rows:13][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 16:36:18 | 200 |    2.581981ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/07 16:36:22 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[0.644ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/07 16:36:22 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[0.655ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 16:36:22 | 200 |    1.618048ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/07 16:36:43 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:57
+[0m[33m[10.063ms] [34;1m[rows:1][0m UPDATE "sim_cards" SET "card_no"='89860123456789012347',"device_no"='866123456789014',"start_date"='2024-01-01 00:00:00',"expire_date"='2027-03-06 00:00:00',"status"=0,"operator"='中国电信',"package_type"='年卡',"total_recharge_count"=0,"total_recharge_amount"=0,"last_recharge_time"='2026-03-07 16:36:43.795',"last_recharge_amount"=0.01,"remark"='测试卡片3 - 已过期',"created_at"='0000-00-00 00:00:00',"updated_at"='2026-03-07 16:36:43.796' WHERE "id" = 3
+[GIN] 2026/03/07 - 16:36:43 | 200 |   10.508985ms |       127.0.0.1 | PUT      "/api/v1/admin/cards/3"
+
+2026/03/07 16:36:43 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[0.617ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/07 16:36:43 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[0.604ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 16:36:43 | 200 |    1.465842ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/07 16:36:52 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:57
+[0m[33m[4.599ms] [34;1m[rows:1][0m UPDATE "sim_cards" SET "card_no"='89860123456789012348',"device_no"='866123456789015',"start_date"='2025-06-01 00:00:00',"expire_date"='2026-12-01 00:00:00',"status"=0,"operator"='中国移动',"package_type"='年卡',"total_recharge_count"=0,"total_recharge_amount"=0,"last_recharge_time"=NULL,"last_recharge_amount"=0,"remark"='测试卡片4',"created_at"='0000-00-00 00:00:00',"updated_at"='2026-03-07 16:36:52.749' WHERE "id" = 4
+[GIN] 2026/03/07 - 16:36:52 | 200 |    8.584523ms |       127.0.0.1 | PUT      "/api/v1/admin/cards/4"
+
+2026/03/07 16:36:52 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[0.815ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/07 16:36:52 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[1.982ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 16:36:52 | 200 |    3.527299ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/07 16:37:30 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[2.550ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '48' OR device_no = '48' OR card_no LIKE '%48%' OR device_no LIKE '%48%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/07 - 16:37:30 | 200 |    2.737358ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=48"
+
+2026/03/07 16:37:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[1.044ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012348' OR device_no = '89860123456789012348' OR card_no LIKE '%89860123456789012348%' OR device_no LIKE '%89860123456789012348%' ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/07 16:37:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:89
+[0m[33m[2.925ms] [34;1m[rows:1][0m INSERT INTO "recharge_records" ("card_id","card_no","device_no","recharge_amount","recharge_years","old_expire_date","new_expire_date","payment_method","trade_no","transaction_id","payment_status","paid_at","openid","ip_address","user_agent","created_at","updated_at") VALUES (4,'89860123456789012348','866123456789015',100,1,'2026-12-01 00:00:00','2027-12-01 00:00:00','wechat','R2026030716373591155','',0,NULL,'o0mUMt4U1j1DFdmjeuA_l_rqkEd0','127.0.0.1','Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452d) NetType/WIFI Language/zh_CN','2026-03-07 16:37:35.327','2026-03-07 16:37:35.327') RETURNING "id"
+[GIN] 2026/03/07 - 16:37:35 | 200 |  460.465527ms |       127.0.0.1 | POST     "/api/v1/payment/create"
+
+2026/03/07 16:37:58 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:57
+[0m[33m[2.372ms] [34;1m[rows:1][0m UPDATE "sim_cards" SET "card_no"='89860123456789012348',"device_no"='866123456789015',"start_date"='2025-06-01 00:00:00',"expire_date"='2026-12-01 00:00:00',"status"=0,"operator"='中国移动',"package_type"='年卡',"total_recharge_count"=0,"total_recharge_amount"=0,"last_recharge_time"=NULL,"last_recharge_amount"=0,"remark"='测试卡片4',"created_at"='0000-00-00 00:00:00',"updated_at"='2026-03-07 16:37:58.492' WHERE "id" = 4
+[GIN] 2026/03/07 - 16:37:58 | 200 |    2.715381ms |       127.0.0.1 | PUT      "/api/v1/admin/cards/4"
+
+2026/03/07 16:37:58 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[0.620ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/07 16:37:58 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[0.817ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 16:37:58 | 200 |    1.898168ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/07 16:38:09 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[1.120ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '48' OR device_no = '48' OR card_no LIKE '%48%' OR device_no LIKE '%48%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/07 - 16:38:09 | 200 |    1.422852ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=48"
+
+2026/03/07 16:38:12 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[0.900ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012348' OR device_no = '89860123456789012348' OR card_no LIKE '%89860123456789012348%' OR device_no LIKE '%89860123456789012348%' ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/07 16:38:12 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:89
+[0m[33m[2.334ms] [34;1m[rows:1][0m INSERT INTO "recharge_records" ("card_id","card_no","device_no","recharge_amount","recharge_years","old_expire_date","new_expire_date","payment_method","trade_no","transaction_id","payment_status","paid_at","openid","ip_address","user_agent","created_at","updated_at") VALUES (4,'89860123456789012348','866123456789015',100,1,'2026-12-01 00:00:00','2027-12-01 00:00:00','wechat','R2026030716381209915','',0,NULL,'o0mUMt4U1j1DFdmjeuA_l_rqkEd0','127.0.0.1','Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452d) NetType/WIFI Language/zh_CN','2026-03-07 16:38:12.153','2026-03-07 16:38:12.153') RETURNING "id"
+[GIN] 2026/03/07 - 16:38:12 | 200 |  407.085091ms |       127.0.0.1 | POST     "/api/v1/payment/create"
+2026/03/07 16:48:02 数据库连接成功
+2026/03/07 16:48:02 微信支付客户端初始化成功
+2026/03/07 16:48:02 服务器启动在端口 8080
+
+2026/03/07 16:48:08 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[2.792ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/07 16:48:08 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[1.903ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 16:48:08 | 200 |    5.331421ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/07 16:48:13 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:48
+[0m[33m[1.962ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE "sim_cards"."id" = 4 ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/07 16:48:13 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:57
+[0m[33m[5.634ms] [34;1m[rows:1][0m UPDATE "sim_cards" SET "card_no"='89860123456789012348',"device_no"='866123456789015',"start_date"='2025-06-01 00:00:00',"expire_date"='2026-12-01 00:00:00',"status"=1,"operator"='中国移动',"package_type"='年卡',"total_recharge_count"=0,"total_recharge_amount"=0,"last_recharge_time"=NULL,"last_recharge_amount"=0,"remark"='测试卡片4',"created_at"='0000-00-00 00:00:00',"updated_at"='2026-03-07 16:48:13.724' WHERE "id" = 4
+[GIN] 2026/03/07 - 16:48:13 | 200 |    8.431879ms |       127.0.0.1 | PUT      "/api/v1/admin/cards/4"
+
+2026/03/07 16:48:13 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[0.413ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/07 16:48:13 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[0.717ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 16:48:13 | 200 |    1.461467ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/07 16:48:30 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[2.069ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '48' OR device_no = '48' OR card_no LIKE '%48%' OR device_no LIKE '%48%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/07 - 16:48:30 | 200 |    2.281624ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=48"
+
+2026/03/07 16:48:33 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[1.338ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012348' OR device_no = '89860123456789012348' OR card_no LIKE '%89860123456789012348%' OR device_no LIKE '%89860123456789012348%' ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/07 16:48:33 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:89
+[0m[33m[3.580ms] [34;1m[rows:1][0m INSERT INTO "recharge_records" ("card_id","card_no","device_no","recharge_amount","recharge_years","old_expire_date","new_expire_date","payment_method","trade_no","transaction_id","payment_status","paid_at","openid","ip_address","user_agent","created_at","updated_at") VALUES (4,'89860123456789012348','866123456789015',100,1,'2026-12-01 00:00:00','2027-12-01 00:00:00','wechat','R2026030716483363968','',0,NULL,'o0mUMt4U1j1DFdmjeuA_l_rqkEd0','127.0.0.1','Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452d) NetType/WIFI Language/zh_CN','2026-03-07 16:48:33.366','2026-03-07 16:48:33.366') RETURNING "id"
+[GIN] 2026/03/07 - 16:48:33 | 200 |  364.578972ms |       127.0.0.1 | POST     "/api/v1/payment/create"
+2026/03/07 17:04:21 数据库连接成功
+2026/03/07 17:04:21 微信支付客户端初始化成功
+2026/03/07 17:04:21 服务器启动在端口 8080
+
+2026/03/07 17:05:28 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[3.907ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '48' OR device_no = '48' OR card_no LIKE '%48%' OR device_no LIKE '%48%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/07 - 17:05:28 | 200 |    4.180728ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=48"
+
+2026/03/07 17:05:30 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[0.964ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012348' OR device_no = '89860123456789012348' OR card_no LIKE '%89860123456789012348%' OR device_no LIKE '%89860123456789012348%' ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/07 17:05:30 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:89
+[0m[33m[4.868ms] [34;1m[rows:1][0m INSERT INTO "recharge_records" ("card_id","card_no","device_no","recharge_amount","recharge_years","old_expire_date","new_expire_date","payment_method","trade_no","transaction_id","payment_status","paid_at","openid","ip_address","user_agent","created_at","updated_at") VALUES (4,'89860123456789012348','866123456789015',0,1,'2026-12-01 00:00:00','2027-12-01 00:00:00','wechat','R2026030717053052859','',0,NULL,'o0mUMt4U1j1DFdmjeuA_l_rqkEd0','127.0.0.1','Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452d) NetType/WIFI Language/zh_CN','2026-03-07 17:05:30.985','2026-03-07 17:05:30.985') RETURNING "id"
+[GIN] 2026/03/07 - 17:05:31 | 400 |  181.401052ms |       127.0.0.1 | POST     "/api/v1/payment/create"
+
+2026/03/07 17:05:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[1.006ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012348' OR device_no = '89860123456789012348' OR card_no LIKE '%89860123456789012348%' OR device_no LIKE '%89860123456789012348%' ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/07 17:05:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:89
+[0m[33m[2.189ms] [34;1m[rows:1][0m INSERT INTO "recharge_records" ("card_id","card_no","device_no","recharge_amount","recharge_years","old_expire_date","new_expire_date","payment_method","trade_no","transaction_id","payment_status","paid_at","openid","ip_address","user_agent","created_at","updated_at") VALUES (4,'89860123456789012348','866123456789015',0,1,'2026-12-01 00:00:00','2027-12-01 00:00:00','wechat','R2026030717053598607','',0,NULL,'o0mUMt4U1j1DFdmjeuA_l_rqkEd0','127.0.0.1','Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452d) NetType/WIFI Language/zh_CN','2026-03-07 17:05:35.666','2026-03-07 17:05:35.666') RETURNING "id"
+[GIN] 2026/03/07 - 17:05:35 | 400 |   88.245503ms |       127.0.0.1 | POST     "/api/v1/payment/create"
+
+2026/03/07 17:05:54 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[1.236ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '47' OR device_no = '47' OR card_no LIKE '%47%' OR device_no LIKE '%47%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/07 - 17:05:54 | 200 |    1.436364ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=47"
+
+2026/03/07 17:05:56 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[0.994ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012347' OR device_no = '89860123456789012347' OR card_no LIKE '%89860123456789012347%' OR device_no LIKE '%89860123456789012347%' ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/07 17:05:56 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:89
+[0m[33m[2.385ms] [34;1m[rows:1][0m INSERT INTO "recharge_records" ("card_id","card_no","device_no","recharge_amount","recharge_years","old_expire_date","new_expire_date","payment_method","trade_no","transaction_id","payment_status","paid_at","openid","ip_address","user_agent","created_at","updated_at") VALUES (3,'89860123456789012347','866123456789014',0.01,1,'2027-03-06 00:00:00','2028-03-06 00:00:00','wechat','R2026030717055678643','',0,NULL,'o0mUMt4U1j1DFdmjeuA_l_rqkEd0','127.0.0.1','Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452d) NetType/WIFI Language/zh_CN','2026-03-07 17:05:56.068','2026-03-07 17:05:56.068') RETURNING "id"
+[GIN] 2026/03/07 - 17:05:56 | 200 |  375.533379ms |       127.0.0.1 | POST     "/api/v1/payment/create"
+2026/03/07 17:07:45 数据库连接成功
+2026/03/07 17:07:45 微信支付客户端初始化成功
+2026/03/07 17:07:45 服务器启动在端口 8080
+
+2026/03/07 17:08:06 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[3.896ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '48' OR device_no = '48' OR card_no LIKE '%48%' OR device_no LIKE '%48%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/07 - 17:08:06 | 200 |    4.182766ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=48"
+
+2026/03/07 17:08:08 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[1.192ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012348' OR device_no = '89860123456789012348' OR card_no LIKE '%89860123456789012348%' OR device_no LIKE '%89860123456789012348%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/07 - 17:08:08 | 400 |    1.535872ms |       127.0.0.1 | POST     "/api/v1/payment/create"
+
+2026/03/07 17:08:24 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:48
+[0m[33m[1.651ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE "sim_cards"."id" = 4 ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/07 17:08:24 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:57
+[0m[33m[5.020ms] [34;1m[rows:1][0m UPDATE "sim_cards" SET "card_no"='89860123456789012348',"device_no"='866123456789015',"start_date"='2025-06-01 00:00:00',"expire_date"='2026-12-01 00:00:00',"status"=1,"operator"='中国移动',"package_type"='年卡',"total_recharge_count"=0,"total_recharge_amount"=0,"last_recharge_time"='2026-03-07 17:08:24.026',"last_recharge_amount"=0.01,"remark"='测试卡片4',"created_at"='0000-00-00 00:00:00',"updated_at"='2026-03-07 17:08:24.026' WHERE "id" = 4
+[GIN] 2026/03/07 - 17:08:24 | 200 |    7.406753ms |       127.0.0.1 | PUT      "/api/v1/admin/cards/4"
+
+2026/03/07 17:08:24 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[1.016ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/07 17:08:24 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[1.059ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 17:08:24 | 200 |    2.460379ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/07 17:08:27 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[1.319ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012348' OR device_no = '89860123456789012348' OR card_no LIKE '%89860123456789012348%' OR device_no LIKE '%89860123456789012348%' ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/07 17:08:27 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:89
+[0m[33m[3.650ms] [34;1m[rows:1][0m INSERT INTO "recharge_records" ("card_id","card_no","device_no","recharge_amount","recharge_years","old_expire_date","new_expire_date","payment_method","trade_no","transaction_id","payment_status","paid_at","openid","ip_address","user_agent","created_at","updated_at") VALUES (4,'89860123456789012348','866123456789015',0.01,1,'2026-12-01 00:00:00','2027-12-01 00:00:00','wechat','R2026030717082783908','',0,NULL,'o0mUMt4U1j1DFdmjeuA_l_rqkEd0','127.0.0.1','Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452d) NetType/WIFI Language/zh_CN','2026-03-07 17:08:27.724','2026-03-07 17:08:27.724') RETURNING "id"
+[GIN] 2026/03/07 - 17:08:28 | 200 |  443.100937ms |       127.0.0.1 | POST     "/api/v1/payment/create"
+
+2026/03/07 19:37:06 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:186
+[0m[33m[12.915ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/07 - 19:37:06 | 200 |   13.228179ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/07 19:37:10 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[1.052ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/07 19:37:10 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[1.092ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 19:37:10 | 200 |     2.49281ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/07 19:37:12 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:159
+[0m[33m[1.314ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/07 - 19:37:12 | 200 |      1.4958ms |       127.0.0.1 | GET      "/api/v1/admin/config"
+
+2026/03/07 19:37:15 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:125
+[0m[33m[1.026ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/07 19:37:15 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:141
+[0m[33m[0.906ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/07 19:37:15 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:144
+[0m[33m[1.274ms] [34;1m[rows:20][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 19:37:15 | 200 |    3.836537ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/07 19:37:20 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[0.588ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/07 19:37:20 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[0.997ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 19:37:20 | 200 |    2.043891ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/07 19:37:33 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:48
+[0m[33m[1.500ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE "sim_cards"."id" = 3 ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/07 19:37:33 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:57
+[0m[33m[4.922ms] [34;1m[rows:1][0m UPDATE "sim_cards" SET "card_no"='89860123456789012347',"device_no"='866123456789014',"start_date"='2024-01-01 00:00:00',"expire_date"='2027-03-06 00:00:00',"status"=1,"operator"='中国电信',"package_type"='年卡',"total_recharge_count"=0,"total_recharge_amount"=0,"last_recharge_time"='2026-03-07 19:37:33.431',"last_recharge_amount"=0.02,"remark"='测试卡片3 - 已过期',"created_at"='0000-00-00 00:00:00',"updated_at"='2026-03-07 19:37:33.431' WHERE "id" = 3
+[GIN] 2026/03/07 - 19:37:33 | 200 |    6.804182ms |       127.0.0.1 | PUT      "/api/v1/admin/cards/3"
+
+2026/03/07 19:37:33 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[0.530ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/07 19:37:33 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[0.727ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 19:37:33 | 200 |    1.663425ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/07 19:37:56 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[3.622ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '9014' OR device_no = '9014' OR card_no LIKE '%9014%' OR device_no LIKE '%9014%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/07 - 19:37:56 | 200 |    3.861938ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=9014"
+
+2026/03/07 19:38:00 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[0.945ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012347' OR device_no = '89860123456789012347' OR card_no LIKE '%89860123456789012347%' OR device_no LIKE '%89860123456789012347%' ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/07 19:38:00 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:89
+[0m[33m[3.229ms] [34;1m[rows:1][0m INSERT INTO "recharge_records" ("card_id","card_no","device_no","recharge_amount","recharge_years","old_expire_date","new_expire_date","payment_method","trade_no","transaction_id","payment_status","paid_at","openid","ip_address","user_agent","created_at","updated_at") VALUES (3,'89860123456789012347','866123456789014',0.02,1,'2027-03-06 00:00:00','2028-03-06 00:00:00','wechat','R2026030719380092512','',0,NULL,'o0mUMtxstWEcLc4BD9KtCAdNrsKY','127.0.0.1','Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452d) NetType/WIFI Language/zh_CN','2026-03-07 19:38:00.456','2026-03-07 19:38:00.456') RETURNING "id"
+[GIN] 2026/03/07 - 19:38:00 | 200 |  413.524539ms |       127.0.0.1 | POST     "/api/v1/payment/create"
+2026/03/07 19:38:12 收到微信支付回调: timestamp=1772883492, nonce=nFHZkWi0xoG0lpiJVojkounRnrwAdAjj, serial=PUB_KEY_ID_0115801802612026020900192206002200
+
+2026/03/07 19:38:12 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:94
+[0m[33m[0.969ms] [34;1m[rows:1][0m SELECT * FROM "recharge_records" WHERE trade_no = 'R2026030719380092512' ORDER BY "recharge_records"."id" LIMIT 1
+
+2026/03/07 19:38:12 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:99
+[0m[33m[1.283ms] [34;1m[rows:1][0m UPDATE "recharge_records" SET "card_id"=3,"card_no"='89860123456789012347',"device_no"='866123456789014',"recharge_amount"=0.02,"recharge_years"=1,"old_expire_date"='2027-03-06 00:00:00',"new_expire_date"='2028-03-06 00:00:00',"payment_method"='wechat',"trade_no"='R2026030719380092512',"transaction_id"='4200002972202603079081656873',"payment_status"=1,"paid_at"='2026-03-07 19:38:11',"openid"='o0mUMtxstWEcLc4BD9KtCAdNrsKY',"ip_address"='127.0.0.1',"user_agent"='Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452d) NetType/WIFI Language/zh_CN',"created_at"='2026-03-07 19:38:00.456',"updated_at"='2026-03-07 19:38:12.682' WHERE "id" = 23
+
+2026/03/07 19:38:12 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:48
+[0m[33m[0.657ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE "sim_cards"."id" = 3 ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/07 19:38:12 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:57
+[0m[33m[0.880ms] [34;1m[rows:1][0m UPDATE "sim_cards" SET "card_no"='89860123456789012347',"device_no"='866123456789014',"start_date"='2024-01-01 00:00:00',"expire_date"='2028-03-06 00:00:00',"status"=1,"operator"='中国电信',"package_type"='年卡',"total_recharge_count"=1,"total_recharge_amount"=0.02,"last_recharge_time"='2026-03-07 19:38:11',"last_recharge_amount"=0.02,"remark"='测试卡片3 - 已过期',"created_at"='0001-01-01 00:00:00',"updated_at"='2026-03-07 19:38:12.684' WHERE "id" = 3
+[GIN] 2026/03/07 - 19:38:12 | 200 |    6.404492ms |       127.0.0.1 | POST     "/api/v1/payment/notify"
+
+2026/03/07 19:38:15 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:94
+[0m[33m[1.330ms] [34;1m[rows:1][0m SELECT * FROM "recharge_records" WHERE trade_no = 'R2026030719380092512' ORDER BY "recharge_records"."id" LIMIT 1
+[GIN] 2026/03/07 - 19:38:15 | 200 |    1.594131ms |       127.0.0.1 | GET      "/api/v1/payment/status?trade_no=R2026030719380092512"
+
+2026/03/07 19:38:15 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[0.812ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012347' OR device_no = '89860123456789012347' OR card_no LIKE '%89860123456789012347%' OR device_no LIKE '%89860123456789012347%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/07 - 19:38:15 | 200 |     966.596µs |       127.0.0.1 | GET      "/api/v1/card/query?keyword=89860123456789012347"
+
+2026/03/07 19:38:18 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:186
+[0m[33m[1.023ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/07 - 19:38:18 | 200 |    1.267717ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/07 19:38:20 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:186
+[0m[33m[0.805ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/07 - 19:38:20 | 200 |    1.276414ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/07 19:39:32 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:125
+[0m[33m[0.952ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/07 19:39:32 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:141
+[0m[33m[0.449ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/07 19:39:32 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:144
+[0m[33m[1.006ms] [34;1m[rows:20][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/07 - 19:39:32 | 200 |    3.165578ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/07 19:39:53 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:186
+[0m[33m[0.960ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/07 - 19:39:53 | 200 |     1.15056ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/07 19:46:54 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:186
+[0m[33m[0.928ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/07 - 19:46:54 | 200 |    1.103824ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+[GIN] 2026/03/08 - 05:55:00 | 404 |       1.679µs |       127.0.0.1 | GET      "/api/v1/guest/comm/config"
+
+2026/03/08 08:01:29 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:186
+[0m[33m[13.453ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/08 - 08:01:29 | 200 |   13.745276ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+2026/03/08 08:01:37 [LOGIN] 尝试登录 - username: admin
+
+2026/03/08 08:01:37 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[3.226ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/08 08:01:37 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/08 08:01:37 [LOGIN] 数据库中的密码hash: admin123
+2026/03/08 08:01:37 [LOGIN] hash长度: 8
+2026/03/08 08:01:37 [LOGIN] 输入的密码: admin123
+2026/03/08 08:01:37 [LOGIN] 密码长度: 8
+2026/03/08 08:01:37 [LOGIN] 密码验证结果: true
+
+2026/03/08 08:01:37 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:33
+[0m[33m[2.466ms] [34;1m[rows:1][0m UPDATE "admin_users" SET "username"='admin',"password_hash"='admin123',"real_name"='系统管理员',"phone"='',"email"='',"status"=1,"last_login_at"='2026-03-08 08:01:37.973',"created_at"='2026-03-05 14:36:10.502',"updated_at"='2026-03-08 08:01:37.974' WHERE "id" = 1
+[GIN] 2026/03/08 - 08:01:37 | 200 |    6.062842ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+
+2026/03/08 08:01:38 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:186
+[0m[33m[0.809ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/08 - 08:01:38 | 200 |    1.103874ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/08 08:10:56 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:186
+[0m[33m[1.772ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/08 - 08:10:56 | 200 |    2.084118ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/08 08:10:59 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[1.241ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/08 08:10:59 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[1.145ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/08 - 08:10:59 | 200 |    2.977049ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/08 08:12:37 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[1.896ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '48' OR device_no = '48' OR card_no LIKE '%48%' OR device_no LIKE '%48%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/08 - 08:12:37 | 200 |    2.403615ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=48"
+
+2026/03/08 08:12:41 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[1.135ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012348' OR device_no = '89860123456789012348' OR card_no LIKE '%89860123456789012348%' OR device_no LIKE '%89860123456789012348%' ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/08 08:12:41 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:89
+[0m[33m[3.724ms] [34;1m[rows:1][0m INSERT INTO "recharge_records" ("card_id","card_no","device_no","recharge_amount","recharge_years","old_expire_date","new_expire_date","payment_method","trade_no","transaction_id","payment_status","paid_at","openid","ip_address","user_agent","created_at","updated_at") VALUES (4,'89860123456789012348','866123456789015',0.01,1,'2026-12-01 00:00:00','2027-12-01 00:00:00','wechat','R2026030808124172705','',0,NULL,'o0mUMt4U1j1DFdmjeuA_l_rqkEd0','127.0.0.1','Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452e) NetType/WIFI Language/zh_CN','2026-03-08 08:12:41.316','2026-03-08 08:12:41.316') RETURNING "id"
+[GIN] 2026/03/08 - 08:12:41 | 200 |  416.316859ms |       127.0.0.1 | POST     "/api/v1/payment/create"
+2026/03/08 08:12:47 收到微信支付回调: timestamp=1772928767, nonce=oE8FxFJSiJj3PCkRGWtgRBl51wnhLMIV, serial=PUB_KEY_ID_0115801802612026020900192206002200
+
+2026/03/08 08:12:47 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:94
+[0m[33m[4.125ms] [34;1m[rows:1][0m SELECT * FROM "recharge_records" WHERE trade_no = 'R2026030808124172705' ORDER BY "recharge_records"."id" LIMIT 1
+
+2026/03/08 08:12:47 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:99
+[0m[33m[6.358ms] [34;1m[rows:1][0m UPDATE "recharge_records" SET "card_id"=4,"card_no"='89860123456789012348',"device_no"='866123456789015',"recharge_amount"=0.01,"recharge_years"=1,"old_expire_date"='2026-12-01 00:00:00',"new_expire_date"='2027-12-01 00:00:00',"payment_method"='wechat',"trade_no"='R2026030808124172705',"transaction_id"='4200002976202603082903254561',"payment_status"=1,"paid_at"='2026-03-08 08:12:47',"openid"='o0mUMt4U1j1DFdmjeuA_l_rqkEd0',"ip_address"='127.0.0.1',"user_agent"='Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452e) NetType/WIFI Language/zh_CN',"created_at"='2026-03-08 08:12:41.316',"updated_at"='2026-03-08 08:12:47.586' WHERE "id" = 24
+
+2026/03/08 08:12:47 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:48
+[0m[33m[1.903ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE "sim_cards"."id" = 4 ORDER BY "sim_cards"."id" LIMIT 1
+
+2026/03/08 08:12:47 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:57
+[0m[33m[4.950ms] [34;1m[rows:1][0m UPDATE "sim_cards" SET "card_no"='89860123456789012348',"device_no"='866123456789015',"start_date"='2025-06-01 00:00:00',"expire_date"='2027-12-01 00:00:00',"status"=1,"operator"='中国移动',"package_type"='年卡',"total_recharge_count"=1,"total_recharge_amount"=0.01,"last_recharge_time"='2026-03-08 08:12:47',"last_recharge_amount"=0.01,"remark"='测试卡片4',"created_at"='0001-01-01 00:00:00',"updated_at"='2026-03-08 08:12:47.595' WHERE "id" = 4
+[GIN] 2026/03/08 - 08:12:47 | 200 |   21.155161ms |       127.0.0.1 | POST     "/api/v1/payment/notify"
+
+2026/03/08 08:12:51 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:94
+[0m[33m[1.168ms] [34;1m[rows:1][0m SELECT * FROM "recharge_records" WHERE trade_no = 'R2026030808124172705' ORDER BY "recharge_records"."id" LIMIT 1
+[GIN] 2026/03/08 - 08:12:51 | 200 |    1.354648ms |       127.0.0.1 | GET      "/api/v1/payment/status?trade_no=R2026030808124172705"
+
+2026/03/08 08:12:51 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[0.747ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012348' OR device_no = '89860123456789012348' OR card_no LIKE '%89860123456789012348%' OR device_no LIKE '%89860123456789012348%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/08 - 08:12:51 | 200 |     915.141µs |       127.0.0.1 | GET      "/api/v1/card/query?keyword=89860123456789012348"
+
+2026/03/08 08:13:04 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[0.875ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '48' OR device_no = '48' OR card_no LIKE '%48%' OR device_no LIKE '%48%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/08 - 08:13:04 | 200 |    1.049359ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=48"
+
+2026/03/08 08:13:27 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:186
+[0m[33m[1.468ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/08 - 08:13:27 | 200 |    1.734199ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/08 08:13:30 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:186
+[0m[33m[0.749ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/08 - 08:13:30 | 200 |     936.289µs |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/08 08:13:33 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[0.562ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/08 08:13:33 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[0.890ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/08 - 08:13:33 | 200 |    1.836256ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/08 08:13:34 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:125
+[0m[33m[1.208ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/08 08:13:34 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:141
+[0m[33m[0.936ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/08 08:13:34 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:144
+[0m[33m[1.401ms] [34;1m[rows:20][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/08 - 08:13:34 | 200 |    4.185448ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/08 08:14:03 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:125
+[0m[33m[1.445ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/08 08:14:03 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:141
+[0m[33m[1.226ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/08 08:14:03 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:144
+[0m[33m[1.113ms] [34;1m[rows:2][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20 OFFSET 20
+[GIN] 2026/03/08 - 08:14:03 | 200 |    4.373225ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=2&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/08 08:14:05 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:125
+[0m[33m[0.799ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/08 08:14:05 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:141
+[0m[33m[0.279ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/08 08:14:05 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:144
+[0m[33m[0.910ms] [34;1m[rows:20][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/08 - 08:14:05 | 200 |    2.531943ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/08 08:14:19 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:186
+[0m[33m[0.894ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/08 - 08:14:19 | 200 |     1.16761ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/08 08:14:20 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[0.777ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/08 08:14:20 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[0.766ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/08 - 08:14:20 | 200 |    1.793468ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/08 08:14:21 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:125
+[0m[33m[0.847ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/08 08:14:21 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:141
+[0m[33m[0.343ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/08 08:14:21 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:144
+[0m[33m[0.816ms] [34;1m[rows:20][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/08 - 08:14:21 | 200 |    2.551209ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/08 08:14:22 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:159
+[0m[33m[3.319ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/08 - 08:14:22 | 200 |    4.130591ms |       127.0.0.1 | GET      "/api/v1/admin/config"
+
+2026/03/08 08:14:23 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:125
+[0m[33m[0.448ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
+
+2026/03/08 08:14:23 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:141
+[0m[33m[0.333ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
+
+2026/03/08 08:14:23 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:144
+[0m[33m[0.906ms] [34;1m[rows:20][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/08 - 08:14:23 | 200 |    2.297049ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
+
+2026/03/08 08:14:23 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:78
+[0m[33m[0.565ms] [34;1m[rows:1][0m SELECT count(*) FROM "sim_cards"
+
+2026/03/08 08:14:23 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:81
+[0m[33m[0.574ms] [34;1m[rows:2][0m SELECT * FROM "sim_cards" ORDER BY id DESC LIMIT 20
+[GIN] 2026/03/08 - 08:14:23 | 200 |    1.447549ms |       127.0.0.1 | GET      "/api/v1/admin/cards?page=1&page_size=20&status=0&keyword="
+
+2026/03/08 08:14:25 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:186
+[0m[33m[1.229ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/08 - 08:14:25 | 200 |    1.400619ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/08 08:22:29 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
+[0m[33m[1.975ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '48' OR device_no = '48' OR card_no LIKE '%48%' OR device_no LIKE '%48%' ORDER BY "sim_cards"."id" LIMIT 1
+[GIN] 2026/03/08 - 08:22:29 | 200 |    2.509494ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=48"

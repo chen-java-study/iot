@@ -2,9 +2,6 @@
   <el-card v-loading="loading">
     <el-form label-width="180px">
       <el-divider content-position="left">充值设置</el-divider>
-      <el-form-item label="充值价格(元/年)">
-        <el-input-number v-model.number="config.recharge_price" :min="0" :precision="2" />
-      </el-form-item>
       <el-form-item label="到期提醒天数">
         <el-input-number v-model.number="config.alert_days" :min="1" :max="365" />
       </el-form-item>
@@ -29,7 +26,6 @@ export default {
     const saving = ref(false)
     
     const config = reactive({
-      recharge_price: 100,
       alert_days: 30
     })
 
@@ -38,7 +34,6 @@ export default {
       try {
         const data = await getConfig()
         Object.assign(config, {
-          recharge_price: parseFloat(data.recharge_price) || 100,
           alert_days: parseInt(data.alert_days) || 30
         })
       } catch (error) {
@@ -51,9 +46,7 @@ export default {
     const handleSave = async () => {
       saving.value = true
       try {
-        // 后端 map[string]string，需要转成字符串
         await updateConfig({
-          recharge_price: String(config.recharge_price),
           alert_days: String(config.alert_days)
         })
         ElMessage.success('保存成功')
@@ -78,4 +71,3 @@ export default {
   }
 }
 </script>
-

@@ -39,15 +39,16 @@ func (h *Handler) QueryCard(c *gin.Context) {
 	}
 
 	utils.Success(c, gin.H{
-		"id":             card.ID,
-		"card_no":        card.CardNo,
-		"device_no":      card.DeviceNo,
-		"start_date":     card.StartDate.Format("2006-01-02"),
-		"expire_date":    card.ExpireDate.Format("2006-01-02"),
-		"status":         card.Status,
-		"status_text":    card.StatusText(),
-		"operator":       card.Operator,
-		"days_remaining": card.DaysRemaining(),
+		"id":                  card.ID,
+		"card_no":             card.CardNo,
+		"device_no":           card.DeviceNo,
+		"start_date":          card.StartDate.Format("2006-01-02"),
+		"expire_date":         card.ExpireDate.Format("2006-01-02"),
+		"status":              card.Status,
+		"status_text":         card.StatusText(),
+		"operator":            card.Operator,
+		"days_remaining":     card.DaysRemaining(),
+		"last_recharge_amount": card.LastRechargeAmount,
 	})
 }
 
@@ -101,8 +102,8 @@ func (h *Handler) WechatPaymentNotify(c *gin.Context) {
 	// 获取微信回调请求头
 	headers := map[string]string{
 		"Wechatpay-Timestamp": c.GetHeader("Wechatpay-Timestamp"),
-		"Wechatpay-Nonce":    c.GetHeader("Wechatpay-Nonce"),
-		"Wechatpay-Serial":   c.GetHeader("Wechatpay-Serial"),
+		"Wechatpay-Nonce":     c.GetHeader("Wechatpay-Nonce"),
+		"Wechatpay-Serial":    c.GetHeader("Wechatpay-Serial"),
 		"Wechatpay-Signature": c.GetHeader("Wechatpay-Signature"),
 	}
 
@@ -163,11 +164,11 @@ func (h *Handler) WechatPaymentNotify(c *gin.Context) {
 
 	// 解析明文
 	var paymentResult struct {
-		OutTradeNo    string `json:"out_trade_no"`
-		TransactionID string `json:"transaction_id"`
-		TradeState    string `json:"trade_state"`
+		OutTradeNo     string `json:"out_trade_no"`
+		TransactionID  string `json:"transaction_id"`
+		TradeState     string `json:"trade_state"`
 		TradeStateDesc string `json:"trade_state_desc"`
-		Amount        struct {
+		Amount         struct {
 			Total         int    `json:"total"`
 			PayerTotal    int    `json:"payer_total"`
 			Currency      string `json:"currency"`
@@ -247,6 +248,34 @@ func (h *Handler) AdminLogin(c *gin.Context) {
 			"real_name": user.RealName,
 		},
 	})
+}
+
+// ChangePassword 修改密码
+func (h *Handler) ChangePassword(c *gin.Context) {
+	var req struct {
+		OldPassword string `json:"old_password" binding:"required"`
+		NewPassword string `json:"new_password" binding:"required"`
+	}
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+		utils.BadRequest(c, "参数错误")
+		return
+	}
+
+	// 从 JWT 中获取用户ID
+	userID, exists := c.Get("user_id")
+	if !exists {
+		utils.Unauthorized(c, "未登录")
+		return
+	}
+
+	err := h.service.ChangePassword(userID.(uint), req.OldPassword, req.NewPassword)
+	if err != nil {
+		utils.BadRequest(c, err.Error())
+		return
+	}
+
+	utils.Success(c, "密码修改成功")
 }
 
 // GetStatistics 获取统计数据
@@ -378,6 +407,13 @@ func (h *Handler) UpdateCard(c *gin.Context) {
 		return
 	}
 
+	// 先查询原有卡片，保留关键字段
+	oldCard, err := h.service.GetCardByID(uint(id))
+	if err != nil {
+		utils.BadRequest(c, "卡片不存在")
+		return
+	}
+
 	startDate, err := time.Parse("2006-01-02", req.StartDate)
 	if err != nil {
 		utils.BadRequest(c, "开始日期格式错误")
@@ -390,15 +426,19 @@ func (h *Handler) UpdateCard(c *gin.Context) {
 	}
 
 	card := model.SimCard{
-		ID:                 uint(id),
-		CardNo:             req.CardNo,
-		DeviceNo:           req.DeviceNo,
-		Operator:           req.Operator,
-		PackageType:        req.PackageType,
-		StartDate:          startDate,
-		ExpireDate:         expireDate,
-		LastRechargeAmount: req.LastRechargeAmount,
-		Remark:             req.Remark,
+		ID:                  uint(id),
+		CardNo:              req.CardNo,
+		DeviceNo:            req.DeviceNo,
+		Operator:            req.Operator,
+		PackageType:         req.PackageType,
+		StartDate:           startDate,
+		ExpireDate:          expireDate,
+		LastRechargeAmount:  req.LastRechargeAmount,
+		Remark:              req.Remark,
+		Status:              oldCard.Status,
+		TotalRechargeCount:  oldCard.TotalRechargeCount,
+		TotalRechargeAmount: oldCard.TotalRechargeAmount,
+		LastRechargeTime:    oldCard.LastRechargeTime,
 	}
 
 	// 有充值金额时，自动记录当前时间为充值时间
@@ -471,8 +511,7 @@ func (h *Handler) ListRechargeRecords(c *gin.Context) {
 
 // 允许通过接口读写的配置项白名单（微信支付相关敏感配置只在 config.yaml 里维护）
 var allowedConfigKeys = map[string]bool{
-	"recharge_price": true,
-	"alert_days":     true,
+	"alert_days": true,
 }
 
 // GetConfig 获取系统配置
@@ -517,4 +556,3 @@ func (h *Handler) UpdateConfig(c *gin.Context) {
 
 	utils.Success(c, nil)
 }
-
