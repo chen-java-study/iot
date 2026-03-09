@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"iot-card-system/internal/config"
 	"iot-card-system/internal/handler"
 	"iot-card-system/internal/repository"
@@ -10,9 +9,17 @@ import (
 	"iot-card-system/internal/service"
 	"iot-card-system/pkg/database"
 	"log"
+
+	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	// 加载 .env 环境变量文件
+	if err := godotenv.Load(); err != nil {
+		log.Printf("加载 .env 文件失败: %v", err)
+	}
+
 	// 加载配置
 	cfg, err := config.LoadConfig("configs/config.yaml")
 	if err != nil {

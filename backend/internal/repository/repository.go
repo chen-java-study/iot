@@ -95,6 +95,10 @@ func (r *Repository) FindRechargeByTradeNo(tradeNo string) (*model.RechargeRecor
 	return &record, err
 }
 
+func (r *Repository) DeleteRechargeRecord(id uint) error {
+	return r.db.Delete(&model.RechargeRecord{}, id).Error
+}
+
 func (r *Repository) UpdateRechargeRecord(record *model.RechargeRecord) error {
 	return r.db.Save(record).Error
 }

@@ -27,6 +27,7 @@ func NewService(repo *repository.Repository, cfg *config.Config) *Service {
 
 	// 初始化微信支付客户端
 	if cfg.Wechat.AppID != "" && cfg.Wechat.MchID != "" && cfg.Wechat.PrivateKeyPath != "" {
+		log.Printf("[DEBUG] 初始化微信支付, NotifyURL=%s", cfg.Wechat.NotifyURL)
 		client, err := utils.NewPayClient(
 			cfg.Wechat.AppID,
 			cfg.Wechat.MchID,
@@ -39,7 +40,7 @@ func NewService(repo *repository.Repository, cfg *config.Config) *Service {
 			log.Printf("初始化微信支付客户端失败: %v", err)
 		} else {
 			s.wechatPay = client
-			log.Println("微信支付客户端初始化成功")
+			log.Printf("微信支付客户端初始化成功, NotifyURL=%s", cfg.Wechat.NotifyURL)
 		}
 	}
 
@@ -160,7 +161,7 @@ func (s *Service) CreateRechargeOrder(cardNo, openid, ipAddress, userAgent strin
 
 	// 2. 获取充值价格（使用卡片记录中的价格）
 	price := card.LastRechargeAmount
-	if price < 0 {
+	if price <= 0 {
 		return nil, nil, errors.New("该卡片未设置充值金额，请联系管理员")
 	}
 
@@ -194,6 +195,8 @@ func (s *Service) CreateRechargeOrder(cardNo, openid, ipAddress, userAgent strin
 	// 5. 调用微信统一下单API
 	var payParams map[string]interface{}
 
+	log.Printf("[DEBUG] wechatPay=%v, AppID=%s", s.wechatPay, s.config.Wechat.AppID)
+
 	if s.wechatPay != nil {
 		// 金额单位是分
 		amountFen := int(price * 100)
@@ -205,12 +208,16 @@ func (s *Service) CreateRechargeOrder(cardNo, openid, ipAddress, userAgent strin
 			amountFen,
 		)
 		if err != nil {
+			// 微信下单失败，删除已创建的充值记录
+			s.repo.DeleteRechargeRecord(record.ID)
 			return nil, nil, fmt.Errorf("微信下单失败: %w", err)
 		}
 
 		// 生成前端支付参数
 		payParams, err = s.wechatPay.GeneratePayParams(prepayResp.PrepayID)
 		if err != nil {
+			// 生成参数失败，删除已创建的充值记录
+			s.repo.DeleteRechargeRecord(record.ID)
 			return nil, nil, fmt.Errorf("生成支付参数失败: %w", err)
 		}
 	} else {
@@ -269,6 +276,11 @@ func (s *Service) HandlePaymentNotify(transactionID, tradeNo string, paidAt time
 // QueryPaymentStatus 查询订单状态
 func (s *Service) QueryPaymentStatus(tradeNo string) (*model.RechargeRecord, error) {
 	return s.repo.FindRechargeByTradeNo(tradeNo)
+}
+
+// DeleteRechargeRecord 删除充值记录
+func (s *Service) DeleteRechargeRecord(id uint) error {
+	return s.repo.DeleteRechargeRecord(id)
 }
 
 // HasWechatPay 检查是否配置了微信支付

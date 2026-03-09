@@ -13,6 +13,7 @@ import (
 	"encoding/pem"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -151,6 +152,8 @@ func (p *PayClient) CreateJSAPIPrepay(outTradeNo, description, openID string, am
 	if err != nil {
 		return nil, fmt.Errorf("读取响应失败: %w", err)
 	}
+
+	log.Printf("[微信支付] 请求URL: %s, 状态码: %d, 响应: %s", url, resp.StatusCode, string(respBody))
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("微信支付下单失败: %s, body: %s", resp.Status, string(respBody))
