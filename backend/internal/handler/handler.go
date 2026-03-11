@@ -252,29 +252,39 @@ func (h *Handler) AdminLogin(c *gin.Context) {
 
 // ChangePassword 修改密码
 func (h *Handler) ChangePassword(c *gin.Context) {
+	log.Println("[ChangePassword] 收到修改密码请求")
+
 	var req struct {
 		OldPassword string `json:"old_password" binding:"required"`
 		NewPassword string `json:"new_password" binding:"required"`
 	}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
+		log.Printf("[ChangePassword] 参数错误: %v", err)
 		utils.BadRequest(c, "参数错误")
 		return
 	}
 
+	log.Printf("[ChangePassword] 旧密码: %s, 新密码: %s", req.OldPassword, req.NewPassword)
+
 	// 从 JWT 中获取用户ID
 	userID, exists := c.Get("user_id")
 	if !exists {
+		log.Println("[ChangePassword] 未登录")
 		utils.Unauthorized(c, "未登录")
 		return
 	}
 
+	log.Printf("[ChangePassword] 用户ID: %v", userID)
+
 	err := h.service.ChangePassword(userID.(uint), req.OldPassword, req.NewPassword)
 	if err != nil {
+		log.Printf("[ChangePassword] 修改失败: %v", err)
 		utils.BadRequest(c, err.Error())
 		return
 	}
 
+	log.Println("[ChangePassword] 修改成功")
 	utils.Success(c, "密码修改成功")
 }
 

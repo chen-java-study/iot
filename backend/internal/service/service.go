@@ -1,7 +1,9 @@
 package service
 
 import (
+	"crypto/md5"
 	"crypto/rand"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"iot-card-system/internal/config"
@@ -77,8 +79,10 @@ func (s *Service) AdminLogin(username, password string) (string, *model.AdminUse
 		return "", nil, errors.New("账号已被禁用")
 	}
 
-	// 直接比对明文密码
+	// 前端已 MD5 加密，直接比对
 	passwordMatch := password == user.PasswordHash
+	log.Printf("[LOGIN] 输入密码: %s", password)
+	log.Printf("[LOGIN] 数据库密码: %s", user.PasswordHash)
 	log.Printf("[LOGIN] 密码验证结果: %v", passwordMatch)
 
 	if !passwordMatch {
@@ -101,20 +105,40 @@ func (s *Service) AdminLogin(username, password string) (string, *model.AdminUse
 }
 
 // ChangePassword 修改密码
+// MD5 加密密码
+func md5Hash(password string) string {
+	h := md5.New()
+	h.Write([]byte(password))
+	return hex.EncodeToString(h.Sum(nil))
+}
+
 func (s *Service) ChangePassword(userID uint, oldPassword, newPassword string) error {
+	log.Printf("[ChangePassword service] userID=%d, oldPassword=%s, newPassword=%s", userID, oldPassword, newPassword)
+
 	user, err := s.repo.FindAdminByID(userID)
 	if err != nil {
 		return errors.New("用户不存在")
 	}
 
-	// 验证旧密码
+	log.Printf("[ChangePassword service] 数据库密码: %s", user.PasswordHash)
+
+	// 前端已 MD5 加密，直接比对
 	if oldPassword != user.PasswordHash {
 		return errors.New("原密码错误")
 	}
 
-	// 更新密码
+	// 直接存前端传的新密码（已 MD5 加密）
 	user.PasswordHash = newPassword
-	return s.repo.UpdateAdminUser(user)
+	log.Printf("[ChangePassword service] 新密码: %s", newPassword)
+
+	err = s.repo.UpdateAdminUser(user)
+	if err != nil {
+		log.Printf("[ChangePassword service] 更新失败: %v", err)
+		return err
+	}
+
+	log.Println("[ChangePassword service] 更新成功")
+	return nil
 }
 
 // === Card Service Methods ===

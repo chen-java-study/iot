@@ -1,6 +1,325 @@
 nohup: ignoring input
-2026/03/11 16:55:02 数据库连接成功
-2026/03/11 16:55:02 [DEBUG] 初始化微信支付, NotifyURL=https://iot4you.top/api/v1/payment/notify
-2026/03/11 16:55:02 微信支付客户端初始化成功, NotifyURL=https://iot4you.top/api/v1/payment/notify
-2026/03/11 16:55:02 服务器启动在端口 8080
-2026/03/11 16:55:02 启动服务器失败: listen tcp :8080: bind: address already in use
+2026/03/11 17:26:47 数据库连接成功
+2026/03/11 17:26:47 [DEBUG] 初始化微信支付, NotifyURL=https://iot4you.top/api/v1/payment/notify
+2026/03/11 17:26:47 微信支付客户端初始化成功, NotifyURL=https://iot4you.top/api/v1/payment/notify
+2026/03/11 17:26:47 服务器启动在端口 8080
+2026/03/11 17:27:11 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:27:11 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[4.385ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:27:11 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:27:11 [LOGIN] 数据库中的密码hash: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:27:11 [LOGIN] hash长度: 32
+2026/03/11 17:27:11 [LOGIN] 输入的密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:27:11 [LOGIN] 密码长度: 32
+2026/03/11 17:27:11 [LOGIN] 输入密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:27:11 [LOGIN] 数据库密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:27:11 [LOGIN] 密码验证结果: true
+
+2026/03/11 17:27:11 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:33
+[0m[33m[3.334ms] [34;1m[rows:1][0m UPDATE "admin_users" SET "username"='admin',"password_hash"='0192023a7bbd73250516f069df18b500',"real_name"='系统管理员',"phone"='',"email"='',"status"=1,"last_login_at"='2026-03-11 17:27:11.512',"created_at"='2026-03-05 14:36:10.502',"updated_at"='2026-03-11 17:27:11.514' WHERE "id" = 1
+[GIN] 2026/03/11 - 17:27:11 | 200 |    8.891972ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+[GIN] 2026/03/11 - 17:27:11 | 401 |     118.154µs |       127.0.0.1 | POST     "/api/v1/admin/password"
+2026/03/11 17:36:21 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:36:21 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[0.962ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:36:21 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:36:21 [LOGIN] 数据库中的密码hash: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:21 [LOGIN] hash长度: 32
+2026/03/11 17:36:21 [LOGIN] 输入的密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:21 [LOGIN] 密码长度: 32
+2026/03/11 17:36:21 [LOGIN] 输入密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:21 [LOGIN] 数据库密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:21 [LOGIN] 密码验证结果: true
+
+2026/03/11 17:36:21 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:33
+[0m[33m[2.815ms] [34;1m[rows:1][0m UPDATE "admin_users" SET "username"='admin',"password_hash"='0192023a7bbd73250516f069df18b500',"real_name"='系统管理员',"phone"='',"email"='',"status"=1,"last_login_at"='2026-03-11 17:36:21.623',"created_at"='2026-03-05 14:36:10.502',"updated_at"='2026-03-11 17:36:21.623' WHERE "id" = 1
+[GIN] 2026/03/11 - 17:36:21 | 200 |    4.684607ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+
+2026/03/11 17:36:21 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:190
+[0m[33m[5.804ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/11 - 17:36:21 | 200 |    6.098268ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/11 17:36:23 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:163
+[0m[33m[2.717ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/11 - 17:36:23 | 200 |    3.118534ms |       127.0.0.1 | GET      "/api/v1/admin/config"
+2026/03/11 17:36:45 [ChangePassword] 收到修改密码请求
+2026/03/11 17:36:45 [ChangePassword] 旧密码: 0192023a7bbd73250516f069df18b500, 新密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:36:45 [ChangePassword] 用户ID: 1
+2026/03/11 17:36:45 [ChangePassword service] userID=1, oldPassword=0192023a7bbd73250516f069df18b500, newPassword=a66abb5684c45962d887564f08346e8d
+
+2026/03/11 17:36:45 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:27
+[0m[33m[1.362ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE "admin_users"."id" = 1 ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:36:45 [ChangePassword service] 数据库密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:45 [ChangePassword service] 新密码: a66abb5684c45962d887564f08346e8d
+
+2026/03/11 17:36:45 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:33
+[0m[33m[2.391ms] [34;1m[rows:1][0m UPDATE "admin_users" SET "username"='admin',"password_hash"='a66abb5684c45962d887564f08346e8d',"real_name"='系统管理员',"phone"='',"email"='',"status"=1,"last_login_at"='2026-03-11 17:36:21.623',"created_at"='2026-03-05 14:36:10.502',"updated_at"='2026-03-11 17:36:45.828' WHERE "id" = 1
+2026/03/11 17:36:45 [ChangePassword service] 更新成功
+2026/03/11 17:36:45 [ChangePassword] 修改成功
+[GIN] 2026/03/11 - 17:36:45 | 200 |    4.806265ms |       127.0.0.1 | POST     "/api/v1/admin/password"
+2026/03/11 17:36:56 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:36:56 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[1.063ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:36:56 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:36:56 [LOGIN] 数据库中的密码hash: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:36:56 [LOGIN] hash长度: 32
+2026/03/11 17:36:56 [LOGIN] 输入的密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:56 [LOGIN] 密码长度: 32
+2026/03/11 17:36:56 [LOGIN] 输入密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:56 [LOGIN] 数据库密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:36:56 [LOGIN] 密码验证结果: false
+2026/03/11 17:36:56 [LOGIN] 密码错误
+AdminLogin error:  用户名或密码错误
+[GIN] 2026/03/11 - 17:36:56 | 401 |    1.323733ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+2026/03/11 17:36:57 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:36:57 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[0.934ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:36:57 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:36:57 [LOGIN] 数据库中的密码hash: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:36:57 [LOGIN] hash长度: 32
+2026/03/11 17:36:57 [LOGIN] 输入的密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:57 [LOGIN] 密码长度: 32
+2026/03/11 17:36:57 [LOGIN] 输入密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:57 [LOGIN] 数据库密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:36:57 [LOGIN] 密码验证结果: false
+2026/03/11 17:36:57 [LOGIN] 密码错误
+AdminLogin error:  用户名或密码错误
+[GIN] 2026/03/11 - 17:36:57 | 401 |    1.291936ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+2026/03/11 17:36:57 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:36:57 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[1.104ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:36:57 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:36:57 [LOGIN] 数据库中的密码hash: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:36:57 [LOGIN] hash长度: 32
+2026/03/11 17:36:57 [LOGIN] 输入的密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:57 [LOGIN] 密码长度: 32
+2026/03/11 17:36:57 [LOGIN] 输入密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:57 [LOGIN] 数据库密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:36:57 [LOGIN] 密码验证结果: false
+2026/03/11 17:36:57 [LOGIN] 密码错误
+AdminLogin error:  用户名或密码错误
+[GIN] 2026/03/11 - 17:36:57 | 401 |    1.303868ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+2026/03/11 17:36:58 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:36:58 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[1.154ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:36:58 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:36:58 [LOGIN] 数据库中的密码hash: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:36:58 [LOGIN] hash长度: 32
+2026/03/11 17:36:58 [LOGIN] 输入的密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:58 [LOGIN] 密码长度: 32
+2026/03/11 17:36:58 [LOGIN] 输入密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:58 [LOGIN] 数据库密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:36:58 [LOGIN] 密码验证结果: false
+2026/03/11 17:36:58 [LOGIN] 密码错误
+AdminLogin error:  用户名或密码错误
+[GIN] 2026/03/11 - 17:36:58 | 401 |    1.483612ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+2026/03/11 17:36:58 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:36:58 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[1.497ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:36:58 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:36:58 [LOGIN] 数据库中的密码hash: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:36:58 [LOGIN] hash长度: 32
+2026/03/11 17:36:58 [LOGIN] 输入的密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:58 [LOGIN] 密码长度: 32
+2026/03/11 17:36:58 [LOGIN] 输入密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:36:58 [LOGIN] 数据库密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:36:58 [LOGIN] 密码验证结果: false
+2026/03/11 17:36:58 [LOGIN] 密码错误
+AdminLogin error:  用户名或密码错误
+[GIN] 2026/03/11 - 17:36:58 | 401 |    1.911647ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+2026/03/11 17:37:00 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:37:00 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[2.138ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:37:00 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:37:00 [LOGIN] 数据库中的密码hash: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:37:00 [LOGIN] hash长度: 32
+2026/03/11 17:37:00 [LOGIN] 输入的密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:37:00 [LOGIN] 密码长度: 32
+2026/03/11 17:37:00 [LOGIN] 输入密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:37:00 [LOGIN] 数据库密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:37:00 [LOGIN] 密码验证结果: false
+2026/03/11 17:37:00 [LOGIN] 密码错误
+AdminLogin error:  用户名或密码错误
+[GIN] 2026/03/11 - 17:37:00 | 401 |    2.728182ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+2026/03/11 17:37:11 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:37:11 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[0.962ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:37:11 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:37:11 [LOGIN] 数据库中的密码hash: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:37:11 [LOGIN] hash长度: 32
+2026/03/11 17:37:11 [LOGIN] 输入的密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:37:11 [LOGIN] 密码长度: 32
+2026/03/11 17:37:11 [LOGIN] 输入密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:37:11 [LOGIN] 数据库密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:37:11 [LOGIN] 密码验证结果: false
+2026/03/11 17:37:11 [LOGIN] 密码错误
+AdminLogin error:  用户名或密码错误
+[GIN] 2026/03/11 - 17:37:11 | 401 |     1.36419ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+2026/03/11 17:37:23 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:37:23 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[0.564ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:37:23 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:37:23 [LOGIN] 数据库中的密码hash: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:37:23 [LOGIN] hash长度: 32
+2026/03/11 17:37:23 [LOGIN] 输入的密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:37:23 [LOGIN] 密码长度: 32
+2026/03/11 17:37:23 [LOGIN] 输入密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:37:23 [LOGIN] 数据库密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:37:23 [LOGIN] 密码验证结果: true
+
+2026/03/11 17:37:23 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:33
+[0m[33m[2.213ms] [34;1m[rows:1][0m UPDATE "admin_users" SET "username"='admin',"password_hash"='a66abb5684c45962d887564f08346e8d',"real_name"='系统管理员',"phone"='',"email"='',"status"=1,"last_login_at"='2026-03-11 17:37:23.732',"created_at"='2026-03-05 14:36:10.502',"updated_at"='2026-03-11 17:37:23.733' WHERE "id" = 1
+[GIN] 2026/03/11 - 17:37:23 | 200 |    3.316421ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+
+2026/03/11 17:37:23 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:190
+[0m[33m[1.164ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/11 - 17:37:23 | 200 |    1.390437ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+2026/03/11 17:43:01 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:43:01 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[0.845ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:43:01 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:43:01 [LOGIN] 数据库中的密码hash: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:43:01 [LOGIN] hash长度: 32
+2026/03/11 17:43:01 [LOGIN] 输入的密码: 21232f297a57a5a743894a0e4a801fc3
+2026/03/11 17:43:01 [LOGIN] 密码长度: 32
+2026/03/11 17:43:01 [LOGIN] 输入密码: 21232f297a57a5a743894a0e4a801fc3
+2026/03/11 17:43:01 [LOGIN] 数据库密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:43:01 [LOGIN] 密码验证结果: false
+2026/03/11 17:43:01 [LOGIN] 密码错误
+AdminLogin error:  用户名或密码错误
+[GIN] 2026/03/11 - 17:43:01 | 401 |      1.1606ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+2026/03/11 17:43:05 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:43:05 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[1.145ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:43:05 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:43:05 [LOGIN] 数据库中的密码hash: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:43:05 [LOGIN] hash长度: 32
+2026/03/11 17:43:05 [LOGIN] 输入的密码: 21232f297a57a5a743894a0e4a801fc3
+2026/03/11 17:43:05 [LOGIN] 密码长度: 32
+2026/03/11 17:43:05 [LOGIN] 输入密码: 21232f297a57a5a743894a0e4a801fc3
+2026/03/11 17:43:05 [LOGIN] 数据库密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:43:05 [LOGIN] 密码验证结果: false
+2026/03/11 17:43:05 [LOGIN] 密码错误
+AdminLogin error:  用户名或密码错误
+[GIN] 2026/03/11 - 17:43:05 | 401 |    1.402233ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+2026/03/11 17:43:11 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:43:11 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[2.245ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:43:11 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:43:11 [LOGIN] 数据库中的密码hash: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:43:11 [LOGIN] hash长度: 32
+2026/03/11 17:43:11 [LOGIN] 输入的密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:43:11 [LOGIN] 密码长度: 32
+2026/03/11 17:43:11 [LOGIN] 输入密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:43:11 [LOGIN] 数据库密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:43:11 [LOGIN] 密码验证结果: false
+2026/03/11 17:43:11 [LOGIN] 密码错误
+AdminLogin error:  用户名或密码错误
+[GIN] 2026/03/11 - 17:43:11 | 401 |    3.145218ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+2026/03/11 17:43:18 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:43:18 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[0.831ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:43:18 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:43:18 [LOGIN] 数据库中的密码hash: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:43:18 [LOGIN] hash长度: 32
+2026/03/11 17:43:18 [LOGIN] 输入的密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:43:18 [LOGIN] 密码长度: 32
+2026/03/11 17:43:18 [LOGIN] 输入密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:43:18 [LOGIN] 数据库密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:43:18 [LOGIN] 密码验证结果: true
+
+2026/03/11 17:43:18 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:33
+[0m[33m[3.027ms] [34;1m[rows:1][0m UPDATE "admin_users" SET "username"='admin',"password_hash"='a66abb5684c45962d887564f08346e8d',"real_name"='系统管理员',"phone"='',"email"='',"status"=1,"last_login_at"='2026-03-11 17:43:18.715',"created_at"='2026-03-05 14:36:10.502',"updated_at"='2026-03-11 17:43:18.715' WHERE "id" = 1
+[GIN] 2026/03/11 - 17:43:18 | 200 |    4.334061ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+
+2026/03/11 17:43:18 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:190
+[0m[33m[0.764ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/11 - 17:43:18 | 200 |     904.847µs |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+
+2026/03/11 17:43:21 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:163
+[0m[33m[1.073ms] [34;1m[rows:8][0m SELECT * FROM "system_config"
+[GIN] 2026/03/11 - 17:43:21 | 200 |    4.587048ms |       127.0.0.1 | GET      "/api/v1/admin/config"
+2026/03/11 17:43:35 [ChangePassword] 收到修改密码请求
+2026/03/11 17:43:35 [ChangePassword] 旧密码: a66abb5684c45962d887564f08346e8d, 新密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:43:35 [ChangePassword] 用户ID: 1
+2026/03/11 17:43:35 [ChangePassword service] userID=1, oldPassword=a66abb5684c45962d887564f08346e8d, newPassword=0192023a7bbd73250516f069df18b500
+
+2026/03/11 17:43:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:27
+[0m[33m[0.879ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE "admin_users"."id" = 1 ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:43:35 [ChangePassword service] 数据库密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:43:35 [ChangePassword service] 新密码: 0192023a7bbd73250516f069df18b500
+
+2026/03/11 17:43:35 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:33
+[0m[33m[2.665ms] [34;1m[rows:1][0m UPDATE "admin_users" SET "username"='admin',"password_hash"='0192023a7bbd73250516f069df18b500',"real_name"='系统管理员',"phone"='',"email"='',"status"=1,"last_login_at"='2026-03-11 17:43:18.715',"created_at"='2026-03-05 14:36:10.502',"updated_at"='2026-03-11 17:43:35.104' WHERE "id" = 1
+2026/03/11 17:43:35 [ChangePassword service] 更新成功
+2026/03/11 17:43:35 [ChangePassword] 修改成功
+[GIN] 2026/03/11 - 17:43:35 | 200 |    3.957015ms |       127.0.0.1 | POST     "/api/v1/admin/password"
+2026/03/11 17:43:39 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:43:39 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[0.731ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:43:39 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:43:39 [LOGIN] 数据库中的密码hash: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:43:39 [LOGIN] hash长度: 32
+2026/03/11 17:43:39 [LOGIN] 输入的密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:43:39 [LOGIN] 密码长度: 32
+2026/03/11 17:43:39 [LOGIN] 输入密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:43:39 [LOGIN] 数据库密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:43:39 [LOGIN] 密码验证结果: true
+
+2026/03/11 17:43:39 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:33
+[0m[33m[1.633ms] [34;1m[rows:1][0m UPDATE "admin_users" SET "username"='admin',"password_hash"='0192023a7bbd73250516f069df18b500',"real_name"='系统管理员',"phone"='',"email"='',"status"=1,"last_login_at"='2026-03-11 17:43:39.115',"created_at"='2026-03-05 14:36:10.502',"updated_at"='2026-03-11 17:43:39.115' WHERE "id" = 1
+[GIN] 2026/03/11 - 17:43:39 | 200 |      3.0867ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+
+2026/03/11 17:43:39 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:190
+[0m[33m[0.966ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/11 - 17:43:39 | 200 |    1.228927ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+2026/03/11 17:43:48 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:43:48 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[1.026ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:43:48 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:43:48 [LOGIN] 数据库中的密码hash: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:43:48 [LOGIN] hash长度: 32
+2026/03/11 17:43:48 [LOGIN] 输入的密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:43:48 [LOGIN] 密码长度: 32
+2026/03/11 17:43:48 [LOGIN] 输入密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:43:48 [LOGIN] 数据库密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:43:48 [LOGIN] 密码验证结果: true
+
+2026/03/11 17:43:48 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:33
+[0m[33m[2.039ms] [34;1m[rows:1][0m UPDATE "admin_users" SET "username"='admin',"password_hash"='0192023a7bbd73250516f069df18b500',"real_name"='系统管理员',"phone"='',"email"='',"status"=1,"last_login_at"='2026-03-11 17:43:48.988',"created_at"='2026-03-05 14:36:10.502',"updated_at"='2026-03-11 17:43:48.989' WHERE "id" = 1
+[GIN] 2026/03/11 - 17:43:48 | 200 |    3.532049ms |       127.0.0.1 | POST     "/api/v1/admin/login"
+
+2026/03/11 17:43:49 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:190
+[0m[33m[1.211ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
+[GIN] 2026/03/11 - 17:43:49 | 200 |    1.444313ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+2026/03/11 17:44:02 [LOGIN] 尝试登录 - username: admin
+
+2026/03/11 17:44:02 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:21
+[0m[33m[1.202ms] [34;1m[rows:1][0m SELECT * FROM "admin_users" WHERE username = 'admin' ORDER BY "admin_users"."id" LIMIT 1
+2026/03/11 17:44:02 [LOGIN] 找到用户 - id: 1, status: 1
+2026/03/11 17:44:02 [LOGIN] 数据库中的密码hash: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:44:02 [LOGIN] hash长度: 32
+2026/03/11 17:44:02 [LOGIN] 输入的密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:44:02 [LOGIN] 密码长度: 32
+2026/03/11 17:44:02 [LOGIN] 输入密码: a66abb5684c45962d887564f08346e8d
+2026/03/11 17:44:02 [LOGIN] 数据库密码: 0192023a7bbd73250516f069df18b500
+2026/03/11 17:44:02 [LOGIN] 密码验证结果: false
+2026/03/11 17:44:02 [LOGIN] 密码错误
+AdminLogin error:  用户名或密码错误
+[GIN] 2026/03/11 - 17:44:02 | 401 |    1.500678ms |       127.0.0.1 | POST     "/api/v1/admin/login"

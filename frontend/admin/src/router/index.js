@@ -41,10 +41,15 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('admin_token')
-  if (to.path !== '/login' && !token) {
+  // 如果在登录页，清除可能存在的无效 token
+  if (to.path === '/login') {
+    if (token) {
+      localStorage.removeItem('admin_token')
+      localStorage.removeItem('admin_user')
+    }
+    next()
+  } else if (!token) {
     next('/login')
-  } else if (to.path === '/login' && token) {
-    next('/')
   } else {
     next()
   }
