@@ -1,11 +1,20 @@
 import request from '../utils/request'
+import md5 from 'js-md5'
+
+// MD5 加密密码
+function encryptPassword(password) {
+  return md5(password)
+}
 
 // 登录
 export function login(data) {
   return request({
     url: '/api/v1/admin/login',
     method: 'post',
-    data
+    data: {
+      username: data.username,
+      password: encryptPassword(data.password)
+    }
   })
 }
 
@@ -79,6 +88,10 @@ export function changePassword(data) {
   return request({
     url: '/api/v1/admin/password',
     method: 'post',
-    data
+    data: {
+      old_password: encryptPassword(data.old_password),
+      new_password: encryptPassword(data.new_password)
+    }
   })
 }
+

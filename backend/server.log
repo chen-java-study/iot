@@ -1,53 +1,6 @@
 nohup: ignoring input
-2026/03/09 16:36:06 数据库连接成功
-2026/03/09 16:36:06 微信支付客户端初始化成功
-2026/03/09 16:36:06 服务器启动在端口 8080
-
-2026/03/09 16:36:21 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
-[0m[33m[4.551ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '123' OR device_no = '123' OR card_no LIKE '%123%' OR device_no LIKE '%123%' ORDER BY "sim_cards"."id" LIMIT 1
-[GIN] 2026/03/09 - 16:36:21 | 200 |     4.88193ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=123"
-
-2026/03/09 16:36:24 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
-[0m[33m[1.999ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012347' OR device_no = '89860123456789012347' OR card_no LIKE '%89860123456789012347%' OR device_no LIKE '%89860123456789012347%' ORDER BY "sim_cards"."id" LIMIT 1
-
-2026/03/09 16:36:24 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:89
-[0m[33m[6.158ms] [34;1m[rows:1][0m INSERT INTO "recharge_records" ("card_id","card_no","device_no","recharge_amount","recharge_years","old_expire_date","new_expire_date","payment_method","trade_no","transaction_id","payment_status","paid_at","openid","ip_address","user_agent","created_at","updated_at") VALUES (3,'89860123456789012347','866123456789014',0.01,1,'2028-03-06 00:00:00','2029-03-06 00:00:00','wechat','R2026030916362415116','',0,NULL,'o0mUMt4U1j1DFdmjeuA_l_rqkEd0','127.0.0.1','Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452e) NetType/WIFI Language/zh_CN','2026-03-09 16:36:24.38','2026-03-09 16:36:24.38') RETURNING "id"
-2026/03/09 16:36:24 [DEBUG] wechatPay=&{wxd7fd41032d8269a9 1580180261 wangmaoquan163412945013mrchenlin 56EA085061C77BCAB7C7774774BB1FBD82E78020 0xc0000a60e0 /home/code/cert/apiclient_key.pem https://iot4you.top/api/v1/payment/notify 0xc0000902d0}, AppID=wxd7fd41032d8269a9
-2026/03/09 16:36:24 [微信支付] 请求URL: https://api.mch.weixin.qq.com/v3/pay/transactions/jsapi, 状态码: 200, 响应: {"prepay_id":"wx09163624740576b55ba41bbc6440c50001"}
-[GIN] 2026/03/09 - 16:36:24 | 200 |  471.537537ms |       127.0.0.1 | POST     "/api/v1/payment/create"
-2026/03/09 16:36:29 收到微信支付回调: timestamp=1773045389, nonce=E6ims9p08TxzeswjSNxMk0usB8lGFraO, serial=PUB_KEY_ID_0115801802612026020900192206002200
-
-2026/03/09 16:36:29 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:94
-[0m[33m[2.979ms] [34;1m[rows:1][0m SELECT * FROM "recharge_records" WHERE trade_no = 'R2026030916362415116' ORDER BY "recharge_records"."id" LIMIT 1
-
-2026/03/09 16:36:29 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:103
-[0m[33m[4.453ms] [34;1m[rows:1][0m UPDATE "recharge_records" SET "card_id"=3,"card_no"='89860123456789012347',"device_no"='866123456789014',"recharge_amount"=0.01,"recharge_years"=1,"old_expire_date"='2028-03-06 00:00:00',"new_expire_date"='2029-03-06 00:00:00',"payment_method"='wechat',"trade_no"='R2026030916362415116',"transaction_id"='4200002990202603093394162948',"payment_status"=1,"paid_at"='2026-03-09 16:36:29',"openid"='o0mUMt4U1j1DFdmjeuA_l_rqkEd0',"ip_address"='127.0.0.1',"user_agent"='Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.69(0x1800452e) NetType/WIFI Language/zh_CN',"created_at"='2026-03-09 16:36:24.38',"updated_at"='2026-03-09 16:36:29.518' WHERE "id" = 36
-
-2026/03/09 16:36:29 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:48
-[0m[33m[2.158ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE "sim_cards"."id" = 3 ORDER BY "sim_cards"."id" LIMIT 1
-
-2026/03/09 16:36:29 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:57
-[0m[33m[2.272ms] [34;1m[rows:1][0m UPDATE "sim_cards" SET "card_no"='89860123456789012347',"device_no"='866123456789014',"start_date"='2024-01-01 00:00:00',"expire_date"='2029-03-06 00:00:00',"status"=1,"operator"='中国电信',"package_type"='年卡',"total_recharge_count"=2,"total_recharge_amount"=0.03,"last_recharge_time"='2026-03-09 16:36:29',"last_recharge_amount"=0.01,"remark"='测试卡片3 - 已过期',"created_at"='0001-01-01 00:00:00',"updated_at"='2026-03-09 16:36:29.525' WHERE "id" = 3
-[GIN] 2026/03/09 - 16:36:29 | 200 |   15.611214ms |       127.0.0.1 | POST     "/api/v1/payment/notify"
-
-2026/03/09 16:36:32 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:94
-[0m[33m[1.791ms] [34;1m[rows:1][0m SELECT * FROM "recharge_records" WHERE trade_no = 'R2026030916362415116' ORDER BY "recharge_records"."id" LIMIT 1
-[GIN] 2026/03/09 - 16:36:32 | 200 |    2.074868ms |       127.0.0.1 | GET      "/api/v1/payment/status?trade_no=R2026030916362415116"
-
-2026/03/09 16:36:32 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:42
-[0m[33m[1.111ms] [34;1m[rows:1][0m SELECT * FROM "sim_cards" WHERE card_no = '89860123456789012347' OR device_no = '89860123456789012347' OR card_no LIKE '%89860123456789012347%' OR device_no LIKE '%89860123456789012347%' ORDER BY "sim_cards"."id" LIMIT 1
-[GIN] 2026/03/09 - 16:36:32 | 200 |    1.329846ms |       127.0.0.1 | GET      "/api/v1/card/query?keyword=89860123456789012347"
-
-2026/03/09 16:36:50 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:129
-[0m[33m[1.836ms] [34;1m[rows:1][0m SELECT count(*) FROM "recharge_records"
-
-2026/03/09 16:36:50 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:145
-[0m[33m[1.706ms] [34;1m[rows:1][0m SELECT COALESCE(SUM(recharge_amount), 0) FROM "recharge_records"
-
-2026/03/09 16:36:50 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:148
-[0m[33m[2.239ms] [34;1m[rows:4][0m SELECT * FROM "recharge_records" ORDER BY id DESC LIMIT 20
-[GIN] 2026/03/09 - 16:36:50 | 200 |    7.429526ms |       127.0.0.1 | GET      "/api/v1/admin/recharges?page=1&page_size=20&status=-1&keyword=&start_date=&end_date="
-
-2026/03/09 16:36:54 [32m/home/code/iot/iot-master/backend/internal/repository/repository.go:190
-[0m[33m[4.098ms] [34;1m[rows:1][0m SELECT * FROM v_statistics
-[GIN] 2026/03/09 - 16:36:54 | 200 |    4.652752ms |       127.0.0.1 | GET      "/api/v1/admin/statistics"
+2026/03/11 16:55:02 数据库连接成功
+2026/03/11 16:55:02 [DEBUG] 初始化微信支付, NotifyURL=https://iot4you.top/api/v1/payment/notify
+2026/03/11 16:55:02 微信支付客户端初始化成功, NotifyURL=https://iot4you.top/api/v1/payment/notify
+2026/03/11 16:55:02 服务器启动在端口 8080
+2026/03/11 16:55:02 启动服务器失败: listen tcp :8080: bind: address already in use

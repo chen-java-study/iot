@@ -1,0 +1,15 @@
+[Unit]
+Description=IoT Card Backend Service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/code/iot/backend
+ExecStart=/home/code/iot/backend/iot-server
+EnvironmentFile=/home/code/iot/backend/.env
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
