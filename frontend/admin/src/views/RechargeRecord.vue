@@ -43,9 +43,13 @@
     <el-pagination
       v-model:current-page="searchForm.page"
       v-model:page-size="searchForm.page_size"
+      :page-sizes="[10, 20, 50, 100]"
+      layout="prev, pager, next, jumper, ->, sizes, total"
       :total="total"
+      background
       @current-change="loadRecords"
-      style="margin-top: 20px; justify-content: center"
+      @size-change="onPageSizeChange"
+      style="margin-top: 20px; width: 100%"
     />
     
     <div style="margin-top: 20px; text-align: right;">
@@ -98,6 +102,11 @@ export default {
       }
     }
 
+    const onPageSizeChange = () => {
+      searchForm.page = 1
+      loadRecords()
+    }
+
     onMounted(() => {
       loadRecords()
     })
@@ -109,8 +118,10 @@ export default {
       totalAmount,
       dateRange,
       searchForm,
-      loadRecords
+      loadRecords,
+      onPageSizeChange
     }
   }
 }
 </script>
+

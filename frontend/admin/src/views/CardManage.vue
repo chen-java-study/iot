@@ -42,9 +42,13 @@
     <el-pagination
       v-model:current-page="searchForm.page"
       v-model:page-size="searchForm.page_size"
+      :page-sizes="[10, 20, 50, 100]"
+      layout="prev, pager, next, jumper, ->, sizes, total"
       :total="total"
+      background
       @current-change="loadCards"
-      style="margin-top: 20px; justify-content: center"
+      @size-change="onPageSizeChange"
+      style="margin-top: 20px; width: 100%"
     />
 
     <!-- 添加/编辑对话框 -->
@@ -133,6 +137,12 @@ export default {
       }
     }
 
+    // 切换每页条数时回到第 1 页再请求（page_size 已由 v-model 更新）
+    const onPageSizeChange = () => {
+      searchForm.page = 1
+      loadCards()
+    }
+
     const showDialog = (row = null) => {
       if (row) {
         Object.assign(form, row)
@@ -197,6 +207,7 @@ export default {
       searchForm,
       form,
       loadCards,
+      onPageSizeChange,
       showDialog,
       handleSave,
       handleDelete
@@ -204,3 +215,4 @@ export default {
   }
 }
 </script>
+
