@@ -302,7 +302,7 @@ func (h *Handler) GetStatistics(c *gin.Context) {
 // ListCards 卡片列表
 func (h *Handler) ListCards(c *gin.Context) {
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
+	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "10"))
 	status, _ := strconv.Atoi(c.DefaultQuery("status", "0"))
 	keyword := c.Query("keyword")
 
